@@ -27,9 +27,6 @@ export function Navbar() {
           <div className="flex items-center">
             <Link href="/" data-testid="link-home">
               <div className="flex items-center space-x-2 cursor-pointer">
-                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                  <span className="text-primary-foreground font-bold text-sm">SR</span>
-                </div>
                 <div>
                   <h1 className="font-bold text-lg">Sathi Ko Recipe</h1>
                   <p className="text-xs text-muted-foreground">Simple Recipe</p>
@@ -78,9 +75,6 @@ export function Navbar() {
             <div className="flex items-center justify-between mb-8">
               <Link href="/">
                 <div className="flex items-center space-x-2 cursor-pointer">
-                  <div className="w-6 h-6 bg-primary rounded-md flex items-center justify-center">
-                    <span className="text-primary-foreground font-bold text-xs">SR</span>
-                  </div>
                   <span className="font-semibold">Sathi Ko Recipe</span>
                 </div>
               </Link>
