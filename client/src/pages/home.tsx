@@ -61,10 +61,10 @@ export default function Home() {
         </div>
         
         <div className="absolute inset-0">
-          <div className="absolute top-20 left-10 w-32 h-32 bg-white bg-opacity-5 rounded-full"></div>
-          <div className="absolute top-40 right-20 w-24 h-24 bg-white bg-opacity-3 rounded-full"></div>
-          <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-white bg-opacity-5 rounded-full"></div>
-          <div className="absolute bottom-40 right-10 w-28 h-28 bg-white bg-opacity-3 rounded-full"></div>
+          <div className="absolute top-20 left-10 w-32 h-32 bg-green-400 bg-opacity-15 rounded-full"></div>
+          <div className="absolute top-40 right-20 w-24 h-24 bg-green-300 bg-opacity-10 rounded-full"></div>
+          <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-green-500 bg-opacity-12 rounded-full"></div>
+          <div className="absolute bottom-40 right-10 w-28 h-28 bg-green-400 bg-opacity-8 rounded-full"></div>
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32 relative hero-content">
           <div className="text-center">
