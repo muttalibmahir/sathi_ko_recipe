@@ -87,6 +87,20 @@
   body {
     @apply font-sans antialiased bg-background text-foreground;
     transition: background-color 0.3s ease, color 0.3s ease;
+    font-family: 'Rosehot', system-ui, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Rosehot', system-ui, sans-serif;
+  }
+
+  button, input, textarea, select, .btn {
+    font-family: 'Rosehot', system-ui, sans-serif;
+  }
+
+  /* Ensure all text elements use Rosehot */
+  * {
+    font-family: 'Rosehot', system-ui, sans-serif;
   }
 
   html {
