@@ -21,7 +21,7 @@ export default function RecipeDetail() {
   const [checkedIngredients, setCheckedIngredients] = useState<Record<number, boolean>>({});
 
   const { data: recipe, isLoading, error } = useQuery<Recipe>({
-    queryKey: [`/api/recipes/${params?.id}`],
+    queryKey: ["/api/recipes", params?.id],
     enabled: !!params?.id,
   });
 

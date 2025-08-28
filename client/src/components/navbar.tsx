@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-provider";
-import { Menu, X, Utensils, Phone } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 export function Navbar() {
   const [location] = useLocation();
@@ -21,18 +21,19 @@ export function Navbar() {
   };
 
   return (
-    <nav className="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
-      <div className="max-w-6xl mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
+    <nav className="bg-card border-b border-border sticky top-0 z-50 backdrop-blur-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16">
+          <div className="flex items-center">
             <Link href="/" data-testid="link-home">
-              <div className="flex items-center space-x-3 cursor-pointer">
-                <div className="w-8 h-8 flex items-center justify-center">
-                  <Utensils className="w-6 h-6 text-orange-500" />
+              <div className="flex items-center space-x-2 cursor-pointer">
+                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                  <span className="text-primary-foreground font-bold text-sm">SR</span>
                 </div>
-                <h1 className="text-2xl font-bold text-gray-900 dark:text-white" data-testid="text-site-title">
-                  Sathi Ko Recipe
-                </h1>
+                <div>
+                  <h1 className="font-bold text-lg">Sathi Ko Recipe</h1>
+                  <p className="text-xs text-muted-foreground">Simple Recipe</p>
+                </div>
               </div>
             </Link>
           </div>
@@ -44,8 +45,8 @@ export function Navbar() {
                 <span
                   className={`nav-link font-medium transition-colors duration-200 cursor-pointer ${
                     isActive(item.href)
-                      ? "text-orange-500"
-                      : "text-gray-600 dark:text-gray-300 hover:text-orange-500"
+                      ? "text-primary"
+                      : "text-muted-foreground hover:text-primary"
                   }`}
                 >
                   {item.name}
@@ -54,17 +55,13 @@ export function Navbar() {
             ))}
           </div>
 
-          {/* Contact & Theme Toggle & Mobile Menu */}
-          <div className="flex items-center space-x-4">
-            <div className="hidden sm:flex items-center space-x-2 text-gray-600 dark:text-gray-300">
-              <Phone className="w-4 h-4" />
-              <span className="text-sm font-medium" data-testid="text-contact-number">12 34 56</span>
-            </div>
+          {/* Theme Toggle & Mobile Menu */}
+          <div className="flex items-center space-x-2">
             <ThemeToggle />
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden"
+              className="md:hidden rounded-lg"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               data-testid="button-mobile-menu"
             >
