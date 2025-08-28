@@ -31,11 +31,11 @@ export default function Recipes() {
   });
 
   const filters = [
-    { name: "All Recipes", icon: null },
-    { name: "Vegetarian", icon: Leaf },
-    { name: "Non-Veg", icon: Fish },
-    { name: "Quick Meals", icon: Clock },
-    { name: "Budget", icon: DollarSign },
+    { name: "All Recipes", icon: null, description: "View all authentic Nepali recipes" },
+    { name: "Vegetarian", icon: Leaf, description: "Plant-based traditional dishes" },
+    { name: "Non-Veg", icon: Fish, description: "Meat and poultry specialties" },
+    { name: "Quick Meals", icon: Clock, description: "Ready in 30 minutes or less" },
+    { name: "Budget", icon: DollarSign, description: "Affordable student-friendly meals" },
   ];
 
   const handleFilterClick = (filterName: string) => {
@@ -66,13 +66,20 @@ export default function Recipes() {
     <div className="min-h-screen py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-foreground mb-4" data-testid="heading-recipes">
-            Our Recipes
+        <div className="text-center mb-12 animate-fade-in">
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4" data-testid="heading-recipes">
+            Authentic Nepali Recipes
           </h1>
-          <p className="text-lg text-muted-foreground" data-testid="text-recipes-description">
-            Discover authentic Nepali recipes perfect for students
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto" data-testid="text-recipes-description">
+            Discover traditional Nepali cuisine with step-by-step guides perfect for international students and cooking beginners
           </p>
+          {recipes && recipes.length > 0 && (
+            <div className="mt-6 text-primary font-medium">
+              <span className="bg-primary/10 px-4 py-2 rounded-full">
+                {recipes.length} Traditional Recipes Available
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Search Bar */}
@@ -97,37 +104,115 @@ export default function Recipes() {
           </div>
         </form>
 
-        {/* Filters */}
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
-          {filters.map((filter) => {
-            const Icon = filter.icon;
-            return (
-              <Button
-                key={filter.name}
-                variant={activeFilter === filter.name ? "default" : "secondary"}
-                className={`filter-pill font-medium ${
-                  activeFilter === filter.name
-                    ? "active bg-primary text-white"
-                    : "bg-muted text-muted-foreground hover:bg-gray-200 dark:hover:bg-gray-700"
-                }`}
-                onClick={() => handleFilterClick(filter.name)}
-                data-testid={`filter-${filter.name.toLowerCase().replace(" ", "-")}`}
-              >
-                {Icon && <Icon className="w-4 h-4 mr-2" />}
-                {filter.name}
-              </Button>
-            );
-          })}
+        {/* Category Filters */}
+        <div className="mb-12 animate-slide-up">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl font-semibold text-foreground mb-2">Browse by Category</h2>
+            <p className="text-muted-foreground">Find recipes that match your preferences and cooking style</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4 max-w-6xl mx-auto">
+            {filters.map((filter) => {
+              const Icon = filter.icon;
+              const isActive = activeFilter === filter.name;
+              return (
+                <div
+                  key={filter.name}
+                  className={`group cursor-pointer transition-all duration-300 hover:scale-105 ${
+                    isActive ? "transform scale-105" : ""
+                  }`}
+                  onClick={() => handleFilterClick(filter.name)}
+                  data-testid={`filter-${filter.name.toLowerCase().replace(" ", "-")}`}
+                >
+                  <div
+                    className={`p-6 rounded-2xl border-2 transition-all duration-300 text-center ${
+                      isActive
+                        ? "border-primary bg-primary/10 shadow-lg"
+                        : "border-border bg-card hover:border-primary/50 hover:bg-primary/5"
+                    }`}
+                  >
+                    {Icon ? (
+                      <div className={`w-12 h-12 mx-auto mb-3 rounded-full flex items-center justify-center ${
+                        isActive ? "bg-primary text-white" : "bg-muted text-muted-foreground group-hover:bg-primary/20 group-hover:text-primary"
+                      }`}>
+                        <Icon className="w-6 h-6" />
+                      </div>
+                    ) : (
+                      <div className={`w-12 h-12 mx-auto mb-3 rounded-full flex items-center justify-center bg-gradient-to-br from-primary to-accent ${
+                        isActive ? "shadow-lg" : "opacity-80 group-hover:opacity-100"
+                      }`}>
+                        <span className="text-white font-bold text-lg">🍽️</span>
+                      </div>
+                    )}
+                    
+                    <h3 className={`font-semibold mb-2 transition-colors ${
+                      isActive ? "text-primary" : "text-foreground group-hover:text-primary"
+                    }`}>
+                      {filter.name}
+                    </h3>
+                    
+                    <p className={`text-sm transition-colors ${
+                      isActive ? "text-primary/80" : "text-muted-foreground"
+                    }`}>
+                      {filter.description}
+                    </p>
+                    
+                    {recipes && (
+                      <div className={`mt-3 text-xs font-medium ${
+                        isActive ? "text-primary" : "text-muted-foreground"
+                      }`}>
+                        {filter.name === "All Recipes" 
+                          ? `${recipes.length} recipes`
+                          : filter.name === "Quick Meals"
+                            ? `${recipes.filter(r => r.cookTime <= 30).length} recipes`
+                            : filter.name === "Budget"
+                              ? `${recipes.filter(r => r.cost <= 3.50).length} recipes`
+                              : `${recipes.filter(r => r.category === filter.name).length} recipes`
+                        }
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
 
         {/* Results Info */}
-        {searchQuery && (
-          <div className="mb-6">
-            <p className="text-muted-foreground" data-testid="text-search-results">
-              Search results for "{searchQuery}"
-            </p>
-          </div>
-        )}
+        <div className="mb-8">
+          {searchQuery ? (
+            <div className="text-center">
+              <p className="text-lg text-muted-foreground" data-testid="text-search-results">
+                Search results for <span className="font-medium text-primary">"{searchQuery}"</span>
+              </p>
+              {recipes && recipes.length > 0 && (
+                <p className="text-sm text-muted-foreground mt-1">
+                  Found {recipes.length} recipe{recipes.length !== 1 ? 's' : ''} matching your search
+                </p>
+              )}
+            </div>
+          ) : activeFilter !== "All Recipes" ? (
+            <div className="text-center">
+              <p className="text-lg text-foreground font-medium">
+                {activeFilter} Recipes
+              </p>
+              {recipes && recipes.length > 0 && (
+                <p className="text-sm text-muted-foreground mt-1">
+                  Showing {recipes.length} traditional {activeFilter.toLowerCase()} recipe{recipes.length !== 1 ? 's' : ''}
+                </p>
+              )}
+            </div>
+          ) : recipes && recipes.length > 0 && (
+            <div className="text-center">
+              <p className="text-lg text-foreground font-medium">
+                All Authentic Nepali Recipes
+              </p>
+              <p className="text-sm text-muted-foreground mt-1">
+                Complete collection of {recipes.length} traditional recipes from Nepal
+              </p>
+            </div>
+          )}
+        </div>
 
         {/* Recipe Grid */}
         {isLoading ? (

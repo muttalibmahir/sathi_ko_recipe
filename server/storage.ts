@@ -1262,9 +1262,21 @@ export class MemStorage implements IStorage {
     if (category === "All Recipes") {
       return this.getAllRecipes();
     }
-    return Array.from(this.recipes.values()).filter(recipe => 
-      recipe.category === category
-    );
+    
+    const allRecipes = Array.from(this.recipes.values());
+    
+    switch (category) {
+      case "Vegetarian":
+        return allRecipes.filter(recipe => recipe.category === "Vegetarian");
+      case "Non-Veg":
+        return allRecipes.filter(recipe => recipe.category === "Non-Veg");
+      case "Quick Meals":
+        return allRecipes.filter(recipe => recipe.cookTime <= 30);
+      case "Budget":
+        return allRecipes.filter(recipe => recipe.cost <= 3.50);
+      default:
+        return allRecipes.filter(recipe => recipe.category === category);
+    }
   }
 
   async searchRecipes(query: string): Promise<Recipe[]> {
