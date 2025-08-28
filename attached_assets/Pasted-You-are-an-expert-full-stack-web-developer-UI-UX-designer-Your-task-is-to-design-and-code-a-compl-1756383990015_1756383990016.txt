@@ -1,0 +1,159 @@
+You are an expert full-stack web developer + UI/UX designer.
+Your task is to design and code a complete recipe website called Sathi Ko Recipe – Simple Recipe.
+The site will run on localhost (no restrictions).
+
+Project Context
+
+Target audience: international students and beginners who need affordable, healthy, simple meals.
+
+Main goals: step-by-step recipes, filters by diet/time/budget, clean design, mobile-first, scalable content.
+
+Pages needed: Home, Recipes, Recipe Detail, About Us, Contact Us.
+
+Technology Stack
+
+Frontend: Next.js (App Router) + TypeScript + Tailwind CSS.
+
+Content: JSON or MDX files for recipes (Phase 1).
+
+Backend/Storage: none required for MVP; later Firebase/Sanity possible.
+
+Deployment: start localhost → later Vercel.
+
+Core Features
+
+Homepage
+
+Welcome hero with tagline.
+
+Search bar + quick filter buttons.
+
+Trending recipes section.
+
+Footer with social icons.
+
+Recipes Page
+
+Grid of recipe cards (image, time, cost, diet tag).
+
+Filter + search (Veg, Vegan, Non-Veg, Quick Meals, Budget Meals).
+
+“View All Recipes” option.
+
+Recipe Detail Page
+
+Title, image, servings, cooking time, cost/serve.
+
+Ingredients list (copy to clipboard).
+
+Step-by-step instructions.
+
+Cooking Mode: large readable step, “Next/Previous” buttons, timer.
+
+Nutrition facts + cooking tips.
+
+About Us
+
+Team mission and story.
+
+Gallery or placeholder image.
+
+Contact Us
+
+Form (Name, Email, Reason, Message).
+
+Validation + success message.
+
+Design & UX
+
+Color palette:
+
+Primary Green #3F7E44
+
+Accent Orange #FFB703
+
+Background White #FFFFFF
+
+Dark Mode option #0B0F14
+
+Typography: clean sans-serif (Inter, Plus Jakarta Sans).
+
+Layout: grid-based, rounded recipe cards, responsive for 360px → desktop.
+
+Accessibility: WCAG 2.2 AA (contrast, alt text, keyboard navigation).
+
+File Structure (expected)
+sathi-ko-recipe/
+├─ app/
+│  ├─ layout.tsx
+│  ├─ page.tsx (Home)
+│  ├─ recipes/
+│  │  ├─ page.tsx (List)
+│  │  └─ [slug]/page.tsx (Detail)
+│  ├─ about/page.tsx
+│  ├─ contact/page.tsx
+├─ components/
+│  ├─ Navbar.tsx
+│  ├─ Footer.tsx
+│  ├─ RecipeCard.tsx
+│  ├─ Filters.tsx
+│  ├─ StepMode.tsx
+├─ content/recipes/ (JSON/MDX files)
+├─ public/images/
+├─ styles/globals.css
+
+Sample Recipe JSON
+{
+  "slug": "5-min-student-eggs",
+  "title": "5-Min Student Eggs",
+  "diet": "veg",
+  "mealType": "breakfast",
+  "timeMinutes": 5,
+  "costAUD": 2.5,
+  "servings": 1,
+  "difficulty": "easy",
+  "image": "/images/eggs.jpg",
+  "ingredients": [
+    { "item": "Eggs", "qty": "2" },
+    { "item": "Bread", "qty": "2 slices" },
+    { "item": "Salt & Pepper", "qty": "to taste" }
+  ],
+  "steps": [
+    "Toast bread.",
+    "Whisk eggs with salt.",
+    "Cook eggs in pan for 60–90s.",
+    "Serve on toast with pepper."
+  ],
+  "nutrition": { "kcal": 220 }
+}
+
+Execution Workflow (for the AI agent)
+
+Scaffold Next.js project with Tailwind.
+
+Implement Navbar, Footer, RecipeCard, Filters, StepMode.
+
+Create Recipes page that loads JSON content with filters.
+
+Build Recipe Detail page with step-by-step cooking mode.
+
+Add About Us + Contact Us pages.
+
+Apply Tailwind styling with the design system.
+
+Add SEO (metadata, schema.org Recipe).
+
+Test responsiveness and accessibility.
+
+Provide README with setup/run instructions.
+
+Deliverables
+
+Full codebase with all files, not snippets.
+
+Preloaded with 5 example recipes.
+
+Documentation for running on localhost.
+
+⚡ Instruction:
+Act as both designer and developer. Generate complete project code, page by page, with full file contents. Always explain file placement. Respect the file structure above.
