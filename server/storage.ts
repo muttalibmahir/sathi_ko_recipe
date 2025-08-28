@@ -36,7 +36,7 @@ export class MemStorage implements IStorage {
         cost: 2.50,
         difficulty: "Easy",
         category: "Vegetarian",
-        rating: 4.2,
+        rating: 4.6,
         ratingCount: 38,
         ingredients: [
           "2 cups fresh stinging nettle leaves",
@@ -83,7 +83,7 @@ export class MemStorage implements IStorage {
         cost: 2.50,
         difficulty: "Medium",
         category: "Vegetarian",
-        rating: 4.3,
+        rating: 3.8,
         ratingCount: 19,
         ingredients: [
           "2 cups fermented leafy greens (gundruk)",
@@ -130,7 +130,7 @@ export class MemStorage implements IStorage {
         cost: 2.00,
         difficulty: "Easy",
         category: "Vegetarian",
-        rating: 4.0,
+        rating: 3.6,
         ratingCount: 25,
         ingredients: [
           "2 cups hog plums (lapsi), chopped",
@@ -270,7 +270,7 @@ export class MemStorage implements IStorage {
         cost: 8.50,
         difficulty: "Medium",
         category: "Non-Veg",
-        rating: 4.7,
+        rating: 4.9,
         ratingCount: 89,
         ingredients: [
           "1 kg goat meat or chicken, cut into cubes",
@@ -319,7 +319,7 @@ export class MemStorage implements IStorage {
         cost: 3.50,
         difficulty: "Easy",
         category: "Vegetarian",
-        rating: 4.4,
+        rating: 3.9,
         ratingCount: 56,
         ingredients: [
           "2 cups mixed vegetables (eggplant, potato, cauliflower)",
@@ -366,7 +366,7 @@ export class MemStorage implements IStorage {
         cost: 9.50,
         difficulty: "Hard",
         category: "Non-Veg",
-        rating: 4.8,
+        rating: 4.2,
         ratingCount: 78,
         ingredients: [
           "1 kg buffalo meat or chicken breast",
@@ -415,7 +415,7 @@ export class MemStorage implements IStorage {
         cost: 10.50,
         difficulty: "Medium",
         category: "Non-Veg",
-        rating: 4.6,
+        rating: 3.8,
         ratingCount: 65,
         ingredients: [
           "1 kg goat meat with bones",
@@ -465,7 +465,7 @@ export class MemStorage implements IStorage {
         cost: 6.50,
         difficulty: "Medium",
         category: "Non-Veg",
-        rating: 4.9,
+        rating: 4.8,
         ratingCount: 234,
         ingredients: [
           "2 cups all-purpose flour",
@@ -514,7 +514,7 @@ export class MemStorage implements IStorage {
         cost: 3.50,
         difficulty: "Easy",
         category: "Vegetarian",
-        rating: 4.8,
+        rating: 4.5,
         ratingCount: 156,
         ingredients: [
           "1 cup yellow lentils (masoor dal)",
@@ -565,7 +565,7 @@ export class MemStorage implements IStorage {
         cost: 4.50,
         difficulty: "Medium",
         category: "Vegetarian",
-        rating: 4.7,
+        rating: 4.3,
         ratingCount: 89,
         ingredients: [
           "2 cups rice flour",
@@ -612,7 +612,7 @@ export class MemStorage implements IStorage {
         cost: 3.50,
         difficulty: "Easy",
         category: "Vegetarian",
-        rating: 4.6,
+        rating: 4.1,
         ratingCount: 67,
         ingredients: [
           "2 cups thick yogurt",
