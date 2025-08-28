@@ -152,7 +152,7 @@ export default function RecipeDetail() {
                 <div className="flex items-center space-x-1" data-testid="rating-stars">
                   {renderStars(recipe.rating)}
                   <span className="text-sm text-muted-foreground ml-1">
-                    ({recipe.rating.toFixed(1)})
+                    ({recipe.rating ? recipe.rating.toFixed(1) : '0.0'})
                   </span>
                 </div>
               </div>
@@ -184,7 +184,7 @@ export default function RecipeDetail() {
                   <DollarSign className="w-5 h-5 text-accent" />
                   <span className="font-semibold">Cost/Serve</span>
                 </div>
-                <span className="text-2xl font-bold text-foreground">${recipe.cost.toFixed(2)}</span>
+                <span className="text-2xl font-bold text-foreground">${recipe.cost ? recipe.cost.toFixed(2) : '0.00'}</span>
               </div>
               <div className="bg-muted p-4 rounded-lg" data-testid="info-difficulty">
                 <div className="flex items-center space-x-2 mb-1">
