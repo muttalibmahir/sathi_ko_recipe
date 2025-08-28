@@ -32,11 +32,9 @@ function App() {
       <ThemeProvider defaultTheme="light" storageKey="sathi-ko-recipe-theme">
         <TooltipProvider>
           <div className="min-h-screen bg-background text-foreground">
-            <Navbar />
             <main>
               <Router />
             </main>
-            <Footer />
           </div>
           <Toaster />
         </TooltipProvider>

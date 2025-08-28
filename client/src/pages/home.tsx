@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { RecipeCard } from "@/components/recipe-card";
-import { Search, Leaf, Clock, DollarSign, TrendingUp, Play } from "lucide-react";
+import { Search, Phone, Utensils } from "lucide-react";
 import type { Recipe } from "@shared/schema";
 
 export default function Home() {
@@ -29,160 +29,134 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <div className="hero-gradient relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-20 left-10 w-32 h-32 bg-white bg-opacity-10 rounded-full"></div>
-          <div className="absolute top-40 right-20 w-24 h-24 bg-white bg-opacity-5 rounded-full"></div>
-          <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-white bg-opacity-10 rounded-full"></div>
-          <div className="absolute bottom-40 right-10 w-28 h-28 bg-white bg-opacity-5 rounded-full"></div>
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32 relative">
-          <div className="text-center">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
-              Simple Recipes for
-              <span className="text-accent block" data-testid="text-hero-subtitle">Students</span>
-            </h1>
-            <p className="text-xl text-green-100 mb-8 max-w-2xl mx-auto" data-testid="text-hero-description">
-              Affordable, healthy, and easy-to-make meals perfect for international students and cooking beginners.
-            </p>
-
-            {/* Search Bar */}
-            <form onSubmit={handleSearch} className="max-w-xl mx-auto mb-8">
-              <div className="relative">
-                <Input
-                  type="text"
-                  placeholder="Search recipes..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full px-4 py-3 pl-12 rounded-xl bg-white text-gray-900 shadow-lg focus:outline-none focus:ring-2 focus:ring-accent"
-                  data-testid="input-search-recipes"
-                />
-                <Search className="absolute left-4 top-3.5 w-5 h-5 text-gray-400" />
-                <Button
-                  type="submit"
-                  className="absolute right-2 top-2 bg-accent text-white hover:bg-orange-600 transition-colors btn-scale"
-                  data-testid="button-search"
-                >
-                  Search
-                </Button>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      {/* Header */}
+      <header className="bg-white dark:bg-gray-800 shadow-sm">
+        <div className="max-w-6xl mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 flex items-center justify-center">
+                <Utensils className="w-6 h-6 text-orange-500" />
               </div>
-            </form>
-
-            {/* Quick Filters */}
-            <div className="flex flex-wrap justify-center gap-3 mb-8">
-              <Button
-                variant="ghost"
-                className="filter-pill bg-white bg-opacity-20 text-white hover:bg-opacity-30"
-                onClick={() => handleFilterClick("Vegetarian")}
-                data-testid="filter-vegetarian"
-              >
-                <Leaf className="w-4 h-4 mr-2" />
-                Vegetarian
-              </Button>
-              <Button
-                variant="ghost"
-                className="filter-pill bg-white bg-opacity-20 text-white hover:bg-opacity-30"
-                onClick={() => handleFilterClick("Quick Meals")}
-                data-testid="filter-quick-meals"
-              >
-                <Clock className="w-4 h-4 mr-2" />
-                Quick Meals
-              </Button>
-              <Button
-                variant="ghost"
-                className="filter-pill bg-white bg-opacity-20 text-white hover:bg-opacity-30"
-                onClick={() => handleFilterClick("Budget")}
-                data-testid="filter-budget"
-              >
-                <DollarSign className="w-4 h-4 mr-2" />
-                Budget Friendly
-              </Button>
-              <Button
-                variant="ghost"
-                className="filter-pill bg-white bg-opacity-20 text-white hover:bg-opacity-30"
-                onClick={() => handleFilterClick("Trending")}
-                data-testid="filter-trending"
-              >
-                <TrendingUp className="w-4 h-4 mr-2" />
-                Trending
-              </Button>
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-white" data-testid="text-site-title">
+                Sathi Ko Recipe
+              </h1>
             </div>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/recipes">
-                <Button
-                  className="bg-accent text-white hover:bg-orange-600 transition-all duration-300 btn-scale px-8 py-3 text-lg"
-                  data-testid="button-explore-recipes"
-                >
-                  Explore Recipes
-                </Button>
-              </Link>
-              <Button
-                variant="ghost"
-                className="bg-white bg-opacity-20 text-white hover:bg-opacity-30 transition-all duration-300 btn-scale px-8 py-3 text-lg"
-                data-testid="button-watch-demo"
-              >
-                <Play className="w-5 h-5 mr-2" />
-                Watch Demo
-              </Button>
+            <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
+              <Phone className="w-4 h-4" />
+              <span className="text-sm font-medium" data-testid="text-contact-number">12 34 56</span>
             </div>
           </div>
         </div>
-      </div>
+      </header>
 
-      {/* Trending Recipes Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      {/* Hero Section */}
+      <div className="max-w-6xl mx-auto px-4 py-16">
         <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4" data-testid="heading-trending-recipes">
-            Trending Recipes
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4" data-testid="text-hero-title">
+            Simple Recipes
           </h2>
-          <p className="text-lg text-muted-foreground" data-testid="text-trending-description">
-            Popular dishes our students love
+          <p className="text-lg text-gray-600 dark:text-gray-300 mb-8" data-testid="text-hero-description">
+            Step-by-step recipes for every type of meal lifestyle
           </p>
+
+          {/* Search Bar */}
+          <form onSubmit={handleSearch} className="max-w-2xl mx-auto mb-8">
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none">
+                <Search className="h-5 w-5 text-white" />
+              </div>
+              <Input
+                type="text"
+                placeholder="Search by keyword..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-14 pr-16 py-4 text-white placeholder-gray-200 bg-green-800 border-green-800 rounded-full focus:ring-2 focus:ring-green-600 focus:border-transparent"
+                data-testid="input-search-recipes"
+              />
+              <div className="absolute inset-y-0 right-0 pr-2 flex items-center">
+                <Button
+                  type="submit"
+                  size="sm"
+                  className="bg-green-600 hover:bg-green-700 text-white rounded-full px-4"
+                  data-testid="button-search"
+                >
+                  <Search className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
+          </form>
+
+          {/* Filter Pills */}
+          <div className="flex flex-wrap justify-center gap-3 mb-16">
+            <Button
+              variant="outline"
+              className="rounded-full px-6 py-2 bg-orange-500 text-white border-orange-500 hover:bg-orange-600"
+              onClick={() => handleFilterClick("Vegetarian")}
+              data-testid="filter-vegetarian"
+            >
+              Vegetarian
+            </Button>
+            <Button
+              variant="outline"
+              className="rounded-full px-6 py-2 bg-orange-500 text-white border-orange-500 hover:bg-orange-600"
+              onClick={() => handleFilterClick("Quick Meals")}
+              data-testid="filter-quick-meals"
+            >
+              Quick Meals
+            </Button>
+            <Button
+              variant="outline"
+              className="rounded-full px-6 py-2 bg-orange-500 text-white border-orange-500 hover:bg-orange-600"
+              onClick={() => handleFilterClick("Non-Veg")}
+              data-testid="filter-vegan"
+            >
+              Vegan
+            </Button>
+            <Button
+              variant="outline"
+              className="rounded-full px-6 py-2 bg-orange-500 text-white border-orange-500 hover:bg-orange-600"
+              onClick={() => handleFilterClick("Budget")}
+              data-testid="filter-budget"
+            >
+              Budget Meals
+            </Button>
+          </div>
+        </div>
+
+        {/* All Recipes Section */}
+        <div className="mb-8">
+          <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-8" data-testid="heading-all-recipes">
+            All Recipes
+          </h3>
         </div>
 
         {isLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="bg-card rounded-xl shadow-lg overflow-hidden animate-pulse">
+              <div key={i} className="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden animate-pulse">
                 <div className="w-full h-48 bg-gray-300 dark:bg-gray-700"></div>
-                <div className="p-4 space-y-3">
+                <div className="p-6 space-y-3">
                   <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded"></div>
                   <div className="h-6 bg-gray-300 dark:bg-gray-700 rounded"></div>
                   <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded"></div>
-                  <div className="h-10 bg-gray-300 dark:bg-gray-700 rounded"></div>
                 </div>
               </div>
             ))}
           </div>
         ) : trendingRecipes && trendingRecipes.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" data-testid="grid-trending-recipes">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6" data-testid="grid-trending-recipes">
             {trendingRecipes.map((recipe) => (
               <RecipeCard key={recipe.id} recipe={recipe} />
             ))}
           </div>
         ) : (
           <div className="text-center py-12">
-            <p className="text-muted-foreground text-lg" data-testid="text-no-trending-recipes">
-              No trending recipes available at the moment.
+            <p className="text-gray-600 dark:text-gray-300 text-lg" data-testid="text-no-trending-recipes">
+              No recipes available at the moment.
             </p>
           </div>
         )}
-
-        <div className="text-center mt-12">
-          <Link href="/recipes">
-            <Button
-              variant="secondary"
-              className="px-8 py-3 rounded-xl font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors btn-scale"
-              data-testid="button-view-all-recipes"
-            >
-              View All Recipes
-            </Button>
-          </Link>
-        </div>
       </div>
     </div>
   );
