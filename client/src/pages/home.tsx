@@ -32,11 +32,39 @@ export default function Home() {
     <div className="min-h-screen">
       {/* Hero Section */}
       <div className="hero-gradient relative overflow-hidden">
+        {/* Floating Food Elements Background */}
+        <div className="absolute inset-0 food-background">
+          {/* Spice Particles */}
+          <div className="spice-particle spice-1">🌿</div>
+          <div className="spice-particle spice-2">🧄</div>
+          <div className="spice-particle spice-3">🌶️</div>
+          <div className="spice-particle spice-4">🧅</div>
+          <div className="spice-particle spice-5">🥬</div>
+          <div className="spice-particle spice-6">🥕</div>
+          <div className="spice-particle spice-7">🍅</div>
+          <div className="spice-particle spice-8">🫑</div>
+          
+          {/* Cooking Utensils */}
+          <div className="utensil-float utensil-1">🥄</div>
+          <div className="utensil-float utensil-2">🍴</div>
+          <div className="utensil-float utensil-3">🔪</div>
+          
+          {/* Rice and Grains */}
+          <div className="grain-float grain-1">🌾</div>
+          <div className="grain-float grain-2">🍚</div>
+          <div className="grain-float grain-3">🌿</div>
+          
+          {/* Traditional Elements */}
+          <div className="traditional-element element-1">🥣</div>
+          <div className="traditional-element element-2">🫖</div>
+          <div className="traditional-element element-3">🍵</div>
+        </div>
+        
         <div className="absolute inset-0">
-          <div className="absolute top-20 left-10 w-32 h-32 bg-white bg-opacity-10 rounded-full"></div>
-          <div className="absolute top-40 right-20 w-24 h-24 bg-white bg-opacity-5 rounded-full"></div>
-          <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-white bg-opacity-10 rounded-full"></div>
-          <div className="absolute bottom-40 right-10 w-28 h-28 bg-white bg-opacity-5 rounded-full"></div>
+          <div className="absolute top-20 left-10 w-32 h-32 bg-white bg-opacity-5 rounded-full"></div>
+          <div className="absolute top-40 right-20 w-24 h-24 bg-white bg-opacity-3 rounded-full"></div>
+          <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-white bg-opacity-5 rounded-full"></div>
+          <div className="absolute bottom-40 right-10 w-28 h-28 bg-white bg-opacity-3 rounded-full"></div>
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32 relative hero-content">
           <div className="text-center">
