@@ -27,16 +27,39 @@ function Router() {
 }
 
 function App() {
+  // Generate floating particles
+  const particles = Array.from({ length: 12 }, (_, i) => (
+    <div
+      key={i}
+      className="particle"
+      style={{
+        left: `${Math.random() * 100}%`,
+        animationDelay: `${Math.random() * 15}s`,
+      }}
+    />
+  ));
+
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider defaultTheme="light" storageKey="sathi-ko-recipe-theme">
         <TooltipProvider>
-          <div className="min-h-screen bg-background text-foreground">
-            <Navbar />
-            <main>
-              <Router />
-            </main>
-            <Footer />
+          <div className="min-h-screen bg-background text-foreground animated-background">
+            {/* Geometric Pattern Background */}
+            <div className="geometric-pattern" />
+            
+            {/* Floating Particles */}
+            <div className="floating-particles">
+              {particles}
+            </div>
+            
+            {/* Main Content */}
+            <div className="relative z-10">
+              <Navbar />
+              <main>
+                <Router />
+              </main>
+              <Footer />
+            </div>
           </div>
           <Toaster />
         </TooltipProvider>
