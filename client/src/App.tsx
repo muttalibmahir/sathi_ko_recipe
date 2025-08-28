@@ -28,7 +28,7 @@ function Router() {
 
 function App() {
   // Generate floating particles
-  const particles = Array.from({ length: 12 }, (_, i) => (
+  const particles = Array.from({ length: 20 }, (_, i) => (
     <div
       key={i}
       className="particle"
@@ -46,6 +46,13 @@ function App() {
           <div className="min-h-screen bg-background text-foreground animated-background">
             {/* Geometric Pattern Background */}
             <div className="geometric-pattern" />
+            
+            {/* Moving Orbs */}
+            <div className="moving-orbs">
+              <div className="orb orb-1"></div>
+              <div className="orb orb-2"></div>
+              <div className="orb orb-3"></div>
+            </div>
             
             {/* Floating Particles */}
             <div className="floating-particles">
