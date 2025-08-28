@@ -38,28 +38,28 @@ export default function Home() {
           <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-white bg-opacity-10 rounded-full"></div>
           <div className="absolute bottom-40 right-10 w-28 h-28 bg-white bg-opacity-5 rounded-full"></div>
         </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32 relative hero-content">
           <div className="text-center">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 hero-title">
               Simple Recipes for
-              <span className="text-accent block" data-testid="text-hero-subtitle">Students</span>
+              <span className="text-accent block hero-subtitle" data-testid="text-hero-subtitle">Students</span>
             </h1>
-            <p className="text-xl text-green-100 mb-8 max-w-2xl mx-auto" data-testid="text-hero-description">
+            <p className="text-xl text-green-100 mb-8 max-w-2xl mx-auto hero-description" data-testid="text-hero-description">
               Affordable, healthy, and easy-to-make meals perfect for international students and cooking beginners.
             </p>
 
             {/* Search Bar */}
-            <form onSubmit={handleSearch} className="max-w-xl mx-auto mb-8">
-              <div className="relative">
+            <form onSubmit={handleSearch} className="max-w-xl mx-auto mb-8 hero-search">
+              <div className="relative search-container">
                 <Input
                   type="text"
                   placeholder="Search recipes..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full px-4 py-3 pl-12 rounded-xl bg-white text-gray-900 shadow-lg focus:outline-none focus:ring-2 focus:ring-accent"
+                  className="w-full px-4 py-3 pl-12 rounded-xl bg-white text-gray-900 shadow-lg focus:outline-none focus:ring-2 focus:ring-accent search-input"
                   data-testid="input-search-recipes"
                 />
-                <Search className="absolute left-4 top-3.5 w-5 h-5 text-gray-400" />
+                <Search className="absolute left-4 top-3.5 w-5 h-5 text-gray-400 search-icon" />
                 <Button
                   type="submit"
                   className="absolute right-2 top-2 bg-accent text-white hover:bg-orange-600 transition-colors btn-scale"
@@ -71,10 +71,10 @@ export default function Home() {
             </form>
 
             {/* Quick Filters */}
-            <div className="flex flex-wrap justify-center gap-3 mb-8">
+            <div className="flex flex-wrap justify-center gap-3 mb-8 hero-filters">
               <Button
                 variant="ghost"
-                className="filter-pill bg-white bg-opacity-20 text-white hover:bg-opacity-30"
+                className="filter-pill filter-pill-1 bg-white bg-opacity-20 text-white hover:bg-opacity-30"
                 onClick={() => handleFilterClick("Vegetarian")}
                 data-testid="filter-vegetarian"
               >
@@ -83,7 +83,7 @@ export default function Home() {
               </Button>
               <Button
                 variant="ghost"
-                className="filter-pill bg-white bg-opacity-20 text-white hover:bg-opacity-30"
+                className="filter-pill filter-pill-2 bg-white bg-opacity-20 text-white hover:bg-opacity-30"
                 onClick={() => handleFilterClick("Quick Meals")}
                 data-testid="filter-quick-meals"
               >
@@ -92,7 +92,7 @@ export default function Home() {
               </Button>
               <Button
                 variant="ghost"
-                className="filter-pill bg-white bg-opacity-20 text-white hover:bg-opacity-30"
+                className="filter-pill filter-pill-3 bg-white bg-opacity-20 text-white hover:bg-opacity-30"
                 onClick={() => handleFilterClick("Budget")}
                 data-testid="filter-budget"
               >
@@ -101,7 +101,7 @@ export default function Home() {
               </Button>
               <Button
                 variant="ghost"
-                className="filter-pill bg-white bg-opacity-20 text-white hover:bg-opacity-30"
+                className="filter-pill filter-pill-4 bg-white bg-opacity-20 text-white hover:bg-opacity-30"
                 onClick={() => handleFilterClick("Trending")}
                 data-testid="filter-trending"
               >
@@ -111,7 +111,7 @@ export default function Home() {
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center hero-cta">
               <Link href="/recipes">
                 <Button
                   className="bg-accent text-white hover:bg-orange-600 transition-all duration-300 btn-scale px-8 py-3 text-lg"
