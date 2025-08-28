@@ -1240,6 +1240,145 @@ export class MemStorage implements IStorage {
         ],
         createdAt: new Date(),
         updatedAt: new Date()
+      },
+      // Add the new recipes from the provided images
+      {
+        id: "30",
+        title: "Dhania Sada",
+        description: "A vibrant green cilantro chutney packed with fresh herbs, garlic, and spices - perfect as a condiment.",
+        image: "@assets/ChatGPT Image Jul 24, 2025, 11_50_42 AM_1756384555813.png",
+        cookTime: 10,
+        servings: 4,
+        cost: 1.50,
+        difficulty: "Easy",
+        category: "Vegetarian",
+        rating: 4.5,
+        ratingCount: 42,
+        ingredients: [
+          "2 cups fresh cilantro leaves",
+          "4 cloves garlic",
+          "2 green chilies",
+          "1 inch piece ginger",
+          "2 tbsp roasted sesame seeds",
+          "1 tsp cumin powder",
+          "Salt to taste",
+          "2 tbsp mustard oil",
+          "1 tsp lemon juice"
+        ],
+        instructions: [
+          "Wash and roughly chop cilantro leaves, discarding thick stems.",
+          "In a blender, combine cilantro, garlic, green chilies, and ginger.",
+          "Add sesame seeds, cumin powder, and salt.",
+          "Blend with minimal water to make a smooth paste.",
+          "Add mustard oil and lemon juice, blend for 30 seconds.",
+          "Taste and adjust salt and spices as needed.",
+          "Store in refrigerator for up to a week."
+        ],
+        nutritionFacts: {
+          calories: 35,
+          protein: 2,
+          carbs: 4,
+          fat: 3
+        },
+        cookingTips: [
+          "Use fresh cilantro for best flavor",
+          "Mustard oil gives authentic taste but can substitute with olive oil",
+          "Add a pinch of sugar if too spicy"
+        ],
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        id: "31",
+        title: "Tilko Chhop", 
+        description: "A traditional sesame seed paste with spices, rich in flavor and nutrients, often served with rice or roti.",
+        image: "@assets/ChatGPT Image Jul 24, 2025, 11_53_18 AM_1756384555813.png",
+        cookTime: 15,
+        servings: 4,
+        cost: 2.00,
+        difficulty: "Medium",
+        category: "Vegetarian", 
+        rating: 4.3,
+        ratingCount: 28,
+        ingredients: [
+          "1 cup sesame seeds",
+          "3 cloves garlic",
+          "2 dried red chilies",
+          "1 tsp ginger, minced",
+          "1/2 tsp turmeric powder",
+          "1 tsp cumin seeds",
+          "Salt to taste",
+          "2 tbsp mustard oil",
+          "1 tbsp lemon juice"
+        ],
+        instructions: [
+          "Dry roast sesame seeds in a pan until golden and fragrant.",
+          "Let cool completely and grind to a fine paste.",
+          "Heat oil in a pan, add cumin seeds and dried chilies.",
+          "Add garlic and ginger, sauté until fragrant.",
+          "Add turmeric and the sesame paste.",
+          "Mix well, add salt and cook for 2-3 minutes.",
+          "Add lemon juice and serve warm or at room temperature."
+        ],
+        nutritionFacts: {
+          calories: 180,
+          protein: 6,
+          carbs: 8,
+          fat: 15
+        },
+        cookingTips: [
+          "Roast sesame seeds on medium heat to prevent burning",
+          "Can be stored for up to 2 weeks in refrigerator",
+          "Consistency should be like thick paste"
+        ],
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        id: "32",
+        title: "Badame Dhaniya",
+        description: "A delicious almond and cilantro chutney with aromatic spices, perfect as a side dish or condiment.",
+        image: "@assets/ChatGPT Image Jul 24, 2025, 08_35_26 AM_1756389866529.png",
+        cookTime: 12,
+        servings: 4,
+        cost: 3.00,
+        difficulty: "Easy",
+        category: "Vegetarian",
+        rating: 4.4,
+        ratingCount: 35,
+        ingredients: [
+          "1/2 cup almonds, soaked",
+          "1 cup fresh cilantro",
+          "3 cloves garlic",
+          "2 green chilies",
+          "1 inch ginger piece",
+          "1 tsp cumin seeds",
+          "Salt to taste",
+          "2 tbsp olive oil",
+          "1 tbsp lime juice"
+        ],
+        instructions: [
+          "Soak almonds in warm water for 30 minutes, then peel.",
+          "Wash cilantro leaves thoroughly and drain.",
+          "In a blender, combine almonds, cilantro, garlic, chilies, and ginger.",
+          "Add cumin seeds and salt.",
+          "Blend with minimal water to make a smooth paste.",
+          "Add olive oil and lime juice, blend until well combined.",
+          "Serve fresh or store refrigerated for up to 5 days."
+        ],
+        nutritionFacts: {
+          calories: 95,
+          protein: 4,
+          carbs: 6,
+          fat: 8
+        },
+        cookingTips: [
+          "Soaking almonds makes them easier to blend",
+          "Can add mint leaves for extra freshness",
+          "Adjust consistency with water as needed"
+        ],
+        createdAt: new Date(),
+        updatedAt: new Date()
       }
     ];
 
