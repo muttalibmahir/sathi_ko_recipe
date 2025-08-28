@@ -240,7 +240,7 @@ export default function RecipeDetail() {
                         checkedIngredients[index] ? "line-through opacity-60" : ""
                       }`}
                     >
-                      {ingredient}
+                      {String(ingredient)}
                     </label>
                   </li>
                 ))}
@@ -287,7 +287,7 @@ export default function RecipeDetail() {
                     {index + 1}
                   </div>
                   <div>
-                    <p className="text-lg text-foreground cooking-step">{instruction}</p>
+                    <p className="text-lg text-foreground cooking-step">{String(instruction)}</p>
                   </div>
                 </div>
               ))}
@@ -301,7 +301,7 @@ export default function RecipeDetail() {
                 </h3>
                 <ul className="space-y-2 text-muted-foreground" data-testid="list-cooking-tips">
                   {recipe.cookingTips.map((tip, index) => (
-                    <li key={index}>• {tip}</li>
+                    <li key={index}>• {String(tip)}</li>
                   ))}
                 </ul>
               </div>

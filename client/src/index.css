@@ -1,7 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'Rosehot';
+  src: url('/fonts/Rosehot.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   --background: hsl(0 0% 100%);
@@ -36,9 +43,10 @@
   --sidebar-accent-foreground: hsl(142 76% 36%);
   --sidebar-border: hsl(205.0000 25.0000% 90.5882%);
   --sidebar-ring: hsl(142 76% 36%);
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-serif: Georgia, serif;
-  --font-mono: Menlo, monospace;
+  --font-sans: 'Rosehot', system-ui, sans-serif;
+  --font-display: 'Rosehot', system-ui, sans-serif;
+  --font-serif: 'Rosehot', Georgia, serif;
+  --font-mono: 'Rosehot', monospace;
   --radius: 0.75rem;
   --yellow-star: hsl(42.0290 92.8251% 56.2745%);
 }
