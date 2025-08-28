@@ -27,11 +27,11 @@ export function Navbar() {
           <div className="flex items-center">
             <Link href="/" data-testid="link-home">
               <div className="flex items-center space-x-2 cursor-pointer">
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center">
                   <img 
                     src="/src/assets/logo.png" 
                     alt="Sathi Ko Recipe Logo" 
-                    className="w-8 h-8 object-contain"
+                    className="w-10 h-10 object-contain"
                   />
                 </div>
                 <div>
@@ -82,11 +82,11 @@ export function Navbar() {
             <div className="flex items-center justify-between mb-8">
               <Link href="/">
                 <div className="flex items-center space-x-2 cursor-pointer">
-                  <div className="w-6 h-6 rounded-md flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-md flex items-center justify-center">
                     <img 
                       src="/src/assets/logo.png" 
                       alt="Sathi Ko Recipe Logo" 
-                      className="w-6 h-6 object-contain"
+                      className="w-8 h-8 object-contain"
                     />
                   </div>
                   <span className="font-semibold">Sathi Ko Recipe</span>
