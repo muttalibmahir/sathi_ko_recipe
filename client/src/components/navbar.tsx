@@ -29,7 +29,7 @@ export function Navbar() {
               <div className="flex items-center space-x-2 cursor-pointer">
                 <div className="w-8 h-8 rounded-lg flex items-center justify-center">
                   <img 
-                    src="@assets/ChatGPT Image Aug 29, 2025, 12_39_04 AM_1756392128426.png" 
+                    src="/src/assets/logo.png" 
                     alt="Sathi Ko Recipe Logo" 
                     className="w-8 h-8 object-contain"
                   />
@@ -84,7 +84,7 @@ export function Navbar() {
                 <div className="flex items-center space-x-2 cursor-pointer">
                   <div className="w-6 h-6 rounded-md flex items-center justify-center">
                     <img 
-                      src="@assets/ChatGPT Image Aug 29, 2025, 12_39_04 AM_1756392128426.png" 
+                      src="/src/assets/logo.png" 
                       alt="Sathi Ko Recipe Logo" 
                       className="w-6 h-6 object-contain"
                     />
