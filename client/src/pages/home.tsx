@@ -30,26 +30,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Header */}
-      <header className="bg-white dark:bg-gray-800 shadow-sm">
-        <div className="max-w-6xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 flex items-center justify-center">
-                <Utensils className="w-6 h-6 text-orange-500" />
-              </div>
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white" data-testid="text-site-title">
-                Sathi Ko Recipe
-              </h1>
-            </div>
-            <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
-              <Phone className="w-4 h-4" />
-              <span className="text-sm font-medium" data-testid="text-contact-number">12 34 56</span>
-            </div>
-          </div>
-        </div>
-      </header>
-
       {/* Hero Section */}
       <div className="max-w-6xl mx-auto px-4 py-16">
         <div className="text-center mb-12">
