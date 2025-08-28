@@ -53,7 +53,7 @@ export default function RecipeDetail() {
   };
 
   const copyIngredients = async () => {
-    if (!recipe) return;
+    if (!recipe || !recipe.ingredients) return;
     
     const ingredientsList = recipe.ingredients.join('\n');
     try {
@@ -226,7 +226,7 @@ export default function RecipeDetail() {
                 </Button>
               </div>
               <ul className="space-y-3" data-testid="list-ingredients">
-                {recipe.ingredients.map((ingredient, index) => (
+                {(recipe.ingredients || []).map((ingredient, index) => (
                   <li key={index} className="flex items-center space-x-3">
                     <Checkbox
                       id={`ingredient-${index}`}
@@ -281,7 +281,7 @@ export default function RecipeDetail() {
               Instructions
             </h2>
             <div className="space-y-6" data-testid="list-instructions">
-              {recipe.instructions.map((instruction, index) => (
+              {(recipe.instructions || []).map((instruction, index) => (
                 <div key={index} className="flex space-x-4">
                   <div className="step-counter w-8 h-8 rounded-full text-white flex items-center justify-center font-semibold text-sm flex-shrink-0">
                     {index + 1}
