@@ -12,18 +12,34 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
   const renderStars = (rating: number) => {
     const stars = [];
     const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 >= 0.5;
     
     for (let i = 0; i < 5; i++) {
-      stars.push(
-        <Star
-          key={i}
-          className={`w-4 h-4 ${
-            i < fullStars
-              ? "text-yellow-star fill-current"
-              : "text-gray-300 dark:text-gray-600"
-          }`}
-        />
-      );
+      if (i < fullStars) {
+        // Full star
+        stars.push(
+          <Star
+            key={i}
+            className="w-4 h-4 text-yellow-400 fill-current"
+          />
+        );
+      } else if (i === fullStars && hasHalfStar) {
+        // Half star
+        stars.push(
+          <div key={i} className="relative w-4 h-4">
+            <Star className="w-4 h-4 text-gray-300 dark:text-gray-600" />
+            <Star className="w-4 h-4 text-yellow-400 fill-current absolute top-0 left-0" style={{clipPath: 'polygon(0 0, 50% 0, 50% 100%, 0 100%)'}} />
+          </div>
+        );
+      } else {
+        // Empty star
+        stars.push(
+          <Star
+            key={i}
+            className="w-4 h-4 text-gray-300 dark:text-gray-600"
+          />
+        );
+      }
     }
     
     return stars;
@@ -52,6 +68,7 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
           </Badge>
           <div className="flex items-center space-x-1" data-testid={`rating-${recipe.id}`}>
             {renderStars(recipe.rating)}
+            <span className="text-xs font-medium text-muted-foreground">{recipe.rating}</span>
           </div>
         </div>
         <h3 className="font-semibold text-lg mb-2" data-testid={`title-${recipe.id}`}>
