@@ -76,21 +76,21 @@ export function Navbar() {
               <DropdownMenuTrigger asChild data-testid="dropdown-recipes">
                 <Button 
                   variant="ghost" 
-                  className={`nav-link font-medium transition-colors duration-200 flex items-center space-x-1 ${
+                  className={`nav-link font-medium transition-all duration-200 flex items-center space-x-1 hover:scale-105 active:scale-95 ${
                     location.startsWith('/recipes')
                       ? "text-primary"
                       : "text-muted-foreground hover:text-primary"
                   }`}
                 >
                   <span>Recipes</span>
-                  <ChevronDown className="w-4 h-4" />
+                  <ChevronDown className="w-4 h-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-64">
-                {recipeCategories.map((category) => (
+              <DropdownMenuContent align="end" className="w-64 animate-in slide-in-from-top-2 duration-200">
+                {recipeCategories.map((category, index) => (
                   <DropdownMenuItem key={category.name} asChild>
                     <Link href={category.href} data-testid={`dropdown-${category.name.toLowerCase().replace(' ', '-')}`}>
-                      <div className="cursor-pointer">
+                      <div className="cursor-pointer hover:bg-muted/50 rounded-md p-2 transition-all duration-150 hover:scale-[1.02] active:scale-95" style={{animationDelay: `${index * 50}ms`}}>
                         <div className="font-medium">{category.name}</div>
                         <div className="text-sm text-muted-foreground">{category.description}</div>
                       </div>
