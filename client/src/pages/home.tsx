@@ -201,74 +201,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Student Success Stories */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4" data-testid="heading-testimonials">
-            Student Success Stories
-          </h2>
-          <p className="text-lg text-muted-foreground" data-testid="text-testimonials-description">
-            Real stories from international students who mastered Nepali cooking
-          </p>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="bg-card p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 border border-border" data-testid="testimonial-priya">
-            <div className="flex items-center mb-4">
-              <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
-                P
-              </div>
-              <div className="ml-3">
-                <h4 className="font-semibold text-foreground">Priya Sharma</h4>
-                <p className="text-sm text-muted-foreground">Engineering Student, UK</p>
-              </div>
-            </div>
-            <p className="text-foreground/80 italic mb-4">
-              "I never cooked before coming to university. These simple Nepali recipes helped me connect with my culture while learning to cook. Now I make Dal Bhat every week!"
-            </p>
-            <div className="flex text-yellow-400">
-              ★★★★★
-            </div>
-          </div>
-          
-          <div className="bg-card p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 border border-border" data-testid="testimonial-alex">
-            <div className="flex items-center mb-4">
-              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
-                A
-              </div>
-              <div className="ml-3">
-                <h4 className="font-semibold text-foreground">Alex Chen</h4>
-                <p className="text-sm text-muted-foreground">Business Student, Canada</p>
-              </div>
-            </div>
-            <p className="text-foreground/80 italic mb-4">
-              "As an international student on a tight budget, these affordable recipes saved me so much money. The Momo recipe is absolutely perfect!"
-            </p>
-            <div className="flex text-yellow-400">
-              ★★★★★
-            </div>
-          </div>
-          
-          <div className="bg-card p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 border border-border" data-testid="testimonial-sara">
-            <div className="flex items-center mb-4">
-              <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
-                S
-              </div>
-              <div className="ml-3">
-                <h4 className="font-semibold text-foreground">Sara Patel</h4>
-                <p className="text-sm text-muted-foreground">Medical Student, Australia</p>
-              </div>
-            </div>
-            <p className="text-foreground/80 italic mb-4">
-              "The step-by-step instructions are so clear! I went from burning toast to making authentic Chhoyela. My Nepali friends were amazed!"
-            </p>
-            <div className="flex text-yellow-400">
-              ★★★★★
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Trending Recipes Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center mb-12">
@@ -324,6 +256,76 @@ export default function Home() {
               <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-transparent via-white/5 to-transparent group-hover:animate-none"></div>
             </Button>
           </Link>
+        </div>
+      </div>
+
+      {/* Student Success Stories */}
+      <div className="bg-gradient-to-r from-orange-50 to-yellow-50 dark:from-orange-950/20 dark:to-yellow-950/20 py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4" data-testid="heading-testimonials">
+              Student Success Stories
+            </h2>
+            <p className="text-lg text-muted-foreground" data-testid="text-testimonials-description">
+              Real stories from international students who mastered Nepali cooking
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-card p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 border border-border" data-testid="testimonial-priya">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                  P
+                </div>
+                <div className="ml-3">
+                  <h4 className="font-semibold text-foreground">Priya Sharma</h4>
+                  <p className="text-sm text-muted-foreground">Engineering Student, UK</p>
+                </div>
+              </div>
+              <p className="text-foreground/80 italic mb-4">
+                "I never cooked before coming to university. These simple Nepali recipes helped me connect with my culture while learning to cook. Now I make Dal Bhat every week!"
+              </p>
+              <div className="flex text-yellow-400">
+                ★★★★★
+              </div>
+            </div>
+            
+            <div className="bg-card p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 border border-border" data-testid="testimonial-alex">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                  A
+                </div>
+                <div className="ml-3">
+                  <h4 className="font-semibold text-foreground">Alex Chen</h4>
+                  <p className="text-sm text-muted-foreground">Business Student, Canada</p>
+                </div>
+              </div>
+              <p className="text-foreground/80 italic mb-4">
+                "As an international student on a tight budget, these affordable recipes saved me so much money. The Momo recipe is absolutely perfect!"
+              </p>
+              <div className="flex text-yellow-400">
+                ★★★★★
+              </div>
+            </div>
+            
+            <div className="bg-card p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 border border-border" data-testid="testimonial-sara">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                  S
+                </div>
+                <div className="ml-3">
+                  <h4 className="font-semibold text-foreground">Sara Patel</h4>
+                  <p className="text-sm text-muted-foreground">Medical Student, Australia</p>
+                </div>
+              </div>
+              <p className="text-foreground/80 italic mb-4">
+                "The step-by-step instructions are so clear! I went from burning toast to making authentic Chhoyela. My Nepali friends were amazed!"
+              </p>
+              <div className="flex text-yellow-400">
+                ★★★★★
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
