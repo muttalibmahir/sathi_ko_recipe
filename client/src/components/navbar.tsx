@@ -2,7 +2,13 @@ import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-provider";
-import { Menu, X } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Menu, X, ChevronDown } from "lucide-react";
 
 export function Navbar() {
   const [location] = useLocation();
@@ -10,9 +16,16 @@ export function Navbar() {
 
   const navigation = [
     { name: "Home", href: "/" },
-    { name: "Recipes", href: "/recipes" },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
+  ];
+
+  const recipeCategories = [
+    { name: "All Recipes", href: "/recipes", description: "View all authentic Nepali recipes" },
+    { name: "Vegetarian", href: "/recipes?category=Vegetarian", description: "Plant-based traditional dishes" },
+    { name: "Non-Veg", href: "/recipes?category=Non-Veg", description: "Meat and poultry specialties" },
+    { name: "Quick Meals", href: "/recipes?quick=true", description: "Ready in 30 minutes or less" },
+    { name: "Budget", href: "/recipes?budget=true", description: "Affordable student-friendly meals" },
   ];
 
   const isActive = (href: string) => {
@@ -57,6 +70,35 @@ export function Navbar() {
                 </span>
               </Link>
             ))}
+            
+            {/* Recipes Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild data-testid="dropdown-recipes">
+                <Button 
+                  variant="ghost" 
+                  className={`nav-link font-medium transition-colors duration-200 flex items-center space-x-1 ${
+                    location.startsWith('/recipes')
+                      ? "text-primary"
+                      : "text-muted-foreground hover:text-primary"
+                  }`}
+                >
+                  <span>Recipes</span>
+                  <ChevronDown className="w-4 h-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-64">
+                {recipeCategories.map((category) => (
+                  <DropdownMenuItem key={category.name} asChild>
+                    <Link href={category.href} data-testid={`dropdown-${category.name.toLowerCase().replace(' ', '-')}`}>
+                      <div className="cursor-pointer">
+                        <div className="font-medium">{category.name}</div>
+                        <div className="text-sm text-muted-foreground">{category.description}</div>
+                      </div>
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           {/* Theme Toggle & Mobile Menu */}
@@ -113,6 +155,22 @@ export function Navbar() {
                   </div>
                 </Link>
               ))}
+              
+              {/* Mobile Recipe Categories */}
+              <div className="border-t border-border pt-4 mt-4">
+                <div className="font-semibold text-sm text-muted-foreground mb-3 px-4">Recipe Categories</div>
+                {recipeCategories.map((category) => (
+                  <Link key={category.name} href={category.href} data-testid={`mobile-category-${category.name.toLowerCase().replace(' ', '-')}`}>
+                    <div
+                      className="block py-2 px-4 rounded-lg hover:bg-muted transition-colors cursor-pointer"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <div className="font-medium">{category.name}</div>
+                      <div className="text-xs text-muted-foreground">{category.description}</div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
             </nav>
           </div>
         </div>

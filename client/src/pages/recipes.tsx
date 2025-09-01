@@ -16,10 +16,17 @@ export default function Recipes() {
     const urlParams = new URLSearchParams(window.location.search);
     const category = urlParams.get("category");
     const search = urlParams.get("search");
+    const quick = urlParams.get("quick");
+    const budget = urlParams.get("budget");
     
     if (category) {
       setActiveFilter(category);
+    } else if (quick === "true") {
+      setActiveFilter("Quick Meals");
+    } else if (budget === "true") {
+      setActiveFilter("Budget");
     }
+    
     if (search) {
       setSearchQuery(search);
       setLocalSearch(search);
