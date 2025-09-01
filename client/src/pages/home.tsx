@@ -204,10 +204,16 @@ export default function Home() {
           <Link href="/recipes">
             <Button
               variant="secondary"
-              className="px-8 py-3 rounded-xl font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors btn-scale"
+              className="group relative px-12 py-4 rounded-2xl font-bold text-lg bg-gradient-to-r from-green-500 via-green-600 to-emerald-600 hover:from-green-600 hover:via-green-700 hover:to-emerald-700 text-white shadow-xl hover:shadow-2xl transform transition-all duration-300 hover:scale-110 active:scale-95 hover:-translate-y-2 overflow-hidden border-2 border-green-400/30 hover:border-green-300/50"
               data-testid="button-view-all-recipes"
             >
-              View All Recipes
+              <span className="absolute inset-0 bg-gradient-to-r from-white/20 via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+              <span className="absolute inset-0 bg-gradient-to-r from-green-300/30 to-green-500/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl -z-10"></span>
+              <span className="relative z-10 flex items-center space-x-3">
+                <span className="tracking-wide">View All Recipes</span>
+                <span className="transform transition-all duration-300 group-hover:translate-x-2 group-hover:scale-110 text-xl">→</span>
+              </span>
+              <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-transparent via-white/5 to-transparent group-hover:animate-none"></div>
             </Button>
           </Link>
         </div>
