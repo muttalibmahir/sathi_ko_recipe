@@ -16,10 +16,10 @@ export function Footer() {
               </div>
               <div>
                 <h3 className="font-bold text-lg">Sathi Ko Recipe</h3>
-                <p className="text-xs text-muted-foreground">Simple Recipe</p>
+                <p className="text-xs text-foreground/70">Simple Recipe</p>
               </div>
             </div>
-            <p className="text-muted-foreground text-sm mb-4">
+            <p className="text-foreground/80 text-sm mb-4">
               Empowering international students and cooking beginners with simple, affordable, and delicious recipes from around the world.
             </p>
             <div className="flex space-x-3">
@@ -56,35 +56,35 @@ export function Footer() {
             <ul className="space-y-2 text-sm">
               <li>
                 <Link href="/recipes" data-testid="footer-link-recipes">
-                  <span className="text-muted-foreground hover:text-primary transition-colors cursor-pointer">
+                  <span className="text-foreground/80 hover:text-primary transition-colors cursor-pointer">
                     All Recipes
                   </span>
                 </Link>
               </li>
               <li>
                 <Link href="/recipes?category=Quick Meals" data-testid="footer-link-quick-meals">
-                  <span className="text-muted-foreground hover:text-primary transition-colors cursor-pointer">
+                  <span className="text-foreground/80 hover:text-primary transition-colors cursor-pointer">
                     Quick Meals
                   </span>
                 </Link>
               </li>
               <li>
                 <Link href="/recipes?category=Budget" data-testid="footer-link-budget">
-                  <span className="text-muted-foreground hover:text-primary transition-colors cursor-pointer">
+                  <span className="text-foreground/80 hover:text-primary transition-colors cursor-pointer">
                     Budget Recipes
                   </span>
                 </Link>
               </li>
               <li>
                 <Link href="/recipes?category=Vegetarian" data-testid="footer-link-vegetarian">
-                  <span className="text-muted-foreground hover:text-primary transition-colors cursor-pointer">
+                  <span className="text-foreground/80 hover:text-primary transition-colors cursor-pointer">
                     Vegetarian
                   </span>
                 </Link>
               </li>
               <li>
                 <Link href="/recipes?category=Trending" data-testid="footer-link-trending">
-                  <span className="text-muted-foreground hover:text-primary transition-colors cursor-pointer">
+                  <span className="text-foreground/80 hover:text-primary transition-colors cursor-pointer">
                     Trending
                   </span>
                 </Link>
@@ -127,7 +127,7 @@ export function Footer() {
           {/* Newsletter */}
           <div>
             <h4 className="font-semibold text-foreground mb-4">Stay Updated</h4>
-            <p className="text-muted-foreground text-sm mb-4">
+            <p className="text-foreground/80 text-sm mb-4">
               Get weekly recipe inspiration and cooking tips delivered to your inbox.
             </p>
             <div className="flex">
@@ -148,10 +148,10 @@ export function Footer() {
         </div>
 
         <div className="border-t border-border mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center">
-          <p className="text-muted-foreground text-sm">
+          <p className="text-foreground/80 text-sm">
             © 2024 Sathi Ko Recipe. Made with <span className="text-red-500">❤</span> for students worldwide.
           </p>
-          <p className="text-muted-foreground text-sm mt-2 sm:mt-0">
+          <p className="text-foreground/80 text-sm mt-2 sm:mt-0">
             Made with <span className="text-red-500">❤</span> by students, for students.
           </p>
         </div>
