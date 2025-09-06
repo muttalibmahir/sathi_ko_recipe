@@ -1,0 +1,1178 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sathi Ko Recipe - Your hub for delicious food!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                borderRadius: {
+                    lg: "var(--radius)",
+                    md: "calc(var(--radius) - 2px)", 
+                    sm: "calc(var(--radius) - 4px)",
+                },
+                colors: {
+                    background: "var(--background)",
+                    foreground: "var(--foreground)",
+                    card: {
+                        DEFAULT: "var(--card)",
+                        foreground: "var(--card-foreground)",
+                    },
+                    primary: {
+                        DEFAULT: "var(--primary)",
+                        foreground: "var(--primary-foreground)",
+                    },
+                    secondary: {
+                        DEFAULT: "var(--secondary)", 
+                        foreground: "var(--secondary-foreground)",
+                    },
+                    muted: {
+                        DEFAULT: "var(--muted)",
+                        foreground: "var(--muted-foreground)",
+                    },
+                    accent: {
+                        DEFAULT: "var(--accent)",
+                        foreground: "var(--accent-foreground)",
+                    },
+                    border: "var(--border)",
+                    ring: "var(--ring)",
+                },
+                fontFamily: {
+                    sans: ["Inter", "system-ui", "sans-serif"],
+                }
+            },
+        }
+    };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --background: hsl(0 0% 100%);
+            --foreground: hsl(222.2 84% 4.9%);
+            --card: hsl(0 0% 100%);
+            --card-foreground: hsl(222.2 84% 4.9%);
+            --primary: hsl(142 76% 36%);
+            --primary-foreground: hsl(210 40% 98%);
+            --secondary: hsl(210 40% 96%);
+            --secondary-foreground: hsl(222.2 47.4% 11.2%);
+            --muted: hsl(210 40% 96%);
+            --muted-foreground: hsl(215.4 16.3% 46.9%);
+            --accent: hsl(43 96% 56%);
+            --accent-foreground: hsl(222.2 84% 4.9%);
+            --border: hsl(214.3 31.8% 91.4%);
+            --ring: hsl(142 76% 36%);
+            --radius: 0.75rem;
+        }
+        
+        .recipe-card {
+            transition: all 0.3s ease;
+        }
+        
+        .recipe-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .btn-hover {
+            transition: all 0.2s ease;
+        }
+        
+        .btn-hover:hover {
+            transform: scale(1.05);
+        }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+        }
+        
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        .filter-btn.active {
+            background: var(--primary);
+            color: var(--primary-foreground);
+        }
+    </style>
+</head>
+<body class="bg-background text-foreground font-sans">
+    <!-- @COMPONENT: Navbar -->
+    <nav class="bg-card shadow-sm border-b border-border sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-utensils text-primary text-2xl"></i>
+                    <span class="text-xl font-bold text-primary">Sathi Ko Recipe</span>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <button onclick="showPage('home')" class="nav-link text-foreground hover:text-primary transition-colors font-medium">Home</button>
+                    <button onclick="showPage('recipes')" class="nav-link text-foreground hover:text-primary transition-colors font-medium">Recipes</button>
+                    <button onclick="showPage('about')" class="nav-link text-foreground hover:text-primary transition-colors font-medium">About Us</button>
+                    <button onclick="showPage('contact')" class="nav-link text-foreground hover:text-primary transition-colors font-medium">Contact</button>
+                </div>
+                
+                <div class="md:hidden">
+                    <button onclick="toggleMobileMenu()" class="text-foreground hover:text-primary">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-card border-t border-border">
+            <div class="px-4 py-2 space-y-2">
+                <button onclick="showPage('home')" class="block w-full text-left px-3 py-2 text-foreground hover:text-primary transition-colors">Home</button>
+                <button onclick="showPage('recipes')" class="block w-full text-left px-3 py-2 text-foreground hover:text-primary transition-colors">Recipes</button>
+                <button onclick="showPage('about')" class="block w-full text-left px-3 py-2 text-foreground hover:text-primary transition-colors">About Us</button>
+                <button onclick="showPage('contact')" class="block w-full text-left px-3 py-2 text-foreground hover:text-primary transition-colors">Contact</button>
+            </div>
+        </div>
+    </nav>
+    <!-- @END_COMPONENT: Navbar -->
+
+    <!-- @COMPONENT: HomePage -->
+    <div id="home" class="page active">
+        <!-- Hero Section -->
+        <section class="hero-bg text-primary-foreground py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4">Welcome to Sathi Ko Recipe</h1>
+                <p class="text-xl md:text-2xl mb-8 opacity-90">"Your hub for delicious food!"</p>
+                
+                <!-- Search Bar -->
+                <div class="max-w-2xl mx-auto mb-8">
+                    <div class="relative">
+                        <input type="text" placeholder="Search recipes..." class="w-full px-6 py-4 rounded-full text-foreground bg-white shadow-lg focus:outline-none focus:ring-4 focus:ring-primary/20 text-lg">
+                        <button class="absolute right-2 top-2 bg-primary text-primary-foreground px-6 py-2 rounded-full hover:bg-primary/90 transition-colors btn-hover">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Quick Filters -->
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button class="bg-white/20 backdrop-blur-sm px-6 py-2 rounded-full hover:bg-white/30 transition-colors btn-hover">Quick Meals</button>
+                    <button class="bg-white/20 backdrop-blur-sm px-6 py-2 rounded-full hover:bg-white/30 transition-colors btn-hover">Vegetarian</button>
+                    <button class="bg-white/20 backdrop-blur-sm px-6 py-2 rounded-full hover:bg-white/30 transition-colors btn-hover">Budget Friendly</button>
+                    <button class="bg-white/20 backdrop-blur-sm px-6 py-2 rounded-full hover:bg-white/30 transition-colors btn-hover">Traditional</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trending Recipes Section -->
+        <section class="py-16 bg-muted/30">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Top Rated Recipes</h2>
+                    <p class="text-lg text-muted-foreground max-w-2xl mx-auto">Out of all the many recipes on Sathi Ko Recipe, these are our shining stars - the recipes we come back to again and again.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Dal Bhat Card -->
+                    <div class="recipe-card bg-card rounded-lg shadow-lg overflow-hidden">
+                        <!-- Traditional Nepali dal bhat served on a metal plate with various accompaniments -->
+                        <img src="https://images.unsplash.com/photo-1585032226651-759b368d7246?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" alt="Dal Bhat - Traditional Nepali meal" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">Dal Bhat</h3>
+                            <p class="text-muted-foreground mb-4">Classic Nepali staple with lentil soup and rice</p>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-sm text-accent font-medium">⭐ 4.9 (748 reviews)</span>
+                                <span class="text-sm text-muted-foreground">30 min</span>
+                            </div>
+                            <button onclick="showRecipeDetail('dal-bhat')" class="w-full bg-primary text-primary-foreground py-2 rounded-lg hover:bg-primary/90 transition-colors btn-hover">View Recipe</button>
+                        </div>
+                    </div>
+
+                    <!-- Momo Card -->
+                    <div class="recipe-card bg-card rounded-lg shadow-lg overflow-hidden">
+                        <!-- Steamed Nepali momos (dumplings) arranged on a wooden plate with spicy dipping sauce -->
+                        <img src="https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" alt="Momo - Nepali dumplings" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">Momo</h3>
+                            <p class="text-muted-foreground mb-4">Steamed dumplings with meat or vegetables</p>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-sm text-accent font-medium">⭐ 4.5 (350 reviews)</span>
+                                <span class="text-sm text-muted-foreground">45 min</span>
+                            </div>
+                            <button onclick="showRecipeDetail('momo')" class="w-full bg-primary text-primary-foreground py-2 rounded-lg hover:bg-primary/90 transition-colors btn-hover">View Recipe</button>
+                        </div>
+                    </div>
+
+                    <!-- Taruwa Card -->
+                    <div class="recipe-card bg-card rounded-lg shadow-lg overflow-hidden">
+                        <!-- Deep-fried seasonal vegetables in chickpea batter served as Nepali taruwa -->
+                        <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" alt="Taruwa - Fried vegetables" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">Taruwa</h3>
+                            <p class="text-muted-foreground mb-4">Seasonal vegetables deep-fried in batter</p>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-sm text-accent font-medium">⭐ 3.4 (100 reviews)</span>
+                                <span class="text-sm text-muted-foreground">20 min</span>
+                            </div>
+                            <button onclick="showRecipeDetail('taruwa')" class="w-full bg-primary text-primary-foreground py-2 rounded-lg hover:bg-primary/90 transition-colors btn-hover">View Recipe</button>
+                        </div>
+                    </div>
+
+                    <!-- Sathi ko Mixed Thali Card -->
+                    <div class="recipe-card bg-card rounded-lg shadow-lg overflow-hidden">
+                        <!-- Traditional Nepali thali with variety of dishes including rice, dal, vegetables, and meat -->
+                        <img src="https://pixabay.com/get/g71493e5722dd277b5897f755f15e659637786ac04888de92ff7d4a5fad1590d7ab3d4f70b7342f7c643389a7c0698dee5fb65ecae2ff90be5657a40bd9bd5c41_1280.jpg" alt="Sathi ko Mixed Thali" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">Sathi ko Mixed Thali</h3>
+                            <p class="text-muted-foreground mb-4">Complete Nepali meal with multiple dishes</p>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-sm text-accent font-medium">⭐ 4.9 (748 reviews)</span>
+                                <span class="text-sm text-muted-foreground">60 min</span>
+                            </div>
+                            <button onclick="showRecipeDetail('mixed-thali')" class="w-full bg-primary text-primary-foreground py-2 rounded-lg hover:bg-primary/90 transition-colors btn-hover">View Recipe</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-12">
+                    <button onclick="showPage('recipes')" class="bg-primary text-primary-foreground px-8 py-3 rounded-lg hover:bg-primary/90 transition-colors text-lg font-medium btn-hover">
+                        VIEW ALL RECIPES
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold mb-4">Why Choose Sathi Ko Recipe?</h2>
+                    <p class="text-lg text-muted-foreground">Perfect recipes for international students and beginners</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="text-center p-6">
+                        <div class="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-clock text-primary text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Quick & Easy</h3>
+                        <p class="text-muted-foreground">Simple recipes perfect for busy students with limited time</p>
+                    </div>
+                    
+                    <div class="text-center p-6">
+                        <div class="bg-accent/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-dollar-sign text-accent text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Budget Friendly</h3>
+                        <p class="text-muted-foreground">Affordable ingredients and cost-effective meal planning</p>
+                    </div>
+                    
+                    <div class="text-center p-6">
+                        <div class="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-heart text-primary text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Authentic Taste</h3>
+                        <p class="text-muted-foreground">Traditional Nepali recipes with step-by-step guidance</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- @END_COMPONENT: HomePage -->
+
+    <!-- @COMPONENT: RecipesPage -->
+    <div id="recipes" class="page">
+        <div class="bg-muted/30 py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-8">
+                    <h1 class="text-4xl font-bold mb-4">Our All Recipes</h1>
+                    <p class="text-lg text-muted-foreground max-w-3xl mx-auto">We've organized these recipes every way we could think of so you don't have to! Dietary restrictions, weeknight dinners, meal prep recipes, some of our most tried-and-true… no matter how you browse, we're sure you'll find just what you were looking for.</p>
+                </div>
+                
+                <!-- Search Bar -->
+                <div class="max-w-2xl mx-auto mb-8">
+                    <div class="relative">
+                        <input type="text" id="recipe-search" placeholder="Search by keyword..." class="w-full px-6 py-3 rounded-lg border border-border bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-primary">
+                        <button class="absolute right-2 top-2 bg-primary text-primary-foreground px-4 py-1 rounded-md hover:bg-primary/90 transition-colors">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Filter Buttons -->
+                <div class="flex flex-wrap justify-center gap-3 mb-12">
+                    <button onclick="filterRecipes('all')" class="filter-btn active px-6 py-2 rounded-full border border-border bg-card hover:bg-muted transition-colors">All</button>
+                    <button onclick="filterRecipes('soup')" class="filter-btn px-6 py-2 rounded-full border border-border bg-card hover:bg-muted transition-colors">Soup</button>
+                    <button onclick="filterRecipes('appetizer')" class="filter-btn px-6 py-2 rounded-full border border-border bg-card hover:bg-muted transition-colors">Appetizer</button>
+                    <button onclick="filterRecipes('main')" class="filter-btn px-6 py-2 rounded-full border border-border bg-card hover:bg-muted transition-colors">Main Dish</button>
+                    <button onclick="filterRecipes('dessert')" class="filter-btn px-6 py-2 rounded-full border border-border bg-card hover:bg-muted transition-colors">Dessert</button>
+                    <button onclick="filterRecipes('sauce')" class="filter-btn px-6 py-2 rounded-full border border-border bg-card hover:bg-muted transition-colors">Sauce</button>
+                    <button onclick="filterRecipes('other')" class="filter-btn px-6 py-2 rounded-full border border-border bg-card hover:bg-muted transition-colors">Other</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Recipes Grid -->
+        <section class="py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div id="recipes-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Recipe cards will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- @END_COMPONENT: RecipesPage -->
+
+    <!-- @COMPONENT: RecipeDetailPage -->
+    <div id="recipe-detail" class="page">
+        <div id="recipe-detail-content">
+            <!-- Recipe detail content will be populated by JavaScript -->
+        </div>
+    </div>
+    <!-- @END_COMPONENT: RecipeDetailPage -->
+
+    <!-- @COMPONENT: AboutPage -->
+    <div id="about" class="page">
+        <section class="py-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h1 class="text-4xl font-bold mb-4">About Our Team</h1>
+                </div>
+                
+                <div class="bg-card rounded-lg shadow-lg p-8 mb-12">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <!-- Team photo showing diverse group of people cooking together in a modern kitchen -->
+                            <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" alt="Our cooking team working together" class="rounded-lg shadow-md w-full">
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-semibold mb-4">Our Mission</h2>
+                            <p class="text-muted-foreground mb-6 leading-relaxed">
+                                At Sathi ko Recipe, our mission is to bring people together through the love of cooking. We share easy-to-follow, delicious, and diverse recipes from around the world to inspire home cooks of all skill levels. Whether you're looking for quick meals, traditional favorites, or something new to try, we aim to make your cooking experience joyful, simple, and flavorful. Let's make every meal memorable!
+                            </p>
+                            
+                            <div class="bg-accent/10 p-6 rounded-lg">
+                                <h3 class="text-lg font-semibold mb-3 text-accent-foreground">Join Us:</h3>
+                                <p class="text-muted-foreground">
+                                    Try our recipes, share your creations, and follow us on social media for daily inspiration. Together, we're building a community of food lovers who believe that great food brings people together.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Values Section -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="text-center">
+                        <div class="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-users text-primary text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Community First</h3>
+                        <p class="text-muted-foreground">Building connections through shared meals and cultural exchange</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="bg-accent/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-leaf text-accent text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Authentic Recipes</h3>
+                        <p class="text-muted-foreground">Preserving traditional flavors with modern cooking techniques</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-graduation-cap text-primary text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Student Focused</h3>
+                        <p class="text-muted-foreground">Designed specifically for international students and beginners</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- @END_COMPONENT: AboutPage -->
+
+    <!-- @COMPONENT: ContactPage -->
+    <div id="contact" class="page">
+        <section class="py-16">
+            <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h1 class="text-4xl font-bold mb-4">Contact Us</h1>
+                    <p class="text-lg text-muted-foreground">We'd love to hear from you! Send us a message and we'll get back to you soon.</p>
+                </div>
+                
+                <div class="bg-card rounded-lg shadow-lg p-8">
+                    <form id="contact-form" class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium mb-2">Name *</label>
+                            <input type="text" id="name" name="name" required class="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-background">
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-sm font-medium mb-2">Email *</label>
+                            <input type="email" id="email" name="email" required class="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-background">
+                        </div>
+                        
+                        <div>
+                            <label for="reason" class="block text-sm font-medium mb-2">Reason for Contact</label>
+                            <select id="reason" name="reason" class="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-background">
+                                <option value="">Select a reason</option>
+                                <option value="recipe-suggestion">Recipe Suggestion</option>
+                                <option value="feedback">Feedback</option>
+                                <option value="collaboration">Collaboration</option>
+                                <option value="technical-issue">Technical Issue</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-sm font-medium mb-2">Message *</label>
+                            <textarea id="message" name="message" rows="6" required class="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-background resize-none"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-primary text-primary-foreground py-3 rounded-lg hover:bg-primary/90 transition-colors font-medium btn-hover">
+                            Send Message
+                        </button>
+                    </form>
+                    
+                    <div id="success-message" class="hidden mt-6 p-4 bg-primary/10 border border-primary/20 rounded-lg">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-primary mr-3"></i>
+                            <span class="text-primary font-medium">Thank you! Your message has been sent successfully.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- @END_COMPONENT: ContactPage -->
+
+    <!-- @COMPONENT: Footer -->
+    <footer class="bg-primary text-primary-foreground py-12 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-8">
+                <div class="flex items-center justify-center space-x-2 mb-4">
+                    <i class="fas fa-utensils text-2xl"></i>
+                    <span class="text-2xl font-bold">Sathi Ko Recipe</span>
+                </div>
+                <p class="text-lg opacity-90">"Your hub for delicious food!"</p>
+            </div>
+            
+            <div class="flex justify-center space-x-8 mb-8">
+                <button onclick="showPage('home')" class="hover:text-accent transition-colors">Home</button>
+                <button onclick="showPage('recipes')" class="hover:text-accent transition-colors">Recipes</button>
+                <button onclick="showPage('about')" class="hover:text-accent transition-colors">About Us</button>
+                <button onclick="showPage('contact')" class="hover:text-accent transition-colors">Contact</button>
+            </div>
+            
+            <div class="flex justify-center space-x-6 mb-8">
+                <a href="#" class="text-2xl hover:text-accent transition-colors btn-hover">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="#" class="text-2xl hover:text-accent transition-colors btn-hover">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" class="text-2xl hover:text-accent transition-colors btn-hover">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </div>
+            
+            <div class="text-center text-sm opacity-75">
+                <p>&copy; 2024 Sathi Ko Recipe. All rights reserved. | Flexible delivery options available.</p>
+            </div>
+        </div>
+    </footer>
+    <!-- @END_COMPONENT: Footer -->
+
+    <script>
+        (() => {
+            // Recipe data
+            const recipes = [
+                // Soup
+                {
+                    id: 'quanti',
+                    title: 'Quanti',
+                    category: 'soup',
+                    description: 'A hearty soup made from a mix of sprouted beans, enjoyed especially during Janai Purnima',
+                    time: '45 min',
+                    difficulty: 'Medium',
+                    servings: 4,
+                    cost: '$3.50',
+                    rating: 4.2,
+                    reviews: 89,
+                    image: 'https://images.unsplash.com/photo-1547592180-85f173990554?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600',
+                    ingredients: [
+                        { item: 'Mixed sprouted beans', qty: '2 cups' },
+                        { item: 'Onion', qty: '1 medium' },
+                        { item: 'Garlic', qty: '4 cloves' },
+                        { item: 'Ginger', qty: '1 inch' },
+                        { item: 'Turmeric powder', qty: '1 tsp' },
+                        { item: 'Salt', qty: 'to taste' }
+                    ],
+                    steps: [
+                        'Soak mixed beans overnight and sprout them for 2-3 days',
+                        'Heat oil in a pressure cooker and sauté chopped onions until golden',
+                        'Add ginger-garlic paste and cook for 2 minutes',
+                        'Add sprouted beans, turmeric, and salt with 3 cups water',
+                        'Pressure cook for 15 minutes until beans are tender',
+                        'Garnish with fresh coriander and serve hot'
+                    ],
+                    nutrition: { kcal: 180, protein: '12g', carbs: '28g', fat: '3g' },
+                    tips: 'Sprouting beans increases their nutritional value and makes them easier to digest.'
+                },
+                {
+                    id: 'sishne-jhol',
+                    title: 'Sishne Jhol',
+                    category: 'soup', 
+                    description: 'Nutritious soup made from stinging nettle leaves, rich in minerals',
+                    time: '30 min',
+                    difficulty: 'Easy',
+                    servings: 4,
+                    cost: '$2.00',
+                    rating: 4.0,
+                    reviews: 45,
+                    image: 'https://images.unsplash.com/photo-1570197788417-0e82375c9371?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600'
+                },
+                {
+                    id: 'phando',
+                    title: 'Phando',
+                    category: 'soup',
+                    description: 'A tangy soup using fermented leafy greens, a traditional village delicacy',
+                    time: '25 min',
+                    difficulty: 'Medium',
+                    servings: 4,
+                    cost: '$2.50',
+                    rating: 3.8,
+                    reviews: 32,
+                    image: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600'
+                },
+
+                // Appetizer
+                {
+                    id: 'chukar-khanda',
+                    title: 'Chukar-Khanda',
+                    category: 'appetizer',
+                    description: 'A sour and spicy pickle made from hog plums and local spices',
+                    time: '20 min',
+                    difficulty: 'Easy',
+                    servings: 6,
+                    cost: '$1.50',
+                    rating: 4.3,
+                    reviews: 78,
+                    image: 'https://images.unsplash.com/photo-1599599810769-bcde5a160d32?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600'
+                },
+                {
+                    id: 'karesa-bari',
+                    title: 'Karesa Bari',
+                    category: 'appetizer',
+                    description: 'A bitter gourd mash with mustard oil and chili, served as a flavorful side',
+                    time: '15 min',
+                    difficulty: 'Easy',
+                    servings: 4,
+                    cost: '$2.00',
+                    rating: 3.9,
+                    reviews: 56,
+                    image: 'https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600'
+                },
+                {
+                    id: 'chukauni',
+                    title: 'Chukauni',
+                    category: 'appetizer',
+                    description: 'Creamy yogurt and potato salad mixed with turmeric and mustard',
+                    time: '10 min',
+                    difficulty: 'Easy',
+                    servings: 4,
+                    cost: '$1.80',
+                    rating: 4.1,
+                    reviews: 92,
+                    image: 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600'
+                },
+
+                // Main Dish
+                {
+                    id: 'sekuwa',
+                    title: 'Sekuwa',
+                    category: 'main',
+                    description: 'Grilled meat cubes marinated in traditional Nepali herbs and spices',
+                    time: '60 min',
+                    difficulty: 'Medium',
+                    servings: 4,
+                    cost: '$8.00',
+                    rating: 4.7,
+                    reviews: 234,
+                    image: 'https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600'
+                },
+                {
+                    id: 'taruwa',
+                    title: 'Taruwa',
+                    category: 'main',
+                    description: 'Seasonal vegetables deep-fried in chickpea or rice flour batter',
+                    time: '20 min',
+                    difficulty: 'Easy',
+                    servings: 4,
+                    cost: '$3.00',
+                    rating: 3.4,
+                    reviews: 100,
+                    image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600'
+                },
+                {
+                    id: 'pakuwa',
+                    title: 'Pakuwa',
+                    category: 'main',
+                    description: 'Deep-fried spiced buffalo meat, crispy and rich in flavor',
+                    time: '45 min',
+                    difficulty: 'Medium',
+                    servings: 4,
+                    cost: '$7.50',
+                    rating: 4.2,
+                    reviews: 67,
+                    image: 'https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600'
+                },
+                {
+                    id: 'usineko',
+                    title: 'Usineko',
+                    category: 'main',
+                    description: 'Boiled meat or vegetables, typically served with chutney or pickles',
+                    time: '35 min',
+                    difficulty: 'Easy',
+                    servings: 4,
+                    cost: '$5.00',
+                    rating: 3.8,
+                    reviews: 43,
+                    image: 'https://images.unsplash.com/photo-1574484284002-952d92456975?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600'
+                },
+                {
+                    id: 'chhoyela',
+                    title: 'Chhoyela',
+                    category: 'main',
+                    description: 'Smoked and spiced meat (buffalo or chicken), served cold as a Newari delicacy',
+                    time: '90 min',
+                    difficulty: 'Hard',
+                    servings: 6,
+                    cost: '$9.00',
+                    rating: 4.6,
+                    reviews: 156,
+                    image: 'https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600'
+                },
+                {
+                    id: 'saanbheko',
+                    title: 'Saanbheko',
+                    category: 'main',
+                    description: 'A tender meat dish made by pressure-cooking with robust spices',
+                    time: '50 min',
+                    difficulty: 'Medium',
+                    servings: 4,
+                    cost: '$6.50',
+                    rating: 4.1,
+                    reviews: 89,
+                    image: 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600'
+                },
+                {
+                    id: 'momo',
+                    title: 'Momo',
+                    category: 'main',
+                    description: 'Steamed dumplings filled with meat or vegetables, served with spicy dip',
+                    time: '45 min',
+                    difficulty: 'Medium',
+                    servings: 4,
+                    cost: '$4.50',
+                    rating: 4.5,
+                    reviews: 350,
+                    image: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600',
+                    ingredients: [
+                        { item: 'All-purpose flour', qty: '2 cups' },
+                        { item: 'Ground meat (chicken/buffalo)', qty: '500g' },
+                        { item: 'Onion', qty: '1 large' },
+                        { item: 'Garlic', qty: '6 cloves' },
+                        { item: 'Ginger', qty: '2 inch' },
+                        { item: 'Soy sauce', qty: '2 tbsp' },
+                        { item: 'Salt and pepper', qty: 'to taste' }
+                    ],
+                    steps: [
+                        'Make dough with flour and water, knead until smooth',
+                        'Mix meat with finely chopped onions, garlic, ginger, and seasonings',
+                        'Roll small portions of dough into thin circles',
+                        'Place filling in center and seal by pleating edges',
+                        'Steam momos for 15-20 minutes until cooked through',
+                        'Serve hot with spicy tomato-based dipping sauce'
+                    ],
+                    nutrition: { kcal: 320, protein: '18g', carbs: '35g', fat: '12g' },
+                    tips: 'Keep the dough covered while working to prevent drying. Steam on high heat for best results.'
+                },
+                {
+                    id: 'dal-bhat',
+                    title: 'Dal Bhat',
+                    category: 'main',
+                    description: 'Classic Nepali staple: lentil soup (dal) with steamed rice and sides',
+                    time: '30 min',
+                    difficulty: 'Easy',
+                    servings: 4,
+                    cost: '$2.50',
+                    rating: 4.9,
+                    reviews: 748,
+                    image: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600',
+                    ingredients: [
+                        { item: 'Lentils (dal)', qty: '1 cup' },
+                        { item: 'Basmati rice', qty: '2 cups' },
+                        { item: 'Onion', qty: '1 medium' },
+                        { item: 'Tomato', qty: '1 medium' },
+                        { item: 'Turmeric powder', qty: '1 tsp' },
+                        { item: 'Cumin seeds', qty: '1 tsp' },
+                        { item: 'Garlic', qty: '3 cloves' },
+                        { item: 'Oil', qty: '2 tbsp' }
+                    ],
+                    steps: [
+                        'Wash and cook rice in a rice cooker or pot with 2:1 water ratio',
+                        'Boil lentils with turmeric and salt until soft and mushy',
+                        'Heat oil in pan, add cumin seeds and chopped garlic',
+                        'Add onions and cook until golden, then add tomatoes',
+                        'Pour cooked lentils into the pan and simmer for 10 minutes',
+                        'Serve hot rice with dal and pickles on the side'
+                    ],
+                    nutrition: { kcal: 280, protein: '14g', carbs: '52g', fat: '4g' },
+                    tips: 'Add ghee on top of dal for extra flavor. Serve with pickle and vegetables for a complete meal.'
+                },
+
+                // Dessert
+                {
+                    id: 'yomari',
+                    title: 'Yomari',
+                    category: 'dessert',
+                    description: 'Sweet steamed dumpling filled with jaggery and sesame paste, made during Yomari Punhi',
+                    time: '60 min',
+                    difficulty: 'Hard',
+                    servings: 8,
+                    cost: '$4.00',
+                    rating: 4.4,
+                    reviews: 123,
+                    image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600'
+                },
+                {
+                    id: 'sikarni',
+                    title: 'Sikarni',
+                    category: 'dessert',
+                    description: 'Thickened curd dessert flavored with cardamom, nuts, and saffron',
+                    time: '30 min',
+                    difficulty: 'Easy',
+                    servings: 4,
+                    cost: '$3.50',
+                    rating: 4.2,
+                    reviews: 87,
+                    image: 'https://images.unsplash.com/photo-1571115764595-644a1f56a55c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600'
+                },
+                {
+                    id: 'dahi-phal',
+                    title: 'Dahi Phal',
+                    category: 'dessert',
+                    description: 'A fresh mix of fruits and yogurt, lightly sweetened',
+                    time: '15 min',
+                    difficulty: 'Easy',
+                    servings: 4,
+                    cost: '$2.80',
+                    rating: 3.9,
+                    reviews: 65,
+                    image: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600'
+                },
+                {
+                    id: 'kheer',
+                    title: 'Kheer',
+                    category: 'dessert',
+                    description: 'Creamy rice pudding made with milk, rice, sugar, and cardamom',
+                    time: '45 min',
+                    difficulty: 'Easy',
+                    servings: 6,
+                    cost: '$3.00',
+                    rating: 4.5,
+                    reviews: 198,
+                    image: 'https://images.unsplash.com/photo-1571115764595-644a1f56a55c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600'
+                },
+
+                // Sauce
+                {
+                    id: 'lasune-golbhenda',
+                    title: 'Lasune Golbhenda',
+                    category: 'sauce',
+                    description: 'Tomato-based chutney enhanced with lots of garlic',
+                    time: '25 min',
+                    difficulty: 'Easy',
+                    servings: 6,
+                    cost: '$1.50',
+                    rating: 4.0,
+                    reviews: 76,
+                    image: 'https://images.unsplash.com/photo-1572441713132-51c75654db73?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600'
+                },
+                {
+                    id: 'dhaniya-sada',
+                    title: 'Dhaniya Sada',
+                    category: 'sauce',
+                    description: 'Simple and fresh coriander chutney with lemon and chili',
+                    time: '10 min',
+                    difficulty: 'Easy',
+                    servings: 4,
+                    cost: '$1.00',
+                    rating: 4.1,
+                    reviews: 89,
+                    image: 'https://images.unsplash.com/photo-1599827552450-6e9bb4c54f87?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600'
+                },
+                {
+                    id: 'badame-dhaniya',
+                    title: 'Badame Dhaniya',
+                    category: 'sauce',
+                    description: 'Nutty green chutney made from roasted peanuts and coriander',
+                    time: '15 min',
+                    difficulty: 'Easy',
+                    servings: 4,
+                    cost: '$2.00',
+                    rating: 4.3,
+                    reviews: 54,
+                    image: 'https://images.unsplash.com/photo-1609501676725-7186f73a2d28?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600'
+                },
+                {
+                    id: 'tilko-chhop',
+                    title: 'Tilko Chhop',
+                    category: 'sauce',
+                    description: 'Thick sesame seed paste used as dip or side condiment',
+                    time: '20 min',
+                    difficulty: 'Medium',
+                    servings: 6,
+                    cost: '$2.50',
+                    rating: 3.8,
+                    reviews: 42,
+                    image: 'https://images.unsplash.com/photo-1601662875732-fef602777ff6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600'
+                },
+
+                // Other
+                {
+                    id: 'mixed-thali',
+                    title: 'Sathi ko Mixed Thali',
+                    category: 'other',
+                    description: 'A foundational mix of Nepali kitchen spices: chicken, goat, dhal, shak, chili chatni, potato, and sweet',
+                    time: '60 min',
+                    difficulty: 'Hard',
+                    servings: 2,
+                    cost: '$12.00',
+                    rating: 4.9,
+                    reviews: 748,
+                    image: 'https://images.unsplash.com/photo-1596040033229-a9821ebc227e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600',
+                    ingredients: [
+                        { item: 'Basmati rice', qty: '2 cups' },
+                        { item: 'Mixed lentils', qty: '1 cup' },
+                        { item: 'Chicken curry', qty: '300g' },
+                        { item: 'Goat meat curry', qty: '200g' },
+                        { item: 'Seasonal vegetables', qty: '2 cups' },
+                        { item: 'Potato curry', qty: '2 medium' },
+                        { item: 'Pickle/chutney', qty: '2 tbsp' },
+                        { item: 'Sweet (kheer/laddu)', qty: '1 serving' }
+                    ],
+                    steps: [
+                        'Cook rice separately and keep warm',
+                        'Prepare dal with mixed lentils, turmeric, and spices',
+                        'Cook chicken and goat meat curries with traditional spices',
+                        'Prepare seasonal vegetable curry with local herbs',
+                        'Make potato curry with mustard seeds and turmeric',
+                        'Arrange all items on a traditional thali plate and serve'
+                    ],
+                    nutrition: { kcal: 650, protein: '35g', carbs: '65g', fat: '22g' },
+                    tips: 'This is a complete meal representing the diversity of Nepali cuisine. Best shared with family or friends.'
+                }
+            ];
+
+            let currentRecipes = recipes;
+
+            // Show page function
+            window.showPage = function(pageId) {
+                // Hide all pages
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                // Show selected page
+                document.getElementById(pageId).classList.add('active');
+                
+                // Update nav state
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                
+                // Populate recipes grid if showing recipes page
+                if (pageId === 'recipes') {
+                    populateRecipesGrid();
+                }
+                
+                // Close mobile menu
+                document.getElementById('mobile-menu').classList.add('hidden');
+                
+                // Scroll to top
+                window.scrollTo(0, 0);
+            };
+
+            // Toggle mobile menu
+            window.toggleMobileMenu = function() {
+                const mobileMenu = document.getElementById('mobile-menu');
+                mobileMenu.classList.toggle('hidden');
+            };
+
+            // Filter recipes function
+            window.filterRecipes = function(category) {
+                // Update filter button states
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                event.target.classList.add('active');
+                
+                // Filter recipes
+                if (category === 'all') {
+                    currentRecipes = recipes;
+                } else {
+                    currentRecipes = recipes.filter(recipe => recipe.category === category);
+                }
+                
+                populateRecipesGrid();
+            };
+
+            // Populate recipes grid
+            function populateRecipesGrid() {
+                const grid = document.getElementById('recipes-grid');
+                grid.innerHTML = '';
+                
+                currentRecipes.forEach(recipe => {
+                    const card = createRecipeCard(recipe);
+                    grid.appendChild(card);
+                });
+            }
+
+            // Create recipe card
+            function createRecipeCard(recipe) {
+                const card = document.createElement('div');
+                card.className = 'recipe-card bg-card rounded-lg shadow-lg overflow-hidden';
+                
+                const categoryColor = {
+                    soup: 'bg-blue-100 text-blue-800',
+                    appetizer: 'bg-green-100 text-green-800',
+                    main: 'bg-red-100 text-red-800',
+                    dessert: 'bg-purple-100 text-purple-800',
+                    sauce: 'bg-yellow-100 text-yellow-800',
+                    other: 'bg-gray-100 text-gray-800'
+                };
+
+                card.innerHTML = `
+                    <img src="${recipe.image}" alt="${recipe.title}" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs px-2 py-1 rounded-full font-medium ${categoryColor[recipe.category] || categoryColor.other}">
+                                ${recipe.category.charAt(0).toUpperCase() + recipe.category.slice(1)}
+                            </span>
+                            <span class="text-sm text-muted-foreground">${recipe.time}</span>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">${recipe.title}</h3>
+                        <p class="text-muted-foreground mb-4 text-sm leading-relaxed">${recipe.description}</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-sm text-accent font-medium">⭐ ${recipe.rating} (${recipe.reviews} reviews)</span>
+                            <span class="text-sm font-medium text-primary">${recipe.cost}</span>
+                        </div>
+                        <button onclick="showRecipeDetail('${recipe.id}')" class="w-full bg-primary text-primary-foreground py-2 rounded-lg hover:bg-primary/90 transition-colors btn-hover">
+                            View Recipe
+                        </button>
+                    </div>
+                `;
+                
+                return card;
+            }
+
+            // Show recipe detail
+            window.showRecipeDetail = function(recipeId) {
+                const recipe = recipes.find(r => r.id === recipeId);
+                if (!recipe) return;
+                
+                const detailContent = document.getElementById('recipe-detail-content');
+                detailContent.innerHTML = `
+                    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                        <!-- Header -->
+                        <div class="mb-6">
+                            <button onclick="showPage('recipes')" class="text-primary hover:text-primary/80 mb-4 inline-flex items-center">
+                                <i class="fas fa-arrow-left mr-2"></i> Back to Recipes
+                            </button>
+                            <h1 class="text-4xl font-bold mb-4">${recipe.title}</h1>
+                            <p class="text-lg text-muted-foreground">${recipe.description}</p>
+                        </div>
+
+                        <!-- Recipe Info -->
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                            <div class="lg:col-span-2">
+                                <img src="${recipe.image}" alt="${recipe.title}" class="w-full h-64 lg:h-80 object-cover rounded-xl shadow-lg">
+                            </div>
+                            <div class="space-y-4">
+                                <div class="bg-card rounded-lg p-6 shadow-sm border border-border">
+                                    <h3 class="font-semibold mb-4">Recipe Info</h3>
+                                    <div class="space-y-3">
+                                        <div class="flex justify-between">
+                                            <span class="text-muted-foreground">Prep Time:</span>
+                                            <span class="font-medium">${recipe.time}</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span class="text-muted-foreground">Difficulty:</span>
+                                            <span class="font-medium">${recipe.difficulty}</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span class="text-muted-foreground">Servings:</span>
+                                            <span class="font-medium">${recipe.servings}</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span class="text-muted-foreground">Cost:</span>
+                                            <span class="font-medium text-primary">${recipe.cost}</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span class="text-muted-foreground">Rating:</span>
+                                            <span class="font-medium">⭐ ${recipe.rating} (${recipe.reviews})</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                ${recipe.nutrition ? `
+                                <div class="bg-card rounded-lg p-6 shadow-sm border border-border">
+                                    <h3 class="font-semibold mb-4">Nutrition Facts</h3>
+                                    <div class="space-y-2">
+                                        <div class="flex justify-between">
+                                            <span class="text-muted-foreground">Calories:</span>
+                                            <span class="font-medium">${recipe.nutrition.kcal}</span>
+                                        </div>
+                                        ${recipe.nutrition.protein ? `
+                                        <div class="flex justify-between">
+                                            <span class="text-muted-foreground">Protein:</span>
+                                            <span class="font-medium">${recipe.nutrition.protein}</span>
+                                        </div>` : ''}
+                                        ${recipe.nutrition.carbs ? `
+                                        <div class="flex justify-between">
+                                            <span class="text-muted-foreground">Carbs:</span>
+                                            <span class="font-medium">${recipe.nutrition.carbs}</span>
+                                        </div>` : ''}
+                                        ${recipe.nutrition.fat ? `
+                                        <div class="flex justify-between">
+                                            <span class="text-muted-foreground">Fat:</span>
+                                            <span class="font-medium">${recipe.nutrition.fat}</span>
+                                        </div>` : ''}
+                                    </div>
+                                </div>` : ''}
+                            </div>
+                        </div>
+
+                        <!-- Ingredients & Instructions -->
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            ${recipe.ingredients ? `
+                            <div class="bg-card rounded-lg p-6 shadow-sm border border-border">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="text-xl font-semibold">Ingredients</h3>
+                                    <button onclick="copyIngredients('${recipe.id}')" class="text-primary hover:text-primary/80 text-sm">
+                                        <i class="fas fa-copy mr-1"></i>Copy
+                                    </button>
+                                </div>
+                                <ul id="ingredients-${recipe.id}" class="space-y-2">
+                                    ${recipe.ingredients.map(ing => 
+                                        `<li class="flex justify-between py-2 border-b border-border last:border-b-0">
+                                            <span>${ing.item}</span>
+                                            <span class="font-medium">${ing.qty}</span>
+                                        </li>`
+                                    ).join('')}
+                                </ul>
+                            </div>` : ''}
+
+                            ${recipe.steps ? `
+                            <div class="bg-card rounded-lg p-6 shadow-sm border border-border">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="text-xl font-semibold">Instructions</h3>
+                                    <button onclick="startCookingMode('${recipe.id}')" class="bg-primary text-primary-foreground px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors text-sm btn-hover">
+                                        <i class="fas fa-play mr-2"></i>Cooking Mode
+                                    </button>
+                                </div>
+                                <ol class="space-y-3">
+                                    ${recipe.steps.map((step, index) => 
+                                        `<li class="flex">
+                                            <span class="bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium mr-3 mt-0.5 flex-shrink-0">${index + 1}</span>
+                                            <span class="leading-relaxed">${step}</span>
+                                        </li>`
+                                    ).join('')}
+                                </ol>
+                            </div>` : ''}
+                        </div>
+
+                        ${recipe.tips ? `
+                        <div class="mt-8 bg-accent/10 rounded-lg p-6 border border-accent/20">
+                            <h3 class="font-semibold mb-2 text-accent-foreground">💡 Cooking Tips</h3>
+                            <p class="text-muted-foreground">${recipe.tips}</p>
+                        </div>` : ''}
+                    </div>
+                `;
+                
+                showPage('recipe-detail');
+            };
+
+            // Copy ingredients function
+            window.copyIngredients = function(recipeId) {
+                const recipe = recipes.find(r => r.id === recipeId);
+                if (!recipe || !recipe.ingredients) return;
+                
+                const ingredientsList = recipe.ingredients
+                    .map(ing => `${ing.item}: ${ing.qty}`)
+                    .join('\n');
+                
+                navigator.clipboard.writeText(ingredientsList).then(() => {
+                    // Show feedback (you could add a toast notification here)
+                    console.log('Ingredients copied to clipboard!');
+                });
+            };
+
+            // Start cooking mode
+            window.startCookingMode = function(recipeId) {
+                const recipe = recipes.find(r => r.id === recipeId);
+                if (!recipe || !recipe.steps) return;
+                
+                // TODO: Implement cooking mode with step-by-step navigation
+                alert('Cooking mode feature coming soon! This will provide step-by-step cooking guidance with timers.');
+            };
+
+            // Handle contact form submission
+            document.getElementById('contact-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // TODO: Implement actual form submission logic
+                
+                // Show success message
+                document.getElementById('success-message').classList.remove('hidden');
+                
+                // Reset form
+                this.reset();
+                
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    document.getElementById('success-message').classList.add('hidden');
+                }, 5000);
+            });
+
+            // Search functionality
+            document.getElementById('recipe-search')?.addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                
+                if (searchTerm === '') {
+                    currentRecipes = recipes;
+                } else {
+                    currentRecipes = recipes.filter(recipe => 
+                        recipe.title.toLowerCase().includes(searchTerm) ||
+                        recipe.description.toLowerCase().includes(searchTerm) ||
+                        recipe.category.toLowerCase().includes(searchTerm)
+                    );
+                }
+                
+                populateRecipesGrid();
+            });
+
+            // Initialize
+            populateRecipesGrid();
+        })();
+    </script>
+</body>
+</html>

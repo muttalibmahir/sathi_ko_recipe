@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sathi Ko Recipe - Simple Recipe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    borderRadius: {
+                        lg: "var(--radius)",
+                        md: "calc(var(--radius) - 2px)",
+                        sm: "calc(var(--radius) - 4px)",
+                    },
+                    colors: {
+                        background: "var(--background)",
+                        foreground: "var(--foreground)",
+                        card: {
+                            DEFAULT: "var(--card)",
+                            foreground: "var(--card-foreground)",
+                        },
+                        primary: {
+                            DEFAULT: "var(--primary)",
+                            foreground: "var(--primary-foreground)",
+                        },
+                        secondary: {
+                            DEFAULT: "var(--secondary)",
+                            foreground: "var(--secondary-foreground)",
+                        },
+                        muted: {
+                            DEFAULT: "var(--muted)",
+                            foreground: "var(--muted-foreground)",
+                        },
+                        accent: {
+                            DEFAULT: "var(--accent)",
+                            foreground: "var(--accent-foreground)",
+                        },
+                        border: "var(--border)",
+                        input: "var(--input)",
+                        ring: "var(--ring)",
+                    },
+                    fontFamily: {
+                        sans: ["Inter", "system-ui", "sans-serif"],
+                    }
+                },
+            }
+        };
+    </script>
+    <style>
+        :root {
+            --background: hsl(0 0% 100%);
+            --foreground: hsl(222.2 84% 4.9%);
+            --card: hsl(0 0% 100%);
+            --card-foreground: hsl(222.2 84% 4.9%);
+            --primary: hsl(142 76% 36%);
+            --primary-foreground: hsl(355.7 100% 97.3%);
+            --secondary: hsl(210 40% 96%);
+            --secondary-foreground: hsl(222.2 47.4% 11.2%);
+            --muted: hsl(210 40% 96%);
+            --muted-foreground: hsl(215.4 16.3% 46.9%);
+            --accent: hsl(27 96% 61%);
+            --accent-foreground: hsl(210 40% 98%);
+            --border: hsl(214.3 31.8% 91.4%);
+            --input: hsl(214.3 31.8% 91.4%);
+            --ring: hsl(142 76% 36%);
+            --radius: 0.75rem;
+        }
+
+        .dark {
+            --background: hsl(222.2 84% 4.9%);
+            --foreground: hsl(210 40% 98%);
+            --card: hsl(222.2 84% 4.9%);
+            --card-foreground: hsl(210 40% 98%);
+            --primary: hsl(142 76% 36%);
+            --primary-foreground: hsl(355.7 100% 97.3%);
+            --secondary: hsl(217.2 32.6% 17.5%);
+            --secondary-foreground: hsl(210 40% 98%);
+            --muted: hsl(217.2 32.6% 17.5%);
+            --muted-foreground: hsl(215 20.2% 65.1%);
+            --accent: hsl(27 96% 61%);
+            --accent-foreground: hsl(222.2 84% 4.9%);
+            --border: hsl(217.2 32.6% 17.5%);
+            --input: hsl(217.2 32.6% 17.5%);
+            --ring: hsl(142 76% 36%);
+        }
+
+        body {
+            font-family: Inter, system-ui, sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, hsl(142 76% 36%) 0%, hsl(142 86% 28%) 100%);
+        }
+
+        .recipe-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        .filter-pill {
+            transition: all 0.2s ease;
+        }
+
+        .filter-pill:hover {
+            transform: scale(1.05);
+        }
+
+        .filter-pill.active {
+            background-color: hsl(142 76% 36%);
+            color: white;
+        }
+
+        .btn-scale {
+            transition: transform 0.1s ease;
+        }
+
+        .btn-scale:active {
+            transform: scale(0.95);
+        }
+
+        /* Star Rating Styles */
+        .star-rating {
+            color: #FBBF24;
+        }
+
+        /* Mobile Navigation */
+        .mobile-menu {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        /* Cooking Mode Styles */
+        .cooking-step {
+            font-size: 1.25rem;
+            line-height: 1.8;
+        }
+
+        .step-counter {
+            background: linear-gradient(135deg, hsl(142 76% 36%) 0%, hsl(142 86% 28%) 100%);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body class="bg-background text-foreground antialiased">
+    <!-- Navigation -->
+    <nav class="bg-card border-b border-border sticky top-0 z-50 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                            <span class="text-primary-foreground font-bold text-sm">SR</span>
+                        </div>
+                        <div>
+                            <h1 class="font-bold text-lg">Sathi Ko Recipe</h1>
+                            <p class="text-xs text-muted-foreground">Simple Recipe</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="nav-link text-foreground hover:text-primary transition-colors duration-200 font-medium">Home</a>
+                    <a href="#recipes" class="nav-link text-muted-foreground hover:text-primary transition-colors duration-200 font-medium">Recipes</a>
+                    <a href="#about" class="nav-link text-muted-foreground hover:text-primary transition-colors duration-200 font-medium">About</a>
+                    <a href="#contact" class="nav-link text-muted-foreground hover:text-primary transition-colors duration-200 font-medium">Contact</a>
+                </div>
+
+                <!-- Theme Toggle & Mobile Menu -->
+                <div class="flex items-center space-x-2">
+                    <button id="theme-toggle" class="p-2 rounded-lg hover:bg-muted transition-colors">
+                        <i data-feather="sun" class="w-5 h-5 dark:hidden"></i>
+                        <i data-feather="moon" class="w-5 h-5 hidden dark:block"></i>
+                    </button>
+                    <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-muted transition-colors">
+                        <i data-feather="menu" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu md:hidden fixed inset-y-0 left-0 w-64 bg-card border-r border-border z-40">
+            <div class="p-4">
+                <div class="flex items-center justify-between mb-8">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-6 h-6 bg-primary rounded-md flex items-center justify-center">
+                            <span class="text-primary-foreground font-bold text-xs">SR</span>
+                        </div>
+                        <span class="font-semibold">Sathi Ko Recipe</span>
+                    </div>
+                    <button id="close-mobile-menu" class="p-1">
+                        <i data-feather="x" class="w-5 h-5"></i>
+                    </button>
+                </div>
+                <nav class="space-y-4">
+                    <a href="#home" class="block py-2 px-4 rounded-lg hover:bg-muted transition-colors">Home</a>
+                    <a href="#recipes" class="block py-2 px-4 rounded-lg hover:bg-muted transition-colors">Recipes</a>
+                    <a href="#about" class="block py-2 px-4 rounded-lg hover:bg-muted transition-colors">About</a>
+                    <a href="#contact" class="block py-2 px-4 rounded-lg hover:bg-muted transition-colors">Contact</a>
+                </nav>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <section id="home" class="page-section">
+        <!-- Hero Section -->
+        <div class="hero-gradient relative overflow-hidden">
+            <div class="absolute inset-0">
+                <div class="absolute top-20 left-10 w-32 h-32 bg-white bg-opacity-10 rounded-full"></div>
+                <div class="absolute top-40 right-20 w-24 h-24 bg-white bg-opacity-5 rounded-full"></div>
+                <div class="absolute bottom-20 left-1/4 w-40 h-40 bg-white bg-opacity-10 rounded-full"></div>
+                <div class="absolute bottom-40 right-10 w-28 h-28 bg-white bg-opacity-5 rounded-full"></div>
+            </div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32 relative">
+                <div class="text-center">
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
+                        Simple Recipes for
+                        <span class="text-accent block">Students</span>
+                    </h1>
+                    <p class="text-xl text-green-100 mb-8 max-w-2xl mx-auto">
+                        Affordable, healthy, and easy-to-make meals perfect for international students and cooking beginners.
+                    </p>
+                    
+                    <!-- Search Bar -->
+                    <div class="max-w-xl mx-auto mb-8">
+                        <div class="relative">
+                            <input type="text" placeholder="Search recipes..." 
+                                   class="w-full px-4 py-3 pl-12 rounded-xl bg-white text-gray-900 shadow-lg focus:outline-none focus:ring-2 focus:ring-accent">
+                            <i data-feather="search" class="absolute left-4 top-3.5 w-5 h-5 text-gray-400"></i>
+                            <button class="absolute right-2 top-2 bg-accent text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors btn-scale">
+                                Search
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Quick Filters -->
+                    <div class="flex flex-wrap justify-center gap-3 mb-8">
+                        <button class="filter-pill bg-white bg-opacity-20 text-white px-4 py-2 rounded-full flex items-center space-x-2 hover:bg-opacity-30">
+                            <i data-feather="leaf" class="w-4 h-4"></i>
+                            <span>Vegetarian</span>
+                        </button>
+                        <button class="filter-pill bg-white bg-opacity-20 text-white px-4 py-2 rounded-full flex items-center space-x-2 hover:bg-opacity-30">
+                            <i data-feather="clock" class="w-4 h-4"></i>
+                            <span>Quick Meals</span>
+                        </button>
+                        <button class="filter-pill bg-white bg-opacity-20 text-white px-4 py-2 rounded-full flex items-center space-x-2 hover:bg-opacity-30">
+                            <i data-feather="dollar-sign" class="w-4 h-4"></i>
+                            <span>Budget Friendly</span>
+                        </button>
+                        <button class="filter-pill bg-white bg-opacity-20 text-white px-4 py-2 rounded-full flex items-center space-x-2 hover:bg-opacity-30">
+                            <i data-feather="trending-up" class="w-4 h-4"></i>
+                            <span>Trending</span>
+                        </button>
+                    </div>
+
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button class="bg-accent text-white px-8 py-3 rounded-xl font-semibold hover:bg-orange-600 transition-all duration-300 btn-scale">
+                            Explore Recipes
+                        </button>
+                        <button class="bg-white bg-opacity-20 text-white px-8 py-3 rounded-xl font-semibold hover:bg-opacity-30 transition-all duration-300 btn-scale flex items-center justify-center space-x-2">
+                            <i data-feather="play" class="w-5 h-5"></i>
+                            <span>Watch Demo</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trending Recipes Section -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl sm:text-4xl font-bold text-foreground mb-4">Trending Recipes</h2>
+                <p class="text-lg text-muted-foreground">Popular dishes our students love</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Recipe Card 1 - Sikarni -->
+                <div class="recipe-card bg-card rounded-xl shadow-lg overflow-hidden">
+                    <!-- Traditional sweet dish from Nepal with milk, nuts and cardamom -->
+                    <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300" 
+                         alt="Sikarni - Traditional Nepali sweet dessert" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="bg-green-100 text-primary text-xs px-2 py-1 rounded-full font-medium">Veg</span>
+                            <div class="flex items-center space-x-1 star-rating">
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4"></i>
+                            </div>
+                        </div>
+                        <h3 class="font-semibold text-lg mb-2">Sikarni</h3>
+                        <p class="text-muted-foreground text-sm mb-3">Traditional Nepali sweet dessert made with milk, cardamom and nuts</p>
+                        <div class="flex items-center justify-between text-sm text-muted-foreground mb-4">
+                            <span class="flex items-center space-x-1">
+                                <i data-feather="clock" class="w-4 h-4"></i>
+                                <span>15 min</span>
+                            </span>
+                            <span class="flex items-center space-x-1">
+                                <i data-feather="users" class="w-4 h-4"></i>
+                                <span>4 servings</span>
+                            </span>
+                            <span class="flex items-center space-x-1">
+                                <i data-feather="dollar-sign" class="w-4 h-4"></i>
+                                <span>$3.50</span>
+                            </span>
+                        </div>
+                        <button class="w-full bg-primary text-primary-foreground py-2 rounded-lg font-medium hover:bg-green-700 transition-colors btn-scale">
+                            View Recipe
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Recipe Card 2 - Dahi Phal -->
+                <div class="recipe-card bg-card rounded-xl shadow-lg overflow-hidden">
+                    <!-- Colorful fruit salad with yogurt and nuts in an earthenware bowl -->
+                    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300" 
+                         alt="Dahi Phal - Nepali fruit yogurt salad" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="bg-green-100 text-primary text-xs px-2 py-1 rounded-full font-medium">Veg</span>
+                            <div class="flex items-center space-x-1 star-rating">
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                            </div>
+                        </div>
+                        <h3 class="font-semibold text-lg mb-2">Dahi Phal</h3>
+                        <p class="text-muted-foreground text-sm mb-3">Refreshing yogurt fruit salad perfect for hot days</p>
+                        <div class="flex items-center justify-between text-sm text-muted-foreground mb-4">
+                            <span class="flex items-center space-x-1">
+                                <i data-feather="clock" class="w-4 h-4"></i>
+                                <span>10 min</span>
+                            </span>
+                            <span class="flex items-center space-x-1">
+                                <i data-feather="users" class="w-4 h-4"></i>
+                                <span>2 servings</span>
+                            </span>
+                            <span class="flex items-center space-x-1">
+                                <i data-feather="dollar-sign" class="w-4 h-4"></i>
+                                <span>$4.00</span>
+                            </span>
+                        </div>
+                        <button class="w-full bg-primary text-primary-foreground py-2 rounded-lg font-medium hover:bg-green-700 transition-colors btn-scale">
+                            View Recipe
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Recipe Card 3 - Lasune Golbhenda -->
+                <div class="recipe-card bg-card rounded-xl shadow-lg overflow-hidden">
+                    <!-- Rich tomato and garlic curry with herbs in a traditional bowl -->
+                    <img src="https://pixabay.com/get/g90b18184f52d9af953f605881ec188e7b890883aef47c019ef8ba66e63f788e3af4b9a36537937cae6ac783d41ccb95d73cb0828cfb9b07fa58aad404aed460e_1280.jpg" 
+                         alt="Lasune Golbhenda - Tomato garlic curry" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="bg-green-100 text-primary text-xs px-2 py-1 rounded-full font-medium">Veg</span>
+                            <div class="flex items-center space-x-1 star-rating">
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4"></i>
+                            </div>
+                        </div>
+                        <h3 class="font-semibold text-lg mb-2">Lasune Golbhenda</h3>
+                        <p class="text-muted-foreground text-sm mb-3">Spicy tomato and garlic curry, a Nepali comfort food</p>
+                        <div class="flex items-center justify-between text-sm text-muted-foreground mb-4">
+                            <span class="flex items-center space-x-1">
+                                <i data-feather="clock" class="w-4 h-4"></i>
+                                <span>25 min</span>
+                            </span>
+                            <span class="flex items-center space-x-1">
+                                <i data-feather="users" class="w-4 h-4"></i>
+                                <span>3 servings</span>
+                            </span>
+                            <span class="flex items-center space-x-1">
+                                <i data-feather="dollar-sign" class="w-4 h-4"></i>
+                                <span>$2.50</span>
+                            </span>
+                        </div>
+                        <button class="w-full bg-primary text-primary-foreground py-2 rounded-lg font-medium hover:bg-green-700 transition-colors btn-scale">
+                            View Recipe
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Recipe Card 4 - Kheer -->
+                <div class="recipe-card bg-card rounded-xl shadow-lg overflow-hidden">
+                    <!-- Creamy rice pudding with pistachios and almonds in earthen bowl -->
+                    <img src="https://images.unsplash.com/photo-1628294895950-9805252327bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300" 
+                         alt="Kheer - Traditional rice pudding with nuts" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="bg-green-100 text-primary text-xs px-2 py-1 rounded-full font-medium">Veg</span>
+                            <div class="flex items-center space-x-1 star-rating">
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                            </div>
+                        </div>
+                        <h3 class="font-semibold text-lg mb-2">Kheer</h3>
+                        <p class="text-muted-foreground text-sm mb-3">Creamy rice pudding with nuts and aromatic spices</p>
+                        <div class="flex items-center justify-between text-sm text-muted-foreground mb-4">
+                            <span class="flex items-center space-x-1">
+                                <i data-feather="clock" class="w-4 h-4"></i>
+                                <span>45 min</span>
+                            </span>
+                            <span class="flex items-center space-x-1">
+                                <i data-feather="users" class="w-4 h-4"></i>
+                                <span>6 servings</span>
+                            </span>
+                            <span class="flex items-center space-x-1">
+                                <i data-feather="dollar-sign" class="w-4 h-4"></i>
+                                <span>$4.50</span>
+                            </span>
+                        </div>
+                        <button class="w-full bg-primary text-primary-foreground py-2 rounded-lg font-medium hover:bg-green-700 transition-colors btn-scale">
+                            View Recipe
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <button class="bg-secondary text-secondary-foreground px-8 py-3 rounded-xl font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors btn-scale">
+                    View All Recipes
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recipes Page -->
+    <section id="recipes" class="page-section hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-bold text-foreground mb-4">Our Recipes</h1>
+                <p class="text-lg text-muted-foreground">Discover authentic Nepali recipes perfect for students</p>
+            </div>
+
+            <!-- Filters -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12">
+                <button class="filter-pill active bg-primary text-white px-6 py-2 rounded-full font-medium">
+                    All Recipes
+                </button>
+                <button class="filter-pill bg-muted text-muted-foreground px-6 py-2 rounded-full font-medium hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center space-x-2">
+                    <i data-feather="leaf" class="w-4 h-4"></i>
+                    <span>Vegetarian</span>
+                </button>
+                <button class="filter-pill bg-muted text-muted-foreground px-6 py-2 rounded-full font-medium hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center space-x-2">
+                    <i data-feather="fish" class="w-4 h-4"></i>
+                    <span>Non-Veg</span>
+                </button>
+                <button class="filter-pill bg-muted text-muted-foreground px-6 py-2 rounded-full font-medium hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center space-x-2">
+                    <i data-feather="clock" class="w-4 h-4"></i>
+                    <span>Quick Meals</span>
+                </button>
+                <button class="filter-pill bg-muted text-muted-foreground px-6 py-2 rounded-full font-medium hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center space-x-2">
+                    <i data-feather="dollar-sign" class="w-4 h-4"></i>
+                    <span>Budget</span>
+                </button>
+            </div>
+
+            <!-- Recipe Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Recipe Cards would be dynamically generated here -->
+                <!-- For demo purposes, showing a few sample cards -->
+                
+                <!-- Sample Recipe Cards -->
+                <div class="recipe-card bg-card rounded-xl shadow-lg overflow-hidden">
+                    <!-- Hearty lentil soup with vegetables and aromatic spices -->
+                    <img src="https://images.unsplash.com/photo-1547592180-85f173990554?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300" 
+                         alt="Quanti - Mixed lentil soup" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="bg-green-100 text-primary text-xs px-2 py-1 rounded-full font-medium">Veg</span>
+                            <div class="flex items-center space-x-1 star-rating">
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4"></i>
+                            </div>
+                        </div>
+                        <h3 class="font-semibold text-lg mb-2">Quanti</h3>
+                        <p class="text-muted-foreground text-sm mb-3">Nutritious nine-bean soup, perfect for cold days</p>
+                        <div class="flex items-center justify-between text-sm text-muted-foreground mb-4">
+                            <span class="flex items-center space-x-1">
+                                <i data-feather="clock" class="w-4 h-4"></i>
+                                <span>45 min</span>
+                            </span>
+                            <span class="flex items-center space-x-1">
+                                <i data-feather="users" class="w-4 h-4"></i>
+                                <span>4 servings</span>
+                            </span>
+                            <span class="flex items-center space-x-1">
+                                <i data-feather="dollar-sign" class="w-4 h-4"></i>
+                                <span>$3.50</span>
+                            </span>
+                        </div>
+                        <button class="w-full bg-primary text-primary-foreground py-2 rounded-lg font-medium hover:bg-green-700 transition-colors btn-scale">
+                            View Recipe
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Additional recipe cards would follow the same pattern -->
+                <div class="recipe-card bg-card rounded-xl shadow-lg overflow-hidden">
+                    <!-- Fresh salad with mixed greens and vegetables in a wooden bowl -->
+                    <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300" 
+                         alt="Badame Dhaniya - Peanut cilantro chutney" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="bg-green-100 text-primary text-xs px-2 py-1 rounded-full font-medium">Veg</span>
+                            <div class="flex items-center space-x-1 star-rating">
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                            </div>
+                        </div>
+                        <h3 class="font-semibold text-lg mb-2">Badame Dhaniya</h3>
+                        <p class="text-muted-foreground text-sm mb-3">Nutty green chutney made from peanuts and cilantro</p>
+                        <div class="flex items-center justify-between text-sm text-muted-foreground mb-4">
+                            <span class="flex items-center space-x-1">
+                                <i data-feather="clock" class="w-4 h-4"></i>
+                                <span>15 min</span>
+                            </span>
+                            <span class="flex items-center space-x-1">
+                                <i data-feather="users" class="w-4 h-4"></i>
+                                <span>4 servings</span>
+                            </span>
+                            <span class="flex items-center space-x-1">
+                                <i data-feather="dollar-sign" class="w-4 h-4"></i>
+                                <span>$2.00</span>
+                            </span>
+                        </div>
+                        <button class="w-full bg-primary text-primary-foreground py-2 rounded-lg font-medium hover:bg-green-700 transition-colors btn-scale">
+                            View Recipe
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recipe Detail Page -->
+    <section id="recipe-detail" class="page-section hidden">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <!-- Back Button -->
+            <button class="flex items-center space-x-2 text-muted-foreground hover:text-foreground mb-8 transition-colors">
+                <i data-feather="arrow-left" class="w-5 h-5"></i>
+                <span>Back to Recipes</span>
+            </button>
+
+            <!-- Recipe Header -->
+            <div class="grid lg:grid-cols-2 gap-8 mb-12">
+                <div>
+                    <!-- Traditional sweet dessert with nuts and cardamom -->
+                    <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400" 
+                         alt="Sikarni dessert with nuts and fruits" class="w-full h-80 object-cover rounded-xl shadow-lg">
+                </div>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex items-center space-x-2 mb-2">
+                            <span class="bg-green-100 text-primary text-sm px-3 py-1 rounded-full font-medium">Veg</span>
+                            <div class="flex items-center space-x-1 star-rating">
+                                <i data-feather="star" class="w-5 h-5 fill-current"></i>
+                                <i data-feather="star" class="w-5 h-5 fill-current"></i>
+                                <i data-feather="star" class="w-5 h-5 fill-current"></i>
+                                <i data-feather="star" class="w-5 h-5 fill-current"></i>
+                                <i data-feather="star" class="w-5 h-5"></i>
+                                <span class="text-sm text-muted-foreground ml-1">(4.2)</span>
+                            </div>
+                        </div>
+                        <h1 class="text-4xl font-bold text-foreground mb-3">Sikarni</h1>
+                        <p class="text-lg text-muted-foreground mb-6">Traditional Nepali sweet dessert made with thick milk, cardamom powder, and assorted nuts. Perfect for festivals and special occasions.</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-muted p-4 rounded-lg">
+                            <div class="flex items-center space-x-2 mb-1">
+                                <i data-feather="clock" class="w-5 h-5 text-accent"></i>
+                                <span class="font-semibold">Cook Time</span>
+                            </div>
+                            <span class="text-2xl font-bold text-foreground">15 min</span>
+                        </div>
+                        <div class="bg-muted p-4 rounded-lg">
+                            <div class="flex items-center space-x-2 mb-1">
+                                <i data-feather="users" class="w-5 h-5 text-accent"></i>
+                                <span class="font-semibold">Servings</span>
+                            </div>
+                            <span class="text-2xl font-bold text-foreground">4</span>
+                        </div>
+                        <div class="bg-muted p-4 rounded-lg">
+                            <div class="flex items-center space-x-2 mb-1">
+                                <i data-feather="dollar-sign" class="w-5 h-5 text-accent"></i>
+                                <span class="font-semibold">Cost/Serve</span>
+                            </div>
+                            <span class="text-2xl font-bold text-foreground">$3.50</span>
+                        </div>
+                        <div class="bg-muted p-4 rounded-lg">
+                            <div class="flex items-center space-x-2 mb-1">
+                                <i data-feather="bar-chart" class="w-5 h-5 text-accent"></i>
+                                <span class="font-semibold">Difficulty</span>
+                            </div>
+                            <span class="text-2xl font-bold text-foreground">Easy</span>
+                        </div>
+                    </div>
+
+                    <button class="w-full bg-primary text-primary-foreground py-3 rounded-xl font-semibold hover:bg-green-700 transition-colors btn-scale">
+                        Start Cooking Mode
+                    </button>
+                </div>
+            </div>
+
+            <!-- Recipe Content -->
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Ingredients -->
+                <div class="lg:col-span-1">
+                    <div class="bg-card p-6 rounded-xl shadow-lg sticky top-24">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-2xl font-bold text-foreground">Ingredients</h2>
+                            <button class="text-accent hover:text-orange-600 transition-colors" title="Copy to clipboard">
+                                <i data-feather="copy" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                        <ul class="space-y-3">
+                            <li class="flex items-center space-x-3">
+                                <input type="checkbox" class="w-4 h-4 text-primary rounded">
+                                <span>2 cups whole milk</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <input type="checkbox" class="w-4 h-4 text-primary rounded">
+                                <span>1/2 cup heavy cream</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <input type="checkbox" class="w-4 h-4 text-primary rounded">
+                                <span>1/4 cup sugar</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <input type="checkbox" class="w-4 h-4 text-primary rounded">
+                                <span>1/2 tsp cardamom powder</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <input type="checkbox" class="w-4 h-4 text-primary rounded">
+                                <span>2 tbsp mixed nuts (chopped)</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <input type="checkbox" class="w-4 h-4 text-primary rounded">
+                                <span>1 tbsp pistachios</span>
+                            </li>
+                        </ul>
+
+                        <!-- Nutrition Facts -->
+                        <div class="mt-8 pt-6 border-t border-border">
+                            <h3 class="font-semibold text-lg mb-3">Nutrition Facts</h3>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span>Calories</span>
+                                    <span class="font-medium">220</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Protein</span>
+                                    <span class="font-medium">8g</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Carbs</span>
+                                    <span class="font-medium">18g</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Fat</span>
+                                    <span class="font-medium">12g</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Instructions -->
+                <div class="lg:col-span-2">
+                    <h2 class="text-2xl font-bold text-foreground mb-6">Instructions</h2>
+                    <div class="space-y-6">
+                        <div class="flex space-x-4">
+                            <div class="step-counter w-8 h-8 rounded-full text-white flex items-center justify-center font-semibold text-sm flex-shrink-0">
+                                1
+                            </div>
+                            <div>
+                                <p class="text-lg text-foreground">Heat the milk in a heavy-bottomed pan over medium heat. Bring it to a boil and let it simmer for 10-15 minutes until it reduces slightly.</p>
+                            </div>
+                        </div>
+                        <div class="flex space-x-4">
+                            <div class="step-counter w-8 h-8 rounded-full text-white flex items-center justify-center font-semibold text-sm flex-shrink-0">
+                                2
+                            </div>
+                            <div>
+                                <p class="text-lg text-foreground">Add sugar and cardamom powder to the milk. Stir well and let it cook for another 5 minutes until the sugar completely dissolves.</p>
+                            </div>
+                        </div>
+                        <div class="flex space-x-4">
+                            <div class="step-counter w-8 h-8 rounded-full text-white flex items-center justify-center font-semibold text-sm flex-shrink-0">
+                                3
+                            </div>
+                            <div>
+                                <p class="text-lg text-foreground">Remove from heat and let it cool to room temperature. Then refrigerate for at least 2 hours until chilled.</p>
+                            </div>
+                        </div>
+                        <div class="flex space-x-4">
+                            <div class="step-counter w-8 h-8 rounded-full text-white flex items-center justify-center font-semibold text-sm flex-shrink-0">
+                                4
+                            </div>
+                            <div>
+                                <p class="text-lg text-foreground">Before serving, whip the heavy cream until soft peaks form. Gently fold it into the chilled milk mixture.</p>
+                            </div>
+                        </div>
+                        <div class="flex space-x-4">
+                            <div class="step-counter w-8 h-8 rounded-full text-white flex items-center justify-center font-semibold text-sm flex-shrink-0">
+                                5
+                            </div>
+                            <div>
+                                <p class="text-lg text-foreground">Serve in individual bowls and garnish with chopped nuts and pistachios. Enjoy this traditional Nepali dessert chilled!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cooking Tips -->
+                    <div class="mt-12 bg-muted p-6 rounded-xl">
+                        <h3 class="text-xl font-bold text-foreground mb-4">👨‍🍳 Cooking Tips</h3>
+                        <ul class="space-y-2 text-muted-foreground">
+                            <li>• Use full-fat milk for the creamiest texture</li>
+                            <li>• Don't skip the chilling time - it's essential for the right consistency</li>
+                            <li>• You can substitute heavy cream with condensed milk for a sweeter version</li>
+                            <li>• Toast the nuts lightly before adding for extra flavor</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Page -->
+    <section id="about" class="page-section hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <!-- Hero Section -->
+            <div class="text-center mb-16">
+                <h1 class="text-4xl sm:text-5xl font-bold text-foreground mb-6">About Sathi Ko Recipe</h1>
+                <p class="text-xl text-muted-foreground max-w-3xl mx-auto">
+                    Empowering international students and cooking beginners with simple, affordable, and delicious recipes from around the world.
+                </p>
+            </div>
+
+            <!-- Mission & Story -->
+            <div class="grid lg:grid-cols-2 gap-12 items-center mb-16">
+                <div>
+                    <h2 class="text-3xl font-bold text-foreground mb-6">Our Mission</h2>
+                    <p class="text-lg text-muted-foreground mb-6">
+                        We believe that everyone deserves access to healthy, affordable, and delicious meals, especially students who are away from home. Our mission is to make cooking accessible and enjoyable for international students and beginners.
+                    </p>
+                    <p class="text-lg text-muted-foreground mb-6">
+                        Founded by students, for students, we understand the challenges of cooking on a budget, limited time, and minimal kitchen equipment. Every recipe is tested and designed with these constraints in mind.
+                    </p>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-primary mb-1">500+</div>
+                            <div class="text-sm text-muted-foreground">Recipes</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-primary mb-1">50k+</div>
+                            <div class="text-sm text-muted-foreground">Students Helped</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-primary mb-1">25+</div>
+                            <div class="text-sm text-muted-foreground">Countries</div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <!-- Group of diverse students cooking together in a modern kitchen -->
+                    <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400" 
+                         alt="Students cooking together in kitchen" class="w-full h-80 object-cover rounded-xl shadow-lg">
+                </div>
+            </div>
+
+            <!-- Team Values -->
+            <div class="bg-muted rounded-2xl p-8 lg:p-12 mb-16">
+                <h2 class="text-3xl font-bold text-foreground text-center mb-12">Our Values</h2>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-feather="heart" class="w-8 h-8 text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-foreground mb-3">Accessibility</h3>
+                        <p class="text-muted-foreground">Every recipe is designed to be simple, affordable, and achievable with basic cooking skills and equipment.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-feather="globe" class="w-8 h-8 text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-foreground mb-3">Cultural Diversity</h3>
+                        <p class="text-muted-foreground">We celebrate cuisines from around the world, helping students stay connected to their roots while exploring new flavors.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-feather="users" class="w-8 h-8 text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-foreground mb-3">Community</h3>
+                        <p class="text-muted-foreground">Building a supportive community where students can share recipes, tips, and culinary experiences.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="text-center">
+                <h2 class="text-3xl font-bold text-foreground mb-4">Join Our Community</h2>
+                <p class="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+                    Ready to start your culinary journey? Explore our recipes, share your creations, and connect with fellow student chefs from around the world.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button class="bg-primary text-primary-foreground px-8 py-3 rounded-xl font-semibold hover:bg-green-700 transition-colors btn-scale">
+                        Explore Recipes
+                    </button>
+                    <button class="bg-secondary text-secondary-foreground px-8 py-3 rounded-xl font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors btn-scale">
+                        Contact Us
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Us Page -->
+    <section id="contact" class="page-section hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <!-- Header -->
+            <div class="text-center mb-16">
+                <h1 class="text-4xl font-bold text-foreground mb-4">Get In <span class="text-primary">Touch</span></h1>
+                <p class="text-lg text-muted-foreground">Have a recipe suggestion? Need cooking help? We'd love to hear from you!</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-16">
+                <!-- Contact Form -->
+                <div class="bg-card p-8 rounded-2xl shadow-lg">
+                    <h2 class="text-2xl font-bold text-foreground mb-6">Send us a message</h2>
+                    <form class="space-y-6">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-foreground mb-2">Name</label>
+                                <input type="text" id="name" placeholder="Your name" 
+                                       class="w-full px-4 py-3 rounded-lg bg-background border border-border text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-foreground mb-2">Email</label>
+                                <input type="email" id="email" placeholder="your@email.com" 
+                                       class="w-full px-4 py-3 rounded-lg bg-background border border-border text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="reason" class="block text-sm font-medium text-foreground mb-2">Reason for Contact</label>
+                            <select id="reason" class="w-full px-4 py-3 rounded-lg bg-background border border-border text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                <option>Select a reason</option>
+                                <option>Recipe Suggestion</option>
+                                <option>Cooking Help</option>
+                                <option>Website Feedback</option>
+                                <option>Partnership</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-foreground mb-2">Message</label>
+                            <textarea id="message" rows="4" placeholder="Tell us how we can help you..." 
+                                      class="w-full px-4 py-3 rounded-lg bg-background border border-border text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-primary text-primary-foreground py-3 rounded-xl font-semibold hover:bg-green-700 transition-colors btn-scale flex items-center justify-center space-x-2">
+                            <span>Send Message</span>
+                            <i data-feather="send" class="w-5 h-5"></i>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Contact Info & FAQ -->
+                <div class="space-y-8">
+                    <!-- Other ways to reach us -->
+                    <div>
+                        <h3 class="text-xl font-bold text-foreground mb-6">Other ways to reach us</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start space-x-3">
+                                <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i data-feather="mail" class="w-5 h-5 text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-foreground">Email Us</h4>
+                                    <p class="text-muted-foreground">hello@sathikorecipe.com</p>
+                                    <p class="text-sm text-muted-foreground">We'll get back to you within 24 hours</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="w-10 h-10 bg-accent rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i data-feather="message-circle" class="w-5 h-5 text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-foreground">Join Our Community</h4>
+                                    <p class="text-muted-foreground">Discord Server</p>
+                                    <p class="text-sm text-muted-foreground">Chat with other students and share recipes</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i data-feather="instagram" class="w-5 h-5 text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-foreground">Follow Us</h4>
+                                    <p class="text-muted-foreground">@sathikorecipe</p>
+                                    <p class="text-sm text-muted-foreground">Daily recipe inspiration and cooking tips</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick FAQ -->
+                    <div>
+                        <h3 class="text-xl font-bold text-foreground mb-6">Quick FAQ</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-semibold text-foreground mb-1">Can I submit my own recipes?</h4>
+                                <p class="text-muted-foreground text-sm">Absolutely! We love featuring student-created recipes.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-foreground mb-1">Do you offer cooking classes?</h4>
+                                <p class="text-muted-foreground text-sm">We're planning virtual cooking classes. Stay tuned!</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-foreground mb-1">Is the app free to use?</h4>
+                                <p class="text-muted-foreground text-sm">Yes! All our basic features are completely free.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-card border-t border-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Brand -->
+                <div class="md:col-span-1">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                            <span class="text-primary-foreground font-bold text-sm">SR</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">Sathi Ko Recipe</h3>
+                            <p class="text-xs text-muted-foreground">Simple Recipe</p>
+                        </div>
+                    </div>
+                    <p class="text-muted-foreground text-sm mb-4">
+                        Empowering international students and cooking beginners with simple, affordable, and delicious recipes from around the world.
+                    </p>
+                    <div class="flex space-x-3">
+                        <a href="#" class="w-8 h-8 bg-muted rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+                            <i data-feather="facebook" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 bg-muted rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+                            <i data-feather="instagram" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 bg-muted rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+                            <i data-feather="youtube" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="font-semibold text-foreground mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#recipes" class="text-muted-foreground hover:text-primary transition-colors">All Recipes</a></li>
+                        <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">Quick Meals</a></li>
+                        <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">Budget Recipes</a></li>
+                        <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">Vegetarian</a></li>
+                        <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">Trending</a></li>
+                    </ul>
+                </div>
+
+                <!-- Support -->
+                <div>
+                    <h4 class="font-semibold text-foreground mb-4">Support</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">Help Center</a></li>
+                        <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">Cooking Tips</a></li>
+                        <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">Submit Recipe</a></li>
+                        <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div>
+                    <h4 class="font-semibold text-foreground mb-4">Stay Updated</h4>
+                    <p class="text-muted-foreground text-sm mb-4">Get weekly recipe inspiration and cooking tips delivered to your inbox.</p>
+                    <div class="flex">
+                        <input type="email" placeholder="Your email" 
+                               class="flex-1 px-3 py-2 text-sm rounded-l-lg bg-background border border-border text-foreground focus:outline-none focus:ring-1 focus:ring-primary">
+                        <button class="bg-primary text-primary-foreground px-4 py-2 rounded-r-lg hover:bg-green-700 transition-colors">
+                            <i data-feather="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-border mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center">
+                <p class="text-muted-foreground text-sm">© 2024 Sathi Ko Recipe. Made with <span class="text-red-500">❤</span> for students worldwide.</p>
+                <p class="text-muted-foreground text-sm mt-2 sm:mt-0">Made with <span class="text-red-500">❤</span> by students, for students.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+        });
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            html.classList.add('dark');
+        }
+
+        // Mobile Menu
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const closeMobileMenu = document.getElementById('close-mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('open');
+        });
+
+        closeMobileMenu.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                mobileMenu.classList.remove('open');
+            }
+        });
+
+        // Page Navigation
+        const navLinks = document.querySelectorAll('.nav-link, a[href^="#"]');
+        const sections = document.querySelectorAll('.page-section');
+
+        // TODO: Implement single-page navigation with proper routing
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                showSection(targetId);
+                
+                // Close mobile menu if open
+                mobileMenu.classList.remove('open');
+                
+                // Update active nav link
+                document.querySelectorAll('.nav-link').forEach(nl => nl.classList.remove('text-primary'));
+                link.classList.add('text-primary');
+            });
+        });
+
+        function showSection(sectionId) {
+            sections.forEach(section => {
+                section.classList.add('hidden');
+            });
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // Filter Pills
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.filter-pill')) {
+                const pill = e.target.closest('.filter-pill');
+                
+                // Remove active class from siblings
+                pill.parentElement.querySelectorAll('.filter-pill').forEach(p => {
+                    p.classList.remove('active');
+                });
+                
+                // Add active class to clicked pill
+                pill.classList.add('active');
+                
+                // TODO: Implement filtering logic
+                console.log('Filter clicked:', pill.textContent.trim());
+            }
+        });
+
+        // Recipe Card View Recipe Buttons
+        document.addEventListener('click', (e) => {
+            if (e.target.textContent === 'View Recipe') {
+                e.preventDefault();
+                showSection('recipe-detail');
+                
+                // Update nav state
+                document.querySelectorAll('.nav-link').forEach(nl => nl.classList.remove('text-primary'));
+            }
+        });
+
+        // Back to Recipes Button
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('button') && e.target.textContent.includes('Back to Recipes')) {
+                e.preventDefault();
+                showSection('recipes');
+                
+                // Update nav state
+                document.querySelectorAll('.nav-link').forEach(nl => nl.classList.remove('text-primary'));
+                document.querySelector('a[href="#recipes"]').classList.add('text-primary');
+            }
+        });
+
+        // CTA Buttons
+        document.addEventListener('click', (e) => {
+            if (e.target.textContent === 'Explore Recipes' || e.target.textContent === 'View All Recipes') {
+                e.preventDefault();
+                showSection('recipes');
+                
+                // Update nav state
+                document.querySelectorAll('.nav-link').forEach(nl => nl.classList.remove('text-primary'));
+                document.querySelector('a[href="#recipes"]').classList.add('text-primary');
+            }
+        });
+
+        // Contact Form Submission
+        document.addEventListener('submit', (e) => {
+            if (e.target.querySelector('button[type="submit"]')?.textContent.includes('Send Message')) {
+                e.preventDefault();
+                
+                // TODO: Implement form validation and submission
+                const formData = new FormData(e.target);
+                console.log('Form submitted:', Object.fromEntries(formData));
+                
+                // Show success message (placeholder)
+                alert('Thank you for your message! We\'ll get back to you soon.');
+                e.target.reset();
+            }
+        });
+
+        // Ingredient Checkboxes
+        document.addEventListener('change', (e) => {
+            if (e.target.type === 'checkbox' && e.target.closest('li')) {
+                const li = e.target.closest('li');
+                if (e.target.checked) {
+                    li.classList.add('opacity-60', 'line-through');
+                } else {
+                    li.classList.remove('opacity-60', 'line-through');
+                }
+            }
+        });
+
+        // Copy Ingredients to Clipboard
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('button[title="Copy to clipboard"]')) {
+                e.preventDefault();
+                
+                // TODO: Implement clipboard functionality
+                const ingredients = Array.from(document.querySelectorAll('#recipe-detail li span'))
+                    .map(span => span.textContent).join('\n');
+                
+                // Fallback for older browsers
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(ingredients).then(() => {
+                        // Show feedback
+                        const btn = e.target.closest('button');
+                        const icon = btn.querySelector('i');
+                        icon.setAttribute('data-feather', 'check');
+                        feather.replace();
+                        
+                        setTimeout(() => {
+                            icon.setAttribute('data-feather', 'copy');
+                            feather.replace();
+                        }, 2000);
+                    });
+                }
+            }
+        });
+
+        // Cooking Mode (placeholder for future implementation)
+        document.addEventListener('click', (e) => {
+            if (e.target.textContent === 'Start Cooking Mode') {
+                e.preventDefault();
+                // TODO: Implement cooking mode with step-by-step navigation
+                console.log('Starting cooking mode...');
+                alert('Cooking Mode coming soon! This will provide step-by-step instructions with timers.');
+            }
+        });
+
+        // Search functionality
+        document.addEventListener('submit', (e) => {
+            if (e.target.querySelector('input[placeholder="Search recipes..."]')) {
+                e.preventDefault();
+                const searchTerm = e.target.querySelector('input').value;
+                // TODO: Implement search functionality
+                console.log('Searching for:', searchTerm);
+                
+                // Navigate to recipes page
+                showSection('recipes');
+                document.querySelectorAll('.nav-link').forEach(nl => nl.classList.remove('text-primary'));
+                document.querySelector('a[href="#recipes"]').classList.add('text-primary');
+            }
+        });
+
+        // Initialize with home page
+        showSection('home');
+        document.querySelector('a[href="#home"]').classList.add('text-primary');
+    </script>
+</body>
+</html>

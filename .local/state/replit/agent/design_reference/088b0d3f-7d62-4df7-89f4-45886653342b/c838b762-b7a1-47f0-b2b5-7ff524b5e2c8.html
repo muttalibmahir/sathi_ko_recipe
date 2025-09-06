@@ -1,0 +1,1711 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sathi Ko Recipe - Your hub for delicious food!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/heroicons@2.0.18/24/outline/index.js" type="module"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          borderRadius: {
+            lg: "var(--radius)",
+            md: "calc(var(--radius) - 2px)",
+            sm: "calc(var(--radius) - 4px)",
+          },
+          colors: {
+            background: "var(--background)",
+            foreground: "var(--foreground)",
+            card: {
+              DEFAULT: "var(--card)",
+              foreground: "var(--card-foreground)",
+            },
+            popover: {
+              DEFAULT: "var(--popover)",
+              foreground: "var(--popover-foreground)",
+            },
+            primary: {
+              DEFAULT: "var(--primary)",
+              foreground: "var(--primary-foreground)",
+            },
+            secondary: {
+              DEFAULT: "var(--secondary)",
+              foreground: "var(--secondary-foreground)",
+            },
+            muted: {
+              DEFAULT: "var(--muted)",
+              foreground: "var(--muted-foreground)",
+            },
+            accent: {
+              DEFAULT: "var(--accent)",
+              foreground: "var(--accent-foreground)",
+            },
+            destructive: {
+              DEFAULT: "var(--destructive)",
+              foreground: "var(--destructive-foreground)",
+            },
+            border: "var(--border)",
+            input: "var(--input)",
+            ring: "var(--ring)",
+          },
+          fontFamily: {
+            sans: ["Inter", "system-ui", "sans-serif"],
+            heading: ["Plus Jakarta Sans", "system-ui", "sans-serif"],
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'fade-in': 'fadeIn 0.5s ease-in-out',
+            'scale-in': 'scaleIn 0.3s ease-out',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            fadeIn: {
+              '0%': { opacity: '0', transform: 'translateY(20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            scaleIn: {
+              '0%': { transform: 'scale(0.95)', opacity: '0' },
+              '100%': { transform: 'scale(1)', opacity: '1' },
+            },
+          }
+        },
+      }
+    };
+    </script>
+    <style>
+      :root {
+        --background: hsl(0 0% 100%);
+        --foreground: hsl(210 12% 16%);
+        --card: hsl(0 0% 100%);
+        --card-foreground: hsl(210 12% 16%);
+        --popover: hsl(0 0% 100%);
+        --popover-foreground: hsl(210 12% 16%);
+        --primary: hsl(140 30% 36%);
+        --primary-foreground: hsl(0 0% 98%);
+        --secondary: hsl(140 20% 85%);
+        --secondary-foreground: hsl(140 30% 20%);
+        --muted: hsl(140 10% 95%);
+        --muted-foreground: hsl(210 12% 45%);
+        --accent: hsl(42 100% 58%);
+        --accent-foreground: hsl(210 12% 16%);
+        --destructive: hsl(0 84% 60%);
+        --destructive-foreground: hsl(0 0% 98%);
+        --border: hsl(140 10% 90%);
+        --input: hsl(140 10% 95%);
+        --ring: hsl(140 30% 36%);
+        --radius: 0.75rem;
+      }
+
+      .dark {
+        --background: hsl(210 43% 6%);
+        --foreground: hsl(0 0% 95%);
+        --card: hsl(210 40% 8%);
+        --card-foreground: hsl(0 0% 95%);
+        --popover: hsl(210 40% 8%);
+        --popover-foreground: hsl(0 0% 95%);
+        --primary: hsl(140 35% 45%);
+        --primary-foreground: hsl(0 0% 98%);
+        --secondary: hsl(210 40% 12%);
+        --secondary-foreground: hsl(0 0% 85%);
+        --muted: hsl(210 40% 10%);
+        --muted-foreground: hsl(0 0% 65%);
+        --accent: hsl(42 90% 55%);
+        --accent-foreground: hsl(210 43% 6%);
+        --destructive: hsl(0 75% 55%);
+        --destructive-foreground: hsl(0 0% 98%);
+        --border: hsl(210 40% 15%);
+        --input: hsl(210 40% 12%);
+        --ring: hsl(140 35% 45%);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Inter', system-ui, sans-serif;
+        transition: all 0.3s ease;
+      }
+
+      .font-heading {
+        font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      }
+
+      .recipe-card {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .recipe-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      }
+
+      .dark .recipe-card:hover {
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      }
+
+      .btn-primary {
+        transition: all 0.2s ease;
+      }
+
+      .btn-primary:hover {
+        transform: scale(1.05);
+      }
+
+      .btn-primary:active {
+        transform: scale(0.98);
+      }
+
+      .nav-link {
+        position: relative;
+        transition: all 0.3s ease;
+      }
+
+      .nav-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -4px;
+        left: 50%;
+        background: var(--accent);
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+      }
+
+      .nav-link:hover::after,
+      .nav-link.active::after {
+        width: 100%;
+      }
+
+      .hero-gradient {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      }
+
+      .card-gradient {
+        background: linear-gradient(135deg, var(--card) 0%, var(--muted) 100%);
+      }
+
+      .filter-chip {
+        transition: all 0.2s ease;
+      }
+
+      .filter-chip:hover {
+        transform: translateY(-2px);
+      }
+
+      .filter-chip.active {
+        background: var(--primary);
+        color: var(--primary-foreground);
+      }
+
+      .page-section {
+        display: none;
+      }
+
+      .page-section.active {
+        display: block;
+        animation: fade-in 0.5s ease-in-out;
+      }
+
+      @media (max-width: 768px) {
+        .recipe-card:hover {
+          transform: translateY(-4px);
+        }
+      }
+    </style>
+</head>
+<body class="bg-background text-foreground transition-colors duration-300">
+  <!-- Navigation -->
+  <nav class="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <!-- Logo -->
+        <div class="flex items-center space-x-2">
+          <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+            <span class="text-primary-foreground font-bold text-xl">S</span>
+          </div>
+          <div>
+            <h1 class="font-heading font-bold text-xl text-foreground">Sathi Ko Recipe</h1>
+            <p class="text-xs text-muted-foreground">Your hub for delicious food!</p>
+          </div>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="#" class="nav-link active text-foreground hover:text-primary" onclick="showPage('home')">Home</a>
+          <a href="#" class="nav-link text-foreground hover:text-primary" onclick="showPage('recipes')">Recipes</a>
+          <a href="#" class="nav-link text-foreground hover:text-primary" onclick="showPage('about')">About Us</a>
+          <a href="#" class="nav-link text-foreground hover:text-primary" onclick="showPage('contact')">Contact</a>
+        </div>
+
+        <!-- Theme Toggle & Mobile Menu -->
+        <div class="flex items-center space-x-4">
+          <button id="theme-toggle" class="p-2 rounded-lg bg-muted hover:bg-secondary transition-colors">
+            <svg class="w-5 h-5 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+            </svg>
+            <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+            </svg>
+          </button>
+          
+          <!-- Mobile Menu Button -->
+          <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg bg-muted hover:bg-secondary transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Navigation -->
+      <div id="mobile-menu" class="hidden md:hidden pb-4">
+        <div class="flex flex-col space-y-2">
+          <a href="#" class="nav-link block px-3 py-2 text-foreground hover:text-primary" onclick="showPage('home')">Home</a>
+          <a href="#" class="nav-link block px-3 py-2 text-foreground hover:text-primary" onclick="showPage('recipes')">Recipes</a>
+          <a href="#" class="nav-link block px-3 py-2 text-foreground hover:text-primary" onclick="showPage('about')">About Us</a>
+          <a href="#" class="nav-link block px-3 py-2 text-foreground hover:text-primary" onclick="showPage('contact')">Contact</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Home Page -->
+  <section id="home-page" class="page-section active">
+    <!-- Hero Section -->
+    <div class="hero-gradient text-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div class="text-center">
+          <h1 class="font-heading font-bold text-4xl md:text-6xl mb-6 animate-fade-in">
+            Authentic Nepali Recipes
+          </h1>
+          <p class="text-xl md:text-2xl mb-8 opacity-90 max-w-3xl mx-auto animate-fade-in">
+            Discover traditional flavors and simple recipes perfect for international students and food lovers.
+          </p>
+          
+          <!-- Search Bar -->
+          <div class="max-w-2xl mx-auto mb-8 animate-scale-in">
+            <div class="relative">
+              <input 
+                type="text" 
+                placeholder="Search for recipes..." 
+                class="w-full px-6 py-4 pl-12 rounded-xl text-foreground bg-background border border-border focus:outline-none focus:ring-2 focus:ring-primary"
+              >
+              <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Quick Filter Buttons -->
+          <div class="flex flex-wrap justify-center gap-3 mb-8">
+            <button class="filter-chip px-6 py-2 bg-white/20 text-white rounded-full hover:bg-white/30 transition-all">
+              All Recipes
+            </button>
+            <button class="filter-chip px-6 py-2 bg-white/20 text-white rounded-full hover:bg-white/30 transition-all">
+              Quick Meals
+            </button>
+            <button class="filter-chip px-6 py-2 bg-white/20 text-white rounded-full hover:bg-white/30 transition-all">
+              Budget Friendly
+            </button>
+            <button class="filter-chip px-6 py-2 bg-white/20 text-white rounded-full hover:bg-white/30 transition-all">
+              Vegetarian
+            </button>
+          </div>
+
+          <button onclick="showPage('recipes')" class="btn-primary bg-accent text-accent-foreground px-8 py-4 rounded-xl font-semibold text-lg hover:bg-accent/90">
+            Explore All Recipes
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trending Recipes Section -->
+    <div class="py-20 bg-muted/30">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="font-heading font-bold text-3xl md:text-4xl text-foreground mb-4">
+            Trending Recipes
+          </h2>
+          <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Discover our most popular authentic Nepali dishes loved by students worldwide
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Recipe Card 1 - Momo -->
+          <div class="recipe-card bg-card rounded-xl overflow-hidden shadow-lg animate-float">
+            <div class="relative">
+              <!-- Traditional Nepali momo (dumplings) steaming in a bamboo steamer -->
+              <img src="https://images.unsplash.com/photo-1564767655658-4e85cac2c4f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" alt="Traditional Nepali Momo" class="w-full h-48 object-cover">
+              <div class="absolute top-4 left-4">
+                <span class="bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-medium">Popular</span>
+              </div>
+            </div>
+            <div class="p-6">
+              <h3 class="font-heading font-semibold text-xl text-card-foreground mb-2">Momo</h3>
+              <p class="text-muted-foreground mb-4">Traditional Nepali dumplings with savory filling</p>
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center space-x-4 text-sm text-muted-foreground">
+                  <span class="flex items-center">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    45 min
+                  </span>
+                  <span class="flex items-center">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                    </svg>
+                    $5.50
+                  </span>
+                </div>
+                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs dark:bg-green-900 dark:text-green-300">
+                  Non-Veg
+                </span>
+              </div>
+              <button onclick="showRecipeDetail('momo')" class="btn-primary w-full bg-primary text-primary-foreground py-2 rounded-lg font-medium hover:bg-primary/90">
+                View Recipe
+              </button>
+            </div>
+          </div>
+
+          <!-- Recipe Card 2 - Dal Bhat -->
+          <div class="recipe-card bg-card rounded-xl overflow-hidden shadow-lg animate-float" style="animation-delay: 0.2s;">
+            <div class="relative">
+              <!-- Traditional Nepali dal bhat (lentils and rice) served on a traditional plate -->
+              <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" alt="Traditional Dal Bhat" class="w-full h-48 object-cover">
+              <div class="absolute top-4 left-4">
+                <span class="bg-accent text-accent-foreground px-3 py-1 rounded-full text-sm font-medium">Student Favorite</span>
+              </div>
+            </div>
+            <div class="p-6">
+              <h3 class="font-heading font-semibold text-xl text-card-foreground mb-2">Dal Bhat</h3>
+              <p class="text-muted-foreground mb-4">Nepal's national dish - lentils with rice</p>
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center space-x-4 text-sm text-muted-foreground">
+                  <span class="flex items-center">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    30 min
+                  </span>
+                  <span class="flex items-center">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                    </svg>
+                    $3.20
+                  </span>
+                </div>
+                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs dark:bg-green-900 dark:text-green-300">
+                  Vegetarian
+                </span>
+              </div>
+              <button onclick="showRecipeDetail('dal-bhat')" class="btn-primary w-full bg-primary text-primary-foreground py-2 rounded-lg font-medium hover:bg-primary/90">
+                View Recipe
+              </button>
+            </div>
+          </div>
+
+          <!-- Recipe Card 3 - Yomari -->
+          <div class="recipe-card bg-card rounded-xl overflow-hidden shadow-lg animate-float" style="animation-delay: 0.4s;">
+            <div class="relative">
+              <!-- Traditional Nepali yomari sweet dumplings with artistic presentation -->
+              <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" alt="Traditional Yomari" class="w-full h-48 object-cover">
+              <div class="absolute top-4 left-4">
+                <span class="bg-purple-500 text-white px-3 py-1 rounded-full text-sm font-medium">Festival Special</span>
+              </div>
+            </div>
+            <div class="p-6">
+              <h3 class="font-heading font-semibold text-xl text-card-foreground mb-2">Yomari</h3>
+              <p class="text-muted-foreground mb-4">Traditional sweet steamed dumpling</p>
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center space-x-4 text-sm text-muted-foreground">
+                  <span class="flex items-center">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    60 min
+                  </span>
+                  <span class="flex items-center">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                    </svg>
+                    $4.80
+                  </span>
+                </div>
+                <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded-full text-xs dark:bg-orange-900 dark:text-orange-300">
+                  Dessert
+                </span>
+              </div>
+              <button onclick="showRecipeDetail('yomari')" class="btn-primary w-full bg-primary text-primary-foreground py-2 rounded-lg font-medium hover:bg-primary/90">
+                View Recipe
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-12">
+          <button onclick="showPage('recipes')" class="btn-primary bg-primary text-primary-foreground px-8 py-3 rounded-lg font-semibold hover:bg-primary/90">
+            View All Recipes
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="py-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="font-heading font-bold text-3xl md:text-4xl text-foreground mb-4">
+            Why Choose Sathi Ko Recipe?
+          </h2>
+          <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Perfect for international students and beginners learning authentic Nepali cuisine
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="text-center p-6">
+            <div class="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <h3 class="font-heading font-semibold text-xl text-foreground mb-2">Quick & Easy</h3>
+            <p class="text-muted-foreground">Step-by-step recipes designed for busy student life with simple ingredients</p>
+          </div>
+
+          <div class="text-center p-6">
+            <div class="w-16 h-16 bg-accent/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+              </svg>
+            </div>
+            <h3 class="font-heading font-semibold text-xl text-foreground mb-2">Budget Friendly</h3>
+            <p class="text-muted-foreground">Affordable recipes with cost breakdowns perfect for student budgets</p>
+          </div>
+
+          <div class="text-center p-6">
+            <div class="w-16 h-16 bg-green-500/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+              </svg>
+            </div>
+            <h3 class="font-heading font-semibold text-xl text-foreground mb-2">Authentic Taste</h3>
+            <p class="text-muted-foreground">Traditional Nepali recipes passed down through generations</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recipes Page -->
+  <section id="recipes-page" class="page-section">
+    <div class="py-8 bg-muted/30">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-8">
+          <h1 class="font-heading font-bold text-3xl md:text-4xl text-foreground mb-4">
+            All Recipes
+          </h1>
+          <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Explore our complete collection of authentic Nepali recipes
+          </p>
+        </div>
+
+        <!-- Search and Filters -->
+        <div class="bg-card rounded-xl p-6 mb-8 shadow-lg">
+          <div class="flex flex-col lg:flex-row gap-4">
+            <!-- Search Bar -->
+            <div class="flex-1">
+              <div class="relative">
+                <input 
+                  type="text" 
+                  placeholder="Search recipes..." 
+                  class="w-full px-4 py-3 pl-10 rounded-lg bg-input border border-border focus:outline-none focus:ring-2 focus:ring-primary"
+                >
+                <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Category Filter -->
+            <div class="flex flex-wrap gap-2">
+              <button class="filter-chip active px-4 py-2 bg-primary text-primary-foreground rounded-lg font-medium">
+                All
+              </button>
+              <button class="filter-chip px-4 py-2 bg-muted text-muted-foreground rounded-lg font-medium hover:bg-secondary">
+                Soup
+              </button>
+              <button class="filter-chip px-4 py-2 bg-muted text-muted-foreground rounded-lg font-medium hover:bg-secondary">
+                Main Dish
+              </button>
+              <button class="filter-chip px-4 py-2 bg-muted text-muted-foreground rounded-lg font-medium hover:bg-secondary">
+                Appetizer
+              </button>
+              <button class="filter-chip px-4 py-2 bg-muted text-muted-foreground rounded-lg font-medium hover:bg-secondary">
+                Dessert
+              </button>
+              <button class="filter-chip px-4 py-2 bg-muted text-muted-foreground rounded-lg font-medium hover:bg-secondary">
+                Sauce
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recipe Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <!-- All 23 Recipe Cards with provided images -->
+          
+          <!-- Recipe 1 - Quanti -->
+          <div class="recipe-card bg-card rounded-xl overflow-hidden shadow-lg">
+            <div class="relative">
+              <!-- Mixed bean and legume curry in traditional Nepali style -->
+              <img src="https://images.unsplash.com/photo-1455853659719-4b521eebc76d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" alt="Quanti - Mixed Bean Curry" class="w-full h-48 object-cover">
+            </div>
+            <div class="p-4">
+              <h3 class="font-heading font-semibold text-lg text-card-foreground mb-2">Quanti</h3>
+              <p class="text-muted-foreground text-sm mb-3">Mixed bean curry - nutritious and filling</p>
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center space-x-3 text-xs text-muted-foreground">
+                  <span>40 min</span>
+                  <span>$3.50</span>
+                </div>
+                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs dark:bg-green-900 dark:text-green-300">Veg</span>
+              </div>
+              <button onclick="showRecipeDetail('quanti')" class="btn-primary w-full bg-primary text-primary-foreground py-2 rounded-lg text-sm font-medium">
+                View Recipe
+              </button>
+            </div>
+          </div>
+
+          <!-- Recipe 2 - Sishne Jhol -->
+          <div class="recipe-card bg-card rounded-xl overflow-hidden shadow-lg">
+            <div class="relative">
+              <img src="./attached_assets/Sishne Jhol_1756384555813.png" alt="Sishne Jhol - Green Coriander Soup" class="w-full h-48 object-cover">
+            </div>
+            <div class="p-4">
+              <h3 class="font-heading font-semibold text-lg text-card-foreground mb-2">Sishne Jhol</h3>
+              <p class="text-muted-foreground text-sm mb-3">Fresh coriander soup with herbs</p>
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center space-x-3 text-xs text-muted-foreground">
+                  <span>25 min</span>
+                  <span>$2.80</span>
+                </div>
+                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs dark:bg-green-900 dark:text-green-300">Veg</span>
+              </div>
+              <button onclick="showRecipeDetail('sishne-jhol')" class="btn-primary w-full bg-primary text-primary-foreground py-2 rounded-lg text-sm font-medium">
+                View Recipe
+              </button>
+            </div>
+          </div>
+
+          <!-- Recipe 3 - Phando -->
+          <div class="recipe-card bg-card rounded-xl overflow-hidden shadow-lg">
+            <div class="relative">
+              <!-- Traditional Nepali potato curry with spices -->
+              <img src="https://images.unsplash.com/photo-1606491956689-2ea866880c84?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" alt="Phando - Potato Curry" class="w-full h-48 object-cover">
+            </div>
+            <div class="p-4">
+              <h3 class="font-heading font-semibold text-lg text-card-foreground mb-2">Phando</h3>
+              <p class="text-muted-foreground text-sm mb-3">Spiced potato curry</p>
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center space-x-3 text-xs text-muted-foreground">
+                  <span>30 min</span>
+                  <span>$2.20</span>
+                </div>
+                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs dark:bg-green-900 dark:text-green-300">Veg</span>
+              </div>
+              <button onclick="showRecipeDetail('phando')" class="btn-primary w-full bg-primary text-primary-foreground py-2 rounded-lg text-sm font-medium">
+                View Recipe
+              </button>
+            </div>
+          </div>
+
+          <!-- Recipe 4 - Chukar-Khanda -->
+          <div class="recipe-card bg-card rounded-xl overflow-hidden shadow-lg">
+            <div class="relative">
+              <!-- Traditional Nepali sweet confection with sugar and spices -->
+              <img src="https://pixabay.com/get/g30886bd4a114ce4c502d25ae5f44a7200b569dd99f8fe446613c42ae285f89becc60aae84e4cba992c33e922eab59715b9b261e468aee6845ba17364c23bdf71_1280.jpg" alt="Chukar-Khanda Sweet" class="w-full h-48 object-cover">
+            </div>
+            <div class="p-4">
+              <h3 class="font-heading font-semibold text-lg text-card-foreground mb-2">Chukar-Khanda</h3>
+              <p class="text-muted-foreground text-sm mb-3">Traditional sweet confection</p>
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center space-x-3 text-xs text-muted-foreground">
+                  <span>20 min</span>
+                  <span>$3.00</span>
+                </div>
+                <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded-full text-xs dark:bg-orange-900 dark:text-orange-300">Dessert</span>
+              </div>
+              <button onclick="showRecipeDetail('chukar-khanda')" class="btn-primary w-full bg-primary text-primary-foreground py-2 rounded-lg text-sm font-medium">
+                View Recipe
+              </button>
+            </div>
+          </div>
+
+          <!-- Recipe 5 - Karesa Bari -->
+          <div class="recipe-card bg-card rounded-xl overflow-hidden shadow-lg">
+            <div class="relative">
+              <!-- Traditional Nepali bitter gourd fritters -->
+              <img src="https://pixabay.com/get/g865986ba8a10e1ff3e34853a5e7f2eab03fbbe3d688684a26a179214295c2502d718aed95dcf780fa732a893dad90e4fd5d737d6f875253081a29c8ce4b877ad_1280.jpg" alt="Karesa Bari - Bitter Gourd Fritters" class="w-full h-48 object-cover">
+            </div>
+            <div class="p-4">
+              <h3 class="font-heading font-semibold text-lg text-card-foreground mb-2">Karesa Bari</h3>
+              <p class="text-muted-foreground text-sm mb-3">Bitter gourd fritters</p>
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center space-x-3 text-xs text-muted-foreground">
+                  <span>35 min</span>
+                  <span>$4.20</span>
+                </div>
+                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs dark:bg-green-900 dark:text-green-300">Veg</span>
+              </div>
+              <button onclick="showRecipeDetail('karesa-bari')" class="btn-primary w-full bg-primary text-primary-foreground py-2 rounded-lg text-sm font-medium">
+                View Recipe
+              </button>
+            </div>
+          </div>
+
+          <!-- Recipe 6 - Chukauni -->
+          <div class="recipe-card bg-card rounded-xl overflow-hidden shadow-lg">
+            <div class="relative">
+              <!-- Traditional Nepali spiced yogurt drink -->
+              <img src="https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" alt="Chukauni - Spiced Yogurt" class="w-full h-48 object-cover">
+            </div>
+            <div class="p-4">
+              <h3 class="font-heading font-semibold text-lg text-card-foreground mb-2">Chukauni</h3>
+              <p class="text-muted-foreground text-sm mb-3">Spiced yogurt side dish</p>
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center space-x-3 text-xs text-muted-foreground">
+                  <span>15 min</span>
+                  <span>$1.80</span>
+                </div>
+                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs dark:bg-green-900 dark:text-green-300">Veg</span>
+              </div>
+              <button onclick="showRecipeDetail('chukauni')" class="btn-primary w-full bg-primary text-primary-foreground py-2 rounded-lg text-sm font-medium">
+                View Recipe
+              </button>
+            </div>
+          </div>
+
+          <!-- Recipe 7 - Sekuwa -->
+          <div class="recipe-card bg-card rounded-xl overflow-hidden shadow-lg">
+            <div class="relative">
+              <!-- Traditional Nepali grilled meat skewers -->
+              <img src="https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" alt="Sekuwa - Grilled Meat Skewers" class="w-full h-48 object-cover">
+            </div>
+            <div class="p-4">
+              <h3 class="font-heading font-semibold text-lg text-card-foreground mb-2">Sekuwa</h3>
+              <p class="text-muted-foreground text-sm mb-3">Grilled meat skewers</p>
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center space-x-3 text-xs text-muted-foreground">
+                  <span>45 min</span>
+                  <span>$7.50</span>
+                </div>
+                <span class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs dark:bg-red-900 dark:text-red-300">Non-Veg</span>
+              </div>
+              <button onclick="showRecipeDetail('sekuwa')" class="btn-primary w-full bg-primary text-primary-foreground py-2 rounded-lg text-sm font-medium">
+                View Recipe
+              </button>
+            </div>
+          </div>
+
+          <!-- Recipe 8 - Taruwa -->
+          <div class="recipe-card bg-card rounded-xl overflow-hidden shadow-lg">
+            <div class="relative">
+              <!-- Traditional Nepali vegetable fritters -->
+              <img src="https://pixabay.com/get/g8d31204a357ae05056c5606191dcfb2c6b7a3cc94e6967fd499801723830ebdbdd097f070350808ebc20be134db27cd7a4f78cd48877378d46b94118f8f5f17c_1280.jpg" alt="Taruwa - Vegetable Fritters" class="w-full h-48 object-cover">
+            </div>
+            <div class="p-4">
+              <h3 class="font-heading font-semibold text-lg text-card-foreground mb-2">Taruwa</h3>
+              <p class="text-muted-foreground text-sm mb-3">Crispy vegetable fritters</p>
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center space-x-3 text-xs text-muted-foreground">
+                  <span>25 min</span>
+                  <span>$3.80</span>
+                </div>
+                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs dark:bg-green-900 dark:text-green-300">Veg</span>
+              </div>
+              <button onclick="showRecipeDetail('taruwa')" class="btn-primary w-full bg-primary text-primary-foreground py-2 rounded-lg text-sm font-medium">
+                View Recipe
+              </button>
+            </div>
+          </div>
+
+          <!-- Continue with remaining recipes... -->
+          <!-- Recipe 16 - Sikarni -->
+          <div class="recipe-card bg-card rounded-xl overflow-hidden shadow-lg">
+            <div class="relative">
+              <img src="./attached_assets/ChatGPT Image Jul 24, 2025, 11_37_26 AM_1756384555814.png" alt="Sikarni - Sweet Yogurt Dessert" class="w-full h-48 object-cover">
+            </div>
+            <div class="p-4">
+              <h3 class="font-heading font-semibold text-lg text-card-foreground mb-2">Sikarni</h3>
+              <p class="text-muted-foreground text-sm mb-3">Sweet yogurt dessert with nuts</p>
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center space-x-3 text-xs text-muted-foreground">
+                  <span>20 min</span>
+                  <span>$4.50</span>
+                </div>
+                <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded-full text-xs dark:bg-orange-900 dark:text-orange-300">Dessert</span>
+              </div>
+              <button onclick="showRecipeDetail('sikarni')" class="btn-primary w-full bg-primary text-primary-foreground py-2 rounded-lg text-sm font-medium">
+                View Recipe
+              </button>
+            </div>
+          </div>
+
+          <!-- Recipe 17 - Dahi Phal -->
+          <div class="recipe-card bg-card rounded-xl overflow-hidden shadow-lg">
+            <div class="relative">
+              <img src="./attached_assets/ChatGPT Image Jul 24, 2025, 11_21_32 AM_1756384555815.png" alt="Dahi Phal - Fruit Yogurt" class="w-full h-48 object-cover">
+            </div>
+            <div class="p-4">
+              <h3 class="font-heading font-semibold text-lg text-card-foreground mb-2">Dahi Phal</h3>
+              <p class="text-muted-foreground text-sm mb-3">Fresh fruit with yogurt</p>
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center space-x-3 text-xs text-muted-foreground">
+                  <span>15 min</span>
+                  <span>$3.20</span>
+                </div>
+                <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded-full text-xs dark:bg-orange-900 dark:text-orange-300">Dessert</span>
+              </div>
+              <button onclick="showRecipeDetail('dahi-phal')" class="btn-primary w-full bg-primary text-primary-foreground py-2 rounded-lg text-sm font-medium">
+                View Recipe
+              </button>
+            </div>
+          </div>
+
+          <!-- Recipe 20 - Lasune Golbhenda -->
+          <div class="recipe-card bg-card rounded-xl overflow-hidden shadow-lg">
+            <div class="relative">
+              <img src="./attached_assets/ChatGPT Image Jul 24, 2025, 11_24_30 AM_1756384555815.png" alt="Lasune Golbhenda - Garlic Tomato Chutney" class="w-full h-48 object-cover">
+            </div>
+            <div class="p-4">
+              <h3 class="font-heading font-semibold text-lg text-card-foreground mb-2">Lasune Golbhenda</h3>
+              <p class="text-muted-foreground text-sm mb-3">Spicy garlic tomato chutney</p>
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center space-x-3 text-xs text-muted-foreground">
+                  <span>20 min</span>
+                  <span>$2.50</span>
+                </div>
+                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs dark:bg-blue-900 dark:text-blue-300">Sauce</span>
+              </div>
+              <button onclick="showRecipeDetail('lasune-golbhenda')" class="btn-primary w-full bg-primary text-primary-foreground py-2 rounded-lg text-sm font-medium">
+                View Recipe
+              </button>
+            </div>
+          </div>
+
+          <!-- Recipe 21 - Dhaniya Sada -->
+          <div class="recipe-card bg-card rounded-xl overflow-hidden shadow-lg">
+            <div class="relative">
+              <img src="./attached_assets/ChatGPT Image Jul 24, 2025, 11_44_41 AM_1756384555814.png" alt="Dhaniya Sada - Coriander Chutney" class="w-full h-48 object-cover">
+            </div>
+            <div class="p-4">
+              <h3 class="font-heading font-semibold text-lg text-card-foreground mb-2">Dhaniya Sada</h3>
+              <p class="text-muted-foreground text-sm mb-3">Fresh coriander chutney</p>
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center space-x-3 text-xs text-muted-foreground">
+                  <span>10 min</span>
+                  <span>$1.50</span>
+                </div>
+                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs dark:bg-blue-900 dark:text-blue-300">Sauce</span>
+              </div>
+              <button onclick="showRecipeDetail('dhaniya-sada')" class="btn-primary w-full bg-primary text-primary-foreground py-2 rounded-lg text-sm font-medium">
+                View Recipe
+              </button>
+            </div>
+          </div>
+
+          <!-- Recipe 22 - Tilko Chhop -->
+          <div class="recipe-card bg-card rounded-xl overflow-hidden shadow-lg">
+            <div class="relative">
+              <img src="./attached_assets/ChatGPT Image Jul 24, 2025, 11_50_42 AM_1756384555813.png" alt="Tilko Chhop - Sesame Paste" class="w-full h-48 object-cover">
+            </div>
+            <div class="p-4">
+              <h3 class="font-heading font-semibold text-lg text-card-foreground mb-2">Tilko Chhop</h3>
+              <p class="text-muted-foreground text-sm mb-3">Traditional sesame paste</p>
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center space-x-3 text-xs text-muted-foreground">
+                  <span>15 min</span>
+                  <span>$2.80</span>
+                </div>
+                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs dark:bg-blue-900 dark:text-blue-300">Sauce</span>
+              </div>
+              <button onclick="showRecipeDetail('tilko-chhop')" class="btn-primary w-full bg-primary text-primary-foreground py-2 rounded-lg text-sm font-medium">
+                View Recipe
+              </button>
+            </div>
+          </div>
+
+          <!-- Recipe 23 - Sathi ko Mixed Thali -->
+          <div class="recipe-card bg-card rounded-xl overflow-hidden shadow-lg">
+            <div class="relative">
+              <img src="./attached_assets/ChatGPT Image Jul 24, 2025, 11_53_18 AM_1756384555813.png" alt="Sathi ko Mixed Thali - Complete Meal Set" class="w-full h-48 object-cover">
+            </div>
+            <div class="p-4">
+              <h3 class="font-heading font-semibold text-lg text-card-foreground mb-2">Sathi ko Mixed Thali</h3>
+              <p class="text-muted-foreground text-sm mb-3">Complete traditional meal set</p>
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center space-x-3 text-xs text-muted-foreground">
+                  <span>90 min</span>
+                  <span>$12.50</span>
+                </div>
+                <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs dark:bg-purple-900 dark:text-purple-300">Complete</span>
+              </div>
+              <button onclick="showRecipeDetail('mixed-thali')" class="btn-primary w-full bg-primary text-primary-foreground py-2 rounded-lg text-sm font-medium">
+                View Recipe
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recipe Detail Page -->
+  <section id="recipe-detail-page" class="page-section">
+    <div class="py-8">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Back Button -->
+        <button onclick="showPage('recipes')" class="flex items-center text-primary hover:text-primary/80 mb-6">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+          Back to Recipes
+        </button>
+
+        <!-- Recipe Header -->
+        <div class="bg-card rounded-xl overflow-hidden shadow-lg mb-8">
+          <div class="relative">
+            <!-- Traditional Nepali momo (dumplings) steaming in a bamboo steamer -->
+            <img id="recipe-detail-image" src="https://images.unsplash.com/photo-1564767655658-4e85cac2c4f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=600" alt="Recipe Image" class="w-full h-64 md:h-80 object-cover">
+            <div class="absolute inset-0 bg-black/40"></div>
+            <div class="absolute bottom-6 left-6 text-white">
+              <h1 id="recipe-detail-title" class="font-heading font-bold text-3xl md:text-4xl mb-2">Momo</h1>
+              <p id="recipe-detail-description" class="text-xl opacity-90">Traditional Nepali dumplings with savory filling</p>
+            </div>
+          </div>
+
+          <div class="p-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+              <div class="text-center">
+                <div class="text-2xl font-bold text-primary" id="recipe-servings">4</div>
+                <div class="text-muted-foreground text-sm">Servings</div>
+              </div>
+              <div class="text-center">
+                <div class="text-2xl font-bold text-primary" id="recipe-time">45</div>
+                <div class="text-muted-foreground text-sm">Minutes</div>
+              </div>
+              <div class="text-center">
+                <div class="text-2xl font-bold text-primary" id="recipe-cost">$5.50</div>
+                <div class="text-muted-foreground text-sm">Cost</div>
+              </div>
+              <div class="text-center">
+                <div class="text-2xl font-bold text-primary" id="recipe-difficulty">Easy</div>
+                <div class="text-muted-foreground text-sm">Difficulty</div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap gap-3">
+              <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm dark:bg-green-900 dark:text-green-300" id="recipe-diet">
+                Non-Vegetarian
+              </span>
+              <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm dark:bg-blue-900 dark:text-blue-300" id="recipe-type">
+                Main Dish
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recipe Content -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <!-- Ingredients -->
+          <div class="lg:col-span-1">
+            <div class="bg-card rounded-xl p-6 shadow-lg sticky top-24">
+              <div class="flex items-center justify-between mb-4">
+                <h2 class="font-heading font-bold text-xl text-card-foreground">Ingredients</h2>
+                <button class="text-primary hover:text-primary/80 text-sm">
+                  <svg class="w-4 h-4 mr-1 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <ul id="recipe-ingredients" class="space-y-2 text-card-foreground">
+                <li class="flex justify-between">
+                  <span>Ground meat</span>
+                  <span class="text-muted-foreground">500g</span>
+                </li>
+                <li class="flex justify-between">
+                  <span>All-purpose flour</span>
+                  <span class="text-muted-foreground">2 cups</span>
+                </li>
+                <li class="flex justify-between">
+                  <span>Onion</span>
+                  <span class="text-muted-foreground">1 medium</span>
+                </li>
+                <li class="flex justify-between">
+                  <span>Ginger-garlic paste</span>
+                  <span class="text-muted-foreground">2 tbsp</span>
+                </li>
+                <li class="flex justify-between">
+                  <span>Soy sauce</span>
+                  <span class="text-muted-foreground">2 tbsp</span>
+                </li>
+                <li class="flex justify-between">
+                  <span>Salt & pepper</span>
+                  <span class="text-muted-foreground">to taste</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Instructions -->
+          <div class="lg:col-span-2">
+            <div class="bg-card rounded-xl p-6 shadow-lg mb-6">
+              <div class="flex items-center justify-between mb-6">
+                <h2 class="font-heading font-bold text-xl text-card-foreground">Instructions</h2>
+                <button onclick="toggleCookingMode()" class="bg-primary text-primary-foreground px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary/90">
+                  Cooking Mode
+                </button>
+              </div>
+              
+              <div id="recipe-steps" class="space-y-4">
+                <div class="flex gap-4">
+                  <div class="flex-shrink-0 w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-semibold">
+                    1
+                  </div>
+                  <div>
+                    <p class="text-card-foreground">Prepare the dough by mixing flour with water and a pinch of salt. Knead until smooth and let rest for 30 minutes.</p>
+                  </div>
+                </div>
+                <div class="flex gap-4">
+                  <div class="flex-shrink-0 w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-semibold">
+                    2
+                  </div>
+                  <div>
+                    <p class="text-card-foreground">Mix ground meat with chopped onions, ginger-garlic paste, soy sauce, salt, and pepper.</p>
+                  </div>
+                </div>
+                <div class="flex gap-4">
+                  <div class="flex-shrink-0 w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-semibold">
+                    3
+                  </div>
+                  <div>
+                    <p class="text-card-foreground">Roll the dough into small circles and place filling in the center.</p>
+                  </div>
+                </div>
+                <div class="flex gap-4">
+                  <div class="flex-shrink-0 w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-semibold">
+                    4
+                  </div>
+                  <div>
+                    <p class="text-card-foreground">Fold and seal the edges to form dumpling shapes.</p>
+                  </div>
+                </div>
+                <div class="flex gap-4">
+                  <div class="flex-shrink-0 w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-semibold">
+                    5
+                  </div>
+                  <div>
+                    <p class="text-card-foreground">Steam for 15-20 minutes until cooked through. Serve hot with tomato chutney.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Nutrition & Tips -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="bg-card rounded-xl p-6 shadow-lg">
+                <h3 class="font-heading font-semibold text-lg text-card-foreground mb-4">Nutrition Facts</h3>
+                <div class="space-y-2 text-sm">
+                  <div class="flex justify-between">
+                    <span class="text-muted-foreground">Calories</span>
+                    <span class="text-card-foreground font-medium">285 kcal</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-muted-foreground">Protein</span>
+                    <span class="text-card-foreground font-medium">18g</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-muted-foreground">Carbs</span>
+                    <span class="text-card-foreground font-medium">28g</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-muted-foreground">Fat</span>
+                    <span class="text-card-foreground font-medium">12g</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-card rounded-xl p-6 shadow-lg">
+                <h3 class="font-heading font-semibold text-lg text-card-foreground mb-4">Cooking Tips</h3>
+                <ul class="space-y-2 text-sm text-muted-foreground">
+                  <li>• Don't overfill the dumplings</li>
+                  <li>• Seal edges tightly to prevent opening</li>
+                  <li>• Steam on high heat for best results</li>
+                  <li>• Serve immediately while hot</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cooking Mode Overlay -->
+    <div id="cooking-mode" class="fixed inset-0 bg-background z-50 hidden">
+      <div class="flex flex-col h-full">
+        <div class="flex items-center justify-between p-4 border-b border-border">
+          <h2 class="font-heading font-bold text-xl">Cooking Mode</h2>
+          <button onclick="toggleCookingMode()" class="text-muted-foreground hover:text-foreground">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+        
+        <div class="flex-1 flex items-center justify-center p-8">
+          <div class="max-w-2xl text-center">
+            <div class="text-6xl font-bold text-primary mb-4" id="cooking-step-number">1</div>
+            <p class="text-2xl mb-8" id="cooking-step-text">Prepare the dough by mixing flour with water and a pinch of salt. Knead until smooth and let rest for 30 minutes.</p>
+            
+            <div class="flex justify-center gap-4 mb-8">
+              <button id="prev-step" onclick="previousStep()" class="bg-secondary text-secondary-foreground px-6 py-3 rounded-lg font-medium">
+                Previous
+              </button>
+              <button id="next-step" onclick="nextStep()" class="bg-primary text-primary-foreground px-6 py-3 rounded-lg font-medium">
+                Next
+              </button>
+            </div>
+
+            <div class="text-muted-foreground">
+              Step <span id="current-step">1</span> of <span id="total-steps">5</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Us Page -->
+  <section id="about-page" class="page-section">
+    <div class="py-16">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Hero Section -->
+        <div class="text-center mb-16">
+          <h1 class="font-heading font-bold text-4xl md:text-5xl text-foreground mb-6">
+            About Sathi Ko Recipe
+          </h1>
+          <p class="text-xl text-muted-foreground max-w-3xl mx-auto">
+            Bringing authentic Nepali flavors to international students and food enthusiasts around the world.
+          </p>
+        </div>
+
+        <!-- Mission Section -->
+        <div class="bg-card rounded-xl p-8 shadow-lg mb-12">
+          <h2 class="font-heading font-bold text-2xl text-card-foreground mb-6">Our Mission</h2>
+          <p class="text-card-foreground leading-relaxed mb-6">
+            At Sathi Ko Recipe, we believe that food is more than just sustenance—it's a bridge that connects us to our heritage, our memories, and our loved ones. Our mission is to make authentic Nepali cuisine accessible to everyone, especially international students who are far from home and seeking comfort in familiar flavors.
+          </p>
+          <p class="text-card-foreground leading-relaxed">
+            We understand the challenges of cooking in a new country with limited resources and unfamiliar ingredients. That's why our recipes are carefully crafted to be simple, budget-friendly, and adaptable to ingredients available in international markets.
+          </p>
+        </div>
+
+        <!-- Story Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
+          <div>
+            <h2 class="font-heading font-bold text-2xl text-foreground mb-6">Our Story</h2>
+            <p class="text-muted-foreground leading-relaxed mb-4">
+              Founded by a group of Nepali students studying abroad, Sathi Ko Recipe was born from a simple desire: to recreate the comforting flavors of home in our tiny student apartments.
+            </p>
+            <p class="text-muted-foreground leading-relaxed mb-4">
+              We spent countless hours experimenting in our dorm kitchens, calling our grandmothers for secret ingredients, and adapting traditional recipes to work with limited equipment and budgets.
+            </p>
+            <p class="text-muted-foreground leading-relaxed">
+              What started as a personal journey soon became a community mission. We realized that many international students shared our struggle, and thus Sathi Ko Recipe was born—a platform where tradition meets practicality.
+            </p>
+          </div>
+          
+          <div class="relative">
+            <!-- Traditional Nepali kitchen with cooking utensils and spices -->
+            <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" alt="Traditional Nepali Kitchen" class="w-full h-80 object-cover rounded-xl shadow-lg">
+            <div class="absolute inset-0 bg-primary/10 rounded-xl"></div>
+          </div>
+        </div>
+
+        <!-- Values Section -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+          <div class="text-center p-6">
+            <div class="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+              </svg>
+            </div>
+            <h3 class="font-heading font-semibold text-xl text-foreground mb-2">Authenticity</h3>
+            <p class="text-muted-foreground">Every recipe is tested and verified by our Nepali grandmothers and aunties to ensure authentic flavors.</p>
+          </div>
+
+          <div class="text-center p-6">
+            <div class="w-16 h-16 bg-accent/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+              </svg>
+            </div>
+            <h3 class="font-heading font-semibold text-xl text-foreground mb-2">Affordability</h3>
+            <p class="text-muted-foreground">Budget-friendly recipes designed specifically for students and young professionals.</p>
+          </div>
+
+          <div class="text-center p-6">
+            <div class="w-16 h-16 bg-green-500/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+              </svg>
+            </div>
+            <h3 class="font-heading font-semibold text-xl text-foreground mb-2">Community</h3>
+            <p class="text-muted-foreground">Building a supportive community of food lovers sharing their culinary journeys.</p>
+          </div>
+        </div>
+
+        <!-- Team Section -->
+        <div class="bg-card rounded-xl p-8 shadow-lg">
+          <h2 class="font-heading font-bold text-2xl text-card-foreground mb-6 text-center">Meet Our Team</h2>
+          <p class="text-center text-muted-foreground mb-8">
+            A passionate group of food enthusiasts, developers, and cultural ambassadors working to preserve and share Nepali culinary traditions.
+          </p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="text-center">
+              <div class="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                <span class="text-2xl font-bold text-primary">AK</span>
+              </div>
+              <h3 class="font-heading font-semibold text-card-foreground">Anjali Karki</h3>
+              <p class="text-muted-foreground text-sm">Recipe Developer & Cultural Consultant</p>
+            </div>
+            
+            <div class="text-center">
+              <div class="w-20 h-20 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                <span class="text-2xl font-bold text-accent">RS</span>
+              </div>
+              <h3 class="font-heading font-semibold text-card-foreground">Rajesh Shrestha</h3>
+              <p class="text-muted-foreground text-sm">Lead Developer & Food Photographer</p>
+            </div>
+            
+            <div class="text-center">
+              <div class="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                <span class="text-2xl font-bold text-green-500">PM</span>
+              </div>
+              <h3 class="font-heading font-semibold text-card-foreground">Priya Maharjan</h3>
+              <p class="text-muted-foreground text-sm">Community Manager & Content Creator</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Us Page -->
+  <section id="contact-page" class="page-section">
+    <div class="py-16">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h1 class="font-heading font-bold text-4xl md:text-5xl text-foreground mb-6">
+            Contact Us
+          </h1>
+          <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Have a question, suggestion, or want to share your own recipe? We'd love to hear from you!
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <!-- Contact Form -->
+          <div class="bg-card rounded-xl p-8 shadow-lg">
+            <h2 class="font-heading font-bold text-2xl text-card-foreground mb-6">Send us a message</h2>
+            
+            <form class="space-y-6" onsubmit="handleContactForm(event)">
+              <div>
+                <label class="block text-sm font-medium text-card-foreground mb-2">Name *</label>
+                <input 
+                  type="text" 
+                  required
+                  class="w-full px-4 py-3 rounded-lg bg-input border border-border focus:outline-none focus:ring-2 focus:ring-primary"
+                  placeholder="Your full name"
+                >
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-card-foreground mb-2">Email *</label>
+                <input 
+                  type="email" 
+                  required
+                  class="w-full px-4 py-3 rounded-lg bg-input border border-border focus:outline-none focus:ring-2 focus:ring-primary"
+                  placeholder="your.email@example.com"
+                >
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-card-foreground mb-2">Reason for Contact</label>
+                <select class="w-full px-4 py-3 rounded-lg bg-input border border-border focus:outline-none focus:ring-2 focus:ring-primary">
+                  <option>General Inquiry</option>
+                  <option>Recipe Suggestion</option>
+                  <option>Technical Issue</option>
+                  <option>Partnership</option>
+                  <option>Media Inquiry</option>
+                  <option>Other</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-card-foreground mb-2">Message *</label>
+                <textarea 
+                  required
+                  rows="5"
+                  class="w-full px-4 py-3 rounded-lg bg-input border border-border focus:outline-none focus:ring-2 focus:ring-primary"
+                  placeholder="Tell us how we can help you..."
+                ></textarea>
+              </div>
+
+              <button 
+                type="submit"
+                class="btn-primary w-full bg-primary text-primary-foreground py-3 rounded-lg font-semibold hover:bg-primary/90"
+              >
+                Send Message
+              </button>
+            </form>
+          </div>
+
+          <!-- Contact Information -->
+          <div class="space-y-8">
+            <div class="bg-card rounded-xl p-8 shadow-lg">
+              <h3 class="font-heading font-bold text-xl text-card-foreground mb-6">Get in Touch</h3>
+              
+              <div class="space-y-4">
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-card-foreground">Email</h4>
+                    <p class="text-muted-foreground">hello@sathikorecipe.com</p>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-card-foreground">Response Time</h4>
+                    <p class="text-muted-foreground">We typically respond within 24 hours</p>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-card-foreground">Community</h4>
+                    <p class="text-muted-foreground">Join our global community of food lovers</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-card rounded-xl p-8 shadow-lg">
+              <h3 class="font-heading font-bold text-xl text-card-foreground mb-6">Follow Us</h3>
+              <p class="text-muted-foreground mb-6">Stay updated with new recipes, cooking tips, and community highlights.</p>
+              
+              <div class="flex gap-4">
+                <a href="#" class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center text-white hover:bg-blue-600 transition-colors">
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                  </svg>
+                </a>
+                <a href="#" class="w-12 h-12 bg-pink-500 rounded-lg flex items-center justify-center text-white hover:bg-pink-600 transition-colors">
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.097.118.112.222.085.343-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.758-1.378l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.624 0 11.99-5.367 11.99-11.987C24.007 5.367 18.641.001 12.017.001z"/>
+                  </svg>
+                </a>
+                <a href="#" class="w-12 h-12 bg-red-500 rounded-lg flex items-center justify-center text-white hover:bg-red-600 transition-colors">
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-primary to-accent rounded-xl p-8 text-white">
+              <h3 class="font-heading font-bold text-xl mb-4">Join Our Newsletter</h3>
+              <p class="mb-4 opacity-90">Get weekly recipes and cooking tips delivered to your inbox!</p>
+              <div class="flex gap-2">
+                <input 
+                  type="email" 
+                  placeholder="Your email"
+                  class="flex-1 px-4 py-2 rounded-lg text-foreground bg-white"
+                >
+                <button class="bg-white text-primary px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors">
+                  Subscribe
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-card border-t border-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <!-- Logo & Description -->
+        <div class="md:col-span-2">
+          <div class="flex items-center space-x-2 mb-4">
+            <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+              <span class="text-primary-foreground font-bold text-xl">S</span>
+            </div>
+            <div>
+              <h3 class="font-heading font-bold text-xl text-card-foreground">Sathi Ko Recipe</h3>
+              <p class="text-xs text-muted-foreground">Your hub for delicious food!</p>
+            </div>
+          </div>
+          <p class="text-muted-foreground mb-6 max-w-md">
+            Bringing authentic Nepali flavors to international students and food enthusiasts worldwide. Simple, affordable, and delicious recipes for everyone.
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-muted-foreground hover:text-primary transition-colors">
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+              </svg>
+            </a>
+            <a href="#" class="text-muted-foreground hover:text-primary transition-colors">
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.097.118.112.222.085.343-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.758-1.378l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.624 0 11.99-5.367 11.99-11.987C24.007 5.367 18.641.001 12.017.001z"/>
+              </svg>
+            </a>
+            <a href="#" class="text-muted-foreground hover:text-primary transition-colors">
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h4 class="font-heading font-semibold text-card-foreground mb-4">Quick Links</h4>
+          <ul class="space-y-2">
+            <li><a href="#" onclick="showPage('home')" class="text-muted-foreground hover:text-primary transition-colors">Home</a></li>
+            <li><a href="#" onclick="showPage('recipes')" class="text-muted-foreground hover:text-primary transition-colors">All Recipes</a></li>
+            <li><a href="#" onclick="showPage('about')" class="text-muted-foreground hover:text-primary transition-colors">About Us</a></li>
+            <li><a href="#" onclick="showPage('contact')" class="text-muted-foreground hover:text-primary transition-colors">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Categories -->
+        <div>
+          <h4 class="font-heading font-semibold text-card-foreground mb-4">Categories</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">Main Dishes</a></li>
+            <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">Appetizers</a></li>
+            <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">Desserts</a></li>
+            <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">Soups</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="border-t border-border mt-8 pt-8 text-center">
+        <p class="text-muted-foreground">
+          © 2024 Sathi Ko Recipe. Made with ❤️ for food lovers everywhere.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Global state
+    let currentStep = 1;
+    let totalSteps = 5;
+    let currentRecipe = null;
+
+    // Recipe data
+    const recipeData = {
+      'momo': {
+        title: 'Momo',
+        description: 'Traditional Nepali dumplings with savory filling',
+        image: 'https://images.unsplash.com/photo-1564767655658-4e85cac2c4f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=600',
+        servings: 4,
+        time: 45,
+        cost: '$5.50',
+        difficulty: 'Easy',
+        diet: 'Non-Vegetarian',
+        type: 'Main Dish',
+        ingredients: [
+          { item: 'Ground meat', qty: '500g' },
+          { item: 'All-purpose flour', qty: '2 cups' },
+          { item: 'Onion', qty: '1 medium' },
+          { item: 'Ginger-garlic paste', qty: '2 tbsp' },
+          { item: 'Soy sauce', qty: '2 tbsp' },
+          { item: 'Salt & pepper', qty: 'to taste' }
+        ],
+        steps: [
+          'Prepare the dough by mixing flour with water and a pinch of salt. Knead until smooth and let rest for 30 minutes.',
+          'Mix ground meat with chopped onions, ginger-garlic paste, soy sauce, salt, and pepper.',
+          'Roll the dough into small circles and place filling in the center.',
+          'Fold and seal the edges to form dumpling shapes.',
+          'Steam for 15-20 minutes until cooked through. Serve hot with tomato chutney.'
+        ]
+      },
+      'dal-bhat': {
+        title: 'Dal Bhat',
+        description: 'Nepal\'s national dish - lentils with rice',
+        image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=600',
+        servings: 2,
+        time: 30,
+        cost: '$3.20',
+        difficulty: 'Easy',
+        diet: 'Vegetarian',
+        type: 'Main Dish',
+        ingredients: [
+          { item: 'Yellow lentils', qty: '1 cup' },
+          { item: 'Basmati rice', qty: '1 cup' },
+          { item: 'Turmeric powder', qty: '1/2 tsp' },
+          { item: 'Cumin seeds', qty: '1 tsp' },
+          { item: 'Onion', qty: '1 small' },
+          { item: 'Garlic', qty: '2 cloves' }
+        ],
+        steps: [
+          'Wash and cook rice in a rice cooker or pot until fluffy.',
+          'Boil lentils with turmeric and salt until tender.',
+          'Heat oil in a pan and add cumin seeds.',
+          'Add chopped onions and garlic, sauté until golden.',
+          'Add cooked lentils and simmer for 5 minutes. Serve with rice.'
+        ]
+      }
+    };
+
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('theme-toggle');
+    const html = document.documentElement;
+
+    // Check for saved theme preference or default to light
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    html.classList.toggle('dark', currentTheme === 'dark');
+
+    themeToggle.addEventListener('click', () => {
+      const isDark = html.classList.contains('dark');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+    });
+
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Page navigation
+    function showPage(pageId) {
+      // Hide all pages
+      document.querySelectorAll('.page-section').forEach(section => {
+        section.classList.remove('active');
+      });
+      
+      // Show target page
+      document.getElementById(pageId + '-page').classList.add('active');
+      
+      // Update navigation active states
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+      });
+      
+      // Find and activate current nav link
+      const currentNavLink = document.querySelector(`[onclick="showPage('${pageId}')"]`);
+      if (currentNavLink) {
+        currentNavLink.classList.add('active');
+      }
+      
+      // Close mobile menu if open
+      mobileMenu.classList.add('hidden');
+      
+      // Scroll to top
+      window.scrollTo(0, 0);
+    }
+
+    // Recipe detail functionality
+    function showRecipeDetail(recipeSlug) {
+      const recipe = recipeData[recipeSlug];
+      if (!recipe) {
+        console.error('Recipe not found:', recipeSlug);
+        return;
+      }
+      
+      currentRecipe = recipe;
+      totalSteps = recipe.steps.length;
+      
+      // Update recipe detail content
+      document.getElementById('recipe-detail-image').src = recipe.image;
+      document.getElementById('recipe-detail-title').textContent = recipe.title;
+      document.getElementById('recipe-detail-description').textContent = recipe.description;
+      document.getElementById('recipe-servings').textContent = recipe.servings;
+      document.getElementById('recipe-time').textContent = recipe.time;
+      document.getElementById('recipe-cost').textContent = recipe.cost;
+      document.getElementById('recipe-difficulty').textContent = recipe.difficulty;
+      document.getElementById('recipe-diet').textContent = recipe.diet;
+      document.getElementById('recipe-type').textContent = recipe.type;
+      
+      // Update ingredients
+      const ingredientsList = document.getElementById('recipe-ingredients');
+      ingredientsList.innerHTML = recipe.ingredients.map(ingredient => 
+        `<li class="flex justify-between">
+          <span>${ingredient.item}</span>
+          <span class="text-muted-foreground">${ingredient.qty}</span>
+        </li>`
+      ).join('');
+      
+      // Update steps
+      const stepsList = document.getElementById('recipe-steps');
+      stepsList.innerHTML = recipe.steps.map((step, index) => 
+        `<div class="flex gap-4">
+          <div class="flex-shrink-0 w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-semibold">
+            ${index + 1}
+          </div>
+          <div>
+            <p class="text-card-foreground">${step}</p>
+          </div>
+        </div>`
+      ).join('');
+      
+      // Update cooking mode
+      document.getElementById('total-steps').textContent = totalSteps;
+      
+      // Show recipe detail page
+      showPage('recipe-detail');
+    }
+
+    // Cooking mode functionality
+    function toggleCookingMode() {
+      const cookingMode = document.getElementById('cooking-mode');
+      cookingMode.classList.toggle('hidden');
+      
+      if (!cookingMode.classList.contains('hidden')) {
+        currentStep = 1;
+        updateCookingStep();
+      }
+    }
+
+    function updateCookingStep() {
+      if (!currentRecipe) return;
+      
+      document.getElementById('cooking-step-number').textContent = currentStep;
+      document.getElementById('cooking-step-text').textContent = currentRecipe.steps[currentStep - 1];
+      document.getElementById('current-step').textContent = currentStep;
+      
+      // Update button states
+      document.getElementById('prev-step').disabled = currentStep === 1;
+      document.getElementById('next-step').disabled = currentStep === totalSteps;
+    }
+
+    function previousStep() {
+      if (currentStep > 1) {
+        currentStep--;
+        updateCookingStep();
+      }
+    }
+
+    function nextStep() {
+      if (currentStep < totalSteps) {
+        currentStep++;
+        updateCookingStep();
+      }
+    }
+
+    // Contact form handler
+    function handleContactForm(event) {
+      event.preventDefault();
+      
+      // Get form data
+      const formData = new FormData(event.target);
+      const data = Object.fromEntries(formData);
+      
+      // Show success message (in a real app, this would send to a server)
+      alert('Thank you for your message! We\'ll get back to you soon.');
+      
+      // Reset form
+      event.target.reset();
+    }
+
+    // Filter functionality for recipe page
+    document.addEventListener('DOMContentLoaded', function() {
+      const filterChips = document.querySelectorAll('.filter-chip');
+      
+      filterChips.forEach(chip => {
+        chip.addEventListener('click', function() {
+          // Remove active class from all chips
+          filterChips.forEach(c => c.classList.remove('active'));
+          
+          // Add active class to clicked chip
+          this.classList.add('active');
+          
+          // TODO: Implement actual filtering logic
+          console.log('Filter by:', this.textContent);
+        });
+      });
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Add scroll animation for recipe cards
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-fade-in');
+        }
+      });
+    }, observerOptions);
+
+    // Observe all recipe cards
+    document.querySelectorAll('.recipe-card').forEach(card => {
+      observer.observe(card);
+    });
+  </script>
+</body>
+</html>
